@@ -1,0 +1,327 @@
+.founders-section{
+  background:#fdf3e0;
+  padding:110px 36px;
+}
+
+/* ===================== */
+/* HEADING */
+/* ===================== */
+
+.founders-tag{
+  display:block;
+  text-align:center;
+
+  color:#d89a3c;
+
+  letter-spacing:4px;
+  font-size:13px;
+  font-weight:700;
+
+  margin-bottom:12px;
+}
+
+.founders-section h2{
+  text-align:center;
+
+  font-size:58px;
+  line-height:1;
+
+  font-family:"Cormorant Garamond", serif;
+
+  color:#0f2b14;
+
+  margin-bottom:60px;
+}
+
+.founders-section h2 span{
+  display:block;
+  color:#1f5b2d;
+}
+
+/* ===================== */
+/* GRID */
+/* ===================== */
+
+.founders-grid{
+  display:grid;
+
+  grid-template-columns:
+  repeat(3, minmax(280px, 380px));
+
+  justify-content:center;
+
+  gap:30px;
+}
+
+/* ===================== */
+/* CARD */
+/* ===================== */
+
+.founder-card{
+  background:#fffdfa;
+
+  border-radius:28px;
+
+  border:1px solid rgba(31,91,45,.08);
+
+  padding:32px 28px;
+
+  text-align:center;
+
+  cursor:pointer;
+
+  position:relative;
+
+  overflow:hidden;
+
+  transition:.35s ease;
+
+  min-height:460px;
+}
+
+.founder-card:hover{
+  transform:translateY(-8px);
+
+  box-shadow:
+  0 25px 50px rgba(31,91,45,.12);
+}
+
+/* ===================== */
+/* IMAGE */
+/* ===================== */
+
+.founder-card img{
+  width:160px;
+  height:160px;
+
+  border-radius:50%;
+
+  object-fit:cover;
+
+  margin-bottom:26px;
+
+  border:5px solid #ffffff;
+
+  box-shadow:
+  0 12px 30px rgba(31,91,45,.12);
+}
+
+/* ===================== */
+/* TEXT */
+/* ===================== */
+
+.founder-card h3{
+  font-size:22px;
+
+  line-height:1.25;
+
+  color:#0f2b14;
+
+  font-weight:700;
+
+  margin-bottom:0px;
+
+  min-height:56px;
+}
+
+.founder-card span{
+  display:inline-block;
+
+  background:#fff4e0;
+
+  color:#d89a3c;
+
+  padding:8px 16px;
+
+  border-radius:999px;
+
+  font-size:14px;
+  font-weight:600;
+margin-top: 0px;
+  margin-bottom:12px;
+}
+
+.founder-card p{
+  color:#667066;
+
+  font-size:15px;
+
+  line-height:1.7;
+
+  min-height:60px;
+}
+
+/* ===================== */
+/* BUTTON */
+/* ===================== */
+
+.founder-card button{
+  margin-top:20px;
+
+  border:none;
+
+  background:#1f5b2d;
+
+  color:#ffffff;
+
+  padding:12px 22px;
+
+  border-radius:999px;
+
+  font-size:14px;
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:.3s ease;
+}
+
+.founder-card button:hover{
+  background:#163f21;
+}
+
+/* ===================== */
+/* MODAL */
+/* ===================== */
+
+.founder-modal-overlay{
+  position:fixed;
+  inset:0;
+
+  background:rgba(0,0,0,.65);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  z-index:9999;
+
+  padding:20px;
+}
+
+.founder-modal{
+  width:750px;
+  max-width:100%;
+
+  background:#fffdfa;
+
+  border-radius:30px;
+
+  padding:50px;
+
+  text-align:center;
+max-height:85vh;
+  overflow-y:auto;
+  animation:popup .3s ease;
+}
+
+@keyframes popup{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.founder-modal img{
+  width:160px;
+  height:160px;
+
+  border-radius:50%;
+
+  object-fit:cover;
+
+  border:6px solid #fff;
+
+  box-shadow:
+  0 15px 40px rgba(31,91,45,.15);
+}
+
+.founder-modal h2{
+  margin-top:20px;
+
+  color:#0f2b14;
+
+  font-size:38px;
+
+  line-height:1.2;
+}
+
+.founder-modal span{
+  display:inline-block;
+
+  margin-top:12px;
+
+  background:#fff4e0;
+
+  color:#d89a3c;
+
+  padding:8px 18px;
+
+  border-radius:999px;
+
+  font-weight:600;
+}
+
+.founder-modal p{
+  margin-top:24px;
+
+  color:#5f685f;
+
+  line-height:1.9;
+
+  font-size:16px;
+}
+
+.founder-modal blockquote{
+  margin-top:30px;
+
+  font-size:24px;
+
+  font-family:"Cormorant Garamond", serif;
+
+  color:#1f5b2d;
+
+  font-style:italic;
+}
+
+/* ===================== */
+/* RESPONSIVE */
+/* ===================== */
+
+@media(max-width:1100px){
+
+  .founders-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:768px){
+
+  .founders-section{
+    padding:80px 20px;
+  }
+
+  .founders-section h2{
+    font-size:42px;
+  }
+
+  .founders-grid{
+    grid-template-columns:1fr;
+  }
+
+  .founder-card{
+    min-height:auto;
+  }
+
+  .founder-modal{
+    padding:35px 25px;
+  }
+
+  .founder-modal h2{
+    font-size:30px;
+  }
+}

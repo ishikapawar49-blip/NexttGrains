@@ -1,0 +1,131 @@
+.why-section {
+  padding:  45px 36px 60px;
+  background: #f7f5ef;
+}
+
+/* ==========================
+   HEADER
+========================== */
+
+.why-header {
+  margin-bottom: 30px;
+}
+
+.why-tag {
+  display: block;
+  color: #4d692d;
+  font-weight: 700;
+ font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.why-header h2 {
+  max-width: 920px;
+  font-size: 42px;   
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 10px;
+  color: #221505;
+}
+
+.why-header p {
+  font-size: 15px;
+  color: #6f6b63;
+  line-height: 1.6;
+}
+
+/* ==========================
+   GRID
+========================== */
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* ==========================
+   CARD
+========================== */
+
+.why-card {
+  background: #ffffff;
+  border: 1px solid #e8e2d7;
+   padding: 26px;
+  min-height: 220px;   
+  max-width: 380px;
+  border-radius: 24px;
+  transition: all 0.3s ease;
+}
+
+.why-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 15px 35px rgba(0,0,0,0.05);
+}
+
+/* ==========================
+   ICON
+========================== */
+
+.why-icon {
+width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  margin-bottom: 22px;
+  background: #557825;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.why-icon svg {
+  font-size: 24px;
+  color: white;
+}
+
+/* ==========================
+   TEXT
+========================== */
+
+.why-card h3 {
+  font-size: 17px;
+  font-weight: 600;
+  color: #18120b;
+  margin-bottom: 12px;
+}
+
+.why-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #6e675e;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 1200px) {
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .why-header h2 {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .why-header h2 {
+    font-size: 38px;
+  }
+
+  .why-card {
+    min-height: auto;
+  }
+}

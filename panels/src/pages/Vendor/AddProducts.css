@@ -1,0 +1,116 @@
+.ngVendorAddPage{
+
+padding:30px;
+
+background:#F9F7F2;
+
+min-height:100vh;
+
+}
+
+.ngVendorAddPage h1{
+
+font-size:38px;
+
+font-family:Georgia,serif;
+
+color:#355218;
+
+margin-bottom:25px;
+
+}
+
+.ngVendorForm{
+
+background:white;
+
+padding:25px;
+
+border-radius:18px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.ngVendorForm input,
+.ngVendorForm textarea{
+
+width:100%;
+
+padding:14px;
+
+border-radius:10px;
+
+border:1px solid #d8d2c5;
+
+font-size:15px;
+
+outline:none;
+
+}
+
+.ngVendorForm textarea{
+
+height:120px;
+
+resize:none;
+
+}
+
+.ngVendorForm button{
+
+height:48px;
+
+border:none;
+
+background:#496E18;
+
+color:white;
+
+font-size:17px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+}
+
+.ngVendorForm p{
+
+font-size:12px;
+
+color:red;
+
+margin-top:-10px;
+
+}
+
+.ngVendorPreview{
+
+display:flex;
+
+gap:12px;
+
+flex-wrap:wrap;
+
+}
+
+.ngVendorPreview img{
+
+width:120px;
+
+height:120px;
+
+border-radius:10px;
+
+object-fit:cover;
+
+border:1px solid #ddd;
+
+}

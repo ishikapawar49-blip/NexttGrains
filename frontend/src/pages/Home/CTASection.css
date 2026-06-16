@@ -1,0 +1,155 @@
+.cta-section {
+  padding: 35px 36px 55px;
+  background: #f7f5ef;
+}
+
+/* ========================= */
+
+.cta-container {
+  min-height: 300px;
+
+  border-radius: 32px;
+
+  background-size: cover;
+  background-position: center;
+
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+
+  padding: 50px 60px;
+}
+
+/* ========================= */
+
+.cta-content {
+  max-width: 900px;
+  z-index: 2;
+}
+
+/* ========================= */
+
+.cta-content h2 {
+  font-size: 62px;
+ font-family: "Cormorant Garamond", serif;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #f8f4ec;
+  margin-bottom: 16px;
+}
+
+.cta-content h2 span {
+  color: #efb34d;
+}
+
+/* ========================= */
+
+.cta-content p {
+  max-width: 560px;
+
+  font-size: 16px;
+  line-height: 1.7;
+
+  color: rgba(255,255,255,.85);
+
+  margin-bottom: 28px;
+}
+
+/* ========================= */
+
+.cta-buttons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ========================= */
+
+.cta-primary-btn {
+  border: none;
+
+  height: 48px;
+  padding: 0 28px;
+  border-radius: 999px;
+
+  background: #efb34d;
+  color: #111;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  cursor: pointer;
+
+  transition: .3s;
+}
+
+.cta-primary-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.cta-primary-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ========================= */
+
+.cta-secondary-btn {
+  height: 48px;
+  padding: 0 28px;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.25);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: .3s;
+}
+
+.cta-secondary-btn:hover {
+  background: rgba(255,255,255,.08);
+}
+
+/* ========================= */
+
+@media (max-width: 1200px) {
+
+  .cta-content h2 {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 900px) {
+
+  .cta-container {
+    padding: 40px 30px;
+    min-height: auto;
+  }
+
+  .cta-content h2 {
+    font-size: 34px;
+  }
+
+  .cta-content p {
+    font-size: 15px;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cta-primary-btn,
+  .cta-secondary-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

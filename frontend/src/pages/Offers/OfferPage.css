@@ -1,0 +1,254 @@
+.offers-page{
+  background:#f8f5ed;
+  padding:30px 36px 70px;
+}
+
+/* ========================= */
+/* HERO */
+/* ========================= */
+
+.offer-banner{
+  background:linear-gradient(
+    135deg,
+    #dd944e,
+    #c96a2e
+  );
+
+  border-radius:32px;
+
+  min-height:360px;
+
+  padding:55px 60px;
+
+  position:relative;
+  overflow:hidden;
+
+  margin-bottom:50px;
+}
+
+.offer-content{
+  max-width:650px;
+  position:relative;
+  z-index:2;
+}
+
+.offer-tag{
+  color:white;
+
+  font-size:13px;
+  font-weight:700;
+
+  letter-spacing:2px;
+
+  display:block;
+
+  margin-bottom:18px;
+}
+
+.offer-content h1{
+  font-size:58px;
+  line-height:1.05;
+
+  font-weight:800;
+
+  color:white;
+
+  margin-bottom:18px;
+}
+
+.offer-content p{
+  font-size:20px;
+  color:white;
+
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  margin-bottom:35px;
+}
+
+.coupon-pill{
+  background:rgba(255,255,255,.18);
+
+  padding:8px 14px;
+
+  border-radius:10px;
+
+  font-weight:700;
+}
+
+.offer-flame{
+  position:absolute;
+  right:90px;
+  top:50%;
+
+  transform:translateY(-50%);
+
+  font-size:160px;
+
+  opacity:.08;
+
+  color:white;
+}
+
+/* ========================= */
+/* TIMER */
+/* ========================= */
+
+.timer{
+  display:flex;
+  gap:14px;
+}
+
+.time-box{
+  width:80px;
+  height:90px;
+
+  background:rgba(255,255,255,.12);
+
+  border-radius:18px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+
+  backdrop-filter:blur(8px);
+}
+
+.time-box h3{
+  font-size:34px;
+  margin-bottom:4px;
+  font-weight:700;
+}
+
+.time-box span{
+  font-size:12px;
+  letter-spacing:1px;
+}
+
+/* ========================= */
+/* OFFERS GRID */
+/* ========================= */
+
+.offers-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+
+.offer-card{
+  background:white;
+
+  border:1px dashed #d7dfca;
+
+  border-radius:24px;
+
+  padding:28px;
+
+  transition:.3s ease;
+}
+
+.offer-card:hover{
+  transform:translateY(-5px);
+
+  box-shadow:
+  0 15px 40px rgba(0,0,0,.06);
+}
+
+.offer-icon{
+  color:#58772f;
+  margin-bottom:18px;
+}
+
+.offer-card h3{
+  font-size:20px;
+  color:#1d1d1d;
+  margin-bottom:8px;
+}
+
+.offer-card p{
+  color:#667085;
+  font-size:14px;
+
+  line-height:1.7;
+
+  margin-bottom:22px;
+}
+
+.coupon-code{
+  background:#f3ebde;
+
+  border-radius:16px;
+
+  padding:15px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.coupon-code span{
+  font-size:16px;
+  font-weight:700;
+}
+
+.coupon-code button{
+  border:none;
+  background:none;
+
+  color:#3c5f1d;
+
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
+
+@media(max-width:1100px){
+
+  .offers-grid{
+    grid-template-columns:1fr;
+  }
+
+  .offer-content h1{
+    font-size:46px;
+  }
+
+  .offer-banner{
+    min-height:auto;
+  }
+}
+
+@media(max-width:768px){
+
+  .offers-page{
+    padding:20px;
+  }
+
+  .offer-banner{
+    padding:40px 24px;
+  }
+
+  .offer-content h1{
+    font-size:38px;
+  }
+
+  .offer-content p{
+    flex-wrap:wrap;
+    font-size:17px;
+  }
+
+  .offer-flame{
+    display:none;
+  }
+
+  .timer{
+    flex-wrap:wrap;
+  }
+}
