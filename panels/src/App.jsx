@@ -1,9 +1,9 @@
 import "./App.css";
 
 import {
-  BrowserRouter,
-  Routes,
-  Route
+BrowserRouter,
+Routes,
+Route
 } from "react-router-dom";
 
 /* ================= ADMIN ================= */
@@ -15,97 +15,172 @@ import Customers from "./pages/Admin/Customer";
 /* ================= VENDOR ================= */
 
 import VendorSidebar from "./components/Vendor/VendorSidebar";
-// import VendorNavbar from "./components/Vendor/VendorNavbar";
+
+import VendorLogin from "./components/Vendor/VendorLogin";
+import VendorSignup from "./components/Vendor/VendorSignup";
+
 import VendorDashboard from "./pages/Vendor/VendorDashboard";
+import Products from "./pages/Vendor/Products";
+import AddProducts from "./pages/Vendor/AddProducts";
 
-function App() {
+function App(){
 
-  return (
+return(
 
-    <BrowserRouter>
+<BrowserRouter>
 
-      <Routes>
+<Routes>
 
-        {/* ================= ADMIN PANEL ================= */}
+{/* ================= ADMIN ================= */}
 
-        <Route
-          path="/admin/*"
-          element={
+<Route
 
-            <div className="ngAdminLayout">
+path="/admin"
 
-              <AdminSidebar />
+element={
 
-              <div className="ngAdminRight">
+<div className="ngAdminLayout">
 
-                <AdminNavbar />
+<AdminSidebar/>
 
-                <div className="ngAdminMainContent">
+<div className="ngAdminRight">
 
-                  <Routes>
+<AdminNavbar/>
 
-                    <Route
-                      path="/"
-                      element={<Customers />}
-                    />
+<div className="ngAdminMainContent">
 
-                    <Route
-                      path="customers"
-                      element={<Customers />}
-                    />
+<Customers/>
 
-                  </Routes>
+</div>
 
-                </div>
+</div>
 
-              </div>
+</div>
 
-            </div>
+}
 
-          }
-        />
+/>
 
 
+{/* ================= VENDOR AUTH ================= */}
 
-        {/* ================= VENDOR PANEL ================= */}
+<Route
 
-        <Route
-          path="/vendor/*"
-          element={
+path="/vendor/login"
 
-            <div className="ngVendorLayout">
+element={<VendorLogin/>}
 
-              <VendorSidebar />
+/>
 
-              <div className="ngVendorRight">
+<Route
 
-                {/* <VendorNavbar/> */}
+path="/vendor/signup"
 
-                <div className="ngVendorMainContent">
+element={<VendorSignup/>}
 
-                  <Routes>
+/>
 
-                    <Route
-                      path="/"
-                      element={<VendorDashboard />}
-                    />
 
-                  </Routes>
+{/* ================= VENDOR DASHBOARD ================= */}
 
-                </div>
+<Route
 
-              </div>
+path="/vendor/dashboard"
 
-            </div>
+element={
 
-          }
-        />
+<div className="ngVendorLayout">
 
-      </Routes>
+<VendorSidebar/>
 
-    </BrowserRouter>
+<div className="ngVendorRight">
 
-  );
+<VendorDashboard/>
+
+</div>
+
+</div>
+
+}
+
+/>
+
+
+{/* ================= PRODUCTS ================= */}
+
+<Route
+
+path="/vendor/products"
+
+element={
+
+<div className="ngVendorLayout">
+
+<VendorSidebar/>
+
+<div className="ngVendorRight">
+
+<Products/>
+
+</div>
+
+</div>
+
+}
+
+/>
+
+
+{/* ================= ADD PRODUCT ================= */}
+
+<Route
+
+path="/vendor/products/add"
+
+element={
+
+<div className="ngVendorLayout">
+
+<VendorSidebar/>
+
+<div className="ngVendorRight">
+
+<AddProducts/>
+
+</div>
+
+</div>
+
+}
+
+/>
+<Route
+
+path="/vendor/products/edit/:id"
+
+element={
+
+<div className="ngVendorLayout">
+
+<VendorSidebar/>
+
+<div className="ngVendorRight">
+
+<AddProducts/>
+
+</div>
+
+</div>
+
+}
+
+/>
+
+</Routes>
+
+</BrowserRouter>
+
+);
 
 }
 

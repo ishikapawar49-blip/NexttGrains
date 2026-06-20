@@ -1,25 +1,32 @@
 import Product from "../models/Product.js";
-
+import cloudinary from "../config/cloudinary.js";
 
 // =====================
 // ADD PRODUCT
 // =====================
-
 export const addProduct=async(req,res)=>{
 
 try{
+console.log("BODY =", req.body);
+
+console.log("FILES =", req.files);
+
+console.log("Cloud =", process.env.CLOUDINARY_CLOUD_NAME);
+
+console.log("Key =", process.env.CLOUDINARY_API_KEY);
 
 const{
 
 vendorId,
 name,
 category,
+quantity,
+unit,
 description,
 packagingDate,
 expiryDate,
 price,
-stock,
-images
+stock
 
 }=req.body;
 
@@ -28,13 +35,16 @@ if(
 !vendorId||
 !name||
 !category||
+!quantity||
+!unit||
 !description||
 !packagingDate||
 !expiryDate||
 !price||
 stock===undefined||
-!images
-
+!req.files||
+req.files.length<1||
+req.files.length>4
 ){
 
 return res.status(400).json({
@@ -46,16 +56,36 @@ message:"Please fill all fields"
 });
 
 }
+console.log(req.body);
+console.log(req.files);
 
-const product=
+const imageUrls=[];
 
-await Product.create({
+for(const file of req.files){
+
+const base64=`data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
+
+const uploaded=await cloudinary.uploader.upload(base64,{
+folder:"NextTGrains/products",
+resource_type:"image"
+});
+
+imageUrls.push(uploaded.secure_url);
+
+}
+
+
+const product=await Product.create({
 
 vendorId,
 
 name,
 
 category,
+
+quantity,
+
+unit,
 
 description,
 
@@ -66,8 +96,8 @@ expiryDate,
 price,
 
 stock,
-
-images,
+thumbnail:imageUrls[0],
+images:imageUrls,
 
 status:
 
@@ -96,7 +126,10 @@ product
 }
 
 catch(err){
-
+console.log("==================");
+console.log(err);
+console.log(err.message);
+console.log("==================");
 res.status(500).json({
 
 success:false,
@@ -142,6 +175,11 @@ products
 
 catch(err){
 
+console.log("==================");
+console.log(err);
+console.log(err.message);
+console.log("==================");
+
 res.status(500).json({
 
 success:false,
@@ -154,36 +192,32 @@ message:err.message
 
 };
 
-
+// 
 // =====================
-// UPDATE PRODUCT
+// GET SINGLE PRODUCT
 // =====================
 
-export const updateProduct=async(req,res)=>{
+export const getSingleProduct = async (req, res) => {
 
 try{
 
-const product=
+const product = await Product.findById(req.params.id);
 
-await Product.findByIdAndUpdate(
+if(!product){
 
-req.params.id,
+return res.status(404).json({
 
-req.body,
+success:false,
 
-{
+message:"Product not found"
 
-new:true
+});
 
 }
-
-);
 
 res.json({
 
 success:true,
-
-message:"Updated",
 
 product
 
@@ -197,6 +231,111 @@ res.status(500).json({
 
 success:false,
 
+message:err.message
+
+});
+
+}
+
+};
+
+// =====================
+// UPDATE PRODUCT
+// =====================
+
+export const updateProduct = async (req,res)=>{
+
+try{
+
+const product=await Product.findById(req.params.id);
+
+if(!product){
+
+return res.status(404).json({
+
+success:false,
+message:"Product not found"
+
+});
+
+}
+
+product.name=req.body.name;
+product.category=req.body.category;
+product.quantity=req.body.quantity;
+product.unit=req.body.unit;
+product.description=req.body.description;
+product.packagingDate=req.body.packagingDate;
+product.expiryDate=req.body.expiryDate;
+product.price=req.body.price;
+product.stock=req.body.stock;
+
+product.status=
+Number(req.body.stock)===0
+?
+"Out Of Stock"
+:
+"Active";
+
+
+// Agar user new images upload kare
+if(req.files && req.files.length>0){
+
+const imageUrls=[];
+
+// old images
+if(req.body.oldImages){
+
+const oldImages=JSON.parse(req.body.oldImages);
+
+oldImages.forEach(img=>{
+
+imageUrls.push(img);
+
+});
+
+}
+
+// new upload
+for(const file of req.files){
+
+const base64=`data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
+
+const uploaded=await cloudinary.uploader.upload(base64,{
+
+folder:"NextTGrains/products",
+resource_type:"image"
+
+});
+
+imageUrls.push(uploaded.secure_url);
+
+}
+
+product.images=imageUrls;
+product.thumbnail=imageUrls[0];
+
+}
+
+await product.save();
+
+res.json({
+
+success:true,
+message:"Product Updated",
+product
+
+});
+
+}
+
+catch(err){
+
+console.log(err);
+
+res.status(500).json({
+
+success:false,
 message:err.message
 
 });
@@ -231,6 +370,12 @@ message:"Deleted"
 }
 
 catch(err){
+
+console.log("================");
+
+console.log(err);
+
+console.log("================");
 
 res.status(500).json({
 

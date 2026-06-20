@@ -30,13 +30,53 @@ required:true
 },
 
 role:{
+
 type:String,
+
+enum:[
+
+"customer",
+
+"vendor",
+
+"admin"
+
+],
+
 default:"customer"
+
+},
+
+businessName:{
+
+type:String,
+
+default:""
+
+},
+
+gstNumber:{
+
+type:String,
+
+default:""
+
+},
+
+address:{
+
+type:String,
+
+default:""
+
 },
 
 isVerified:{
+
 type:Boolean,
+
 default:false
+
 }
 
 },
@@ -49,12 +89,10 @@ timestamps:true
 
 );
 
-const User = mongoose.model(
+export default mongoose.model(
 
 "User",
 
 userSchema
 
 );
-
-export default User;

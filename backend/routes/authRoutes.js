@@ -3,8 +3,14 @@ import express from "express";
 import {
 
 registerUser,
+
 loginUser,
-getProfile
+
+getProfile,
+
+vendorRegister,
+
+vendorLogin
 
 }
 
@@ -12,7 +18,10 @@ from "../controllers/authController.js";
 
 import authMiddleware from "../middleware/authMiddleware.js";
 
-const router = express.Router();
+const router=express.Router();
+
+
+// CUSTOMER
 
 router.post(
 
@@ -29,6 +38,28 @@ router.post(
 loginUser
 
 );
+
+
+// VENDOR
+
+router.post(
+
+"/vendor-register",
+
+vendorRegister
+
+);
+
+router.post(
+
+"/vendor-login",
+
+vendorLogin
+
+);
+
+
+// PROFILE
 
 router.get(
 

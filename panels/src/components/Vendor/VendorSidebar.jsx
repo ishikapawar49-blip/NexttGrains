@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import "./VendorSidebar.css";
-import {NavLink} from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import{
 
@@ -101,6 +101,16 @@ icon:<BadgeCheck size={22}/>
 export default function VendorSidebar(){
 
 const[collapsed,setCollapsed]=useState(false);
+const navigate = useNavigate();
+const handleVendorLogout = () => {
+
+    localStorage.removeItem("vendor");
+
+    localStorage.removeItem("vendorToken");
+
+    navigate("/vendor/login");
+
+};
 
 return(
 
@@ -218,7 +228,10 @@ collapsed
 
 !collapsed&&
 
-<div className="vendorLogoutBtn">
+<div
+className="vendorLogoutBtn"
+onClick={handleVendorLogout}
+>
 
 <LogOut size={19}/>
 

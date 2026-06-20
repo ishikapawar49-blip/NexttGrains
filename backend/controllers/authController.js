@@ -353,3 +353,255 @@ export const getProfile = async (req, res) => {
     }
 
 };
+
+//
+
+//vendior register
+export const vendorRegister=async(req,res)=>{
+
+try{
+
+const{
+
+fullName,
+
+email,
+
+phone,
+
+businessName,
+
+gstNumber,
+
+address,
+
+password
+
+}=req.body;
+
+if(
+
+!fullName||
+
+!email||
+
+!phone||
+
+!businessName||
+
+!address||
+
+!password
+
+){
+
+return res.status(400).json({
+
+success:false,
+
+message:"Please fill all fields"
+
+});
+
+}
+
+const existing=
+
+await User.findOne({
+
+email
+
+});
+
+if(existing){
+
+return res.status(400).json({
+
+success:false,
+
+message:"Vendor already exists"
+
+});
+
+}
+
+const salt=
+
+await bcrypt.genSalt(10);
+
+const hashed=
+
+await bcrypt.hash(
+
+password,
+
+salt
+
+);
+
+const vendor=
+
+await User.create({
+
+name:fullName,
+
+email,
+
+phone,
+
+businessName,
+
+gstNumber,
+
+address,
+
+password:hashed,
+
+role:"vendor"
+
+});
+
+const token=
+
+generateToken(
+
+vendor._id
+
+);
+
+res.status(201).json({
+
+success:true,
+
+message:"Vendor Registered",
+
+token,
+
+user:vendor
+
+});
+
+}
+
+catch(err){
+
+res.status(500).json({
+
+success:false,
+
+message:err.message
+
+});
+
+}
+
+};
+
+//vendor login
+export const vendorLogin=async(req,res)=>{
+
+try{
+
+const{
+
+email,
+
+password
+
+}=req.body;
+
+if(
+
+!email||
+
+!password
+
+){
+
+return res.status(400).json({
+
+success:false,
+
+message:"Please enter credentials"
+
+});
+
+}
+
+const vendor=
+
+await User.findOne({
+
+email,
+
+role:"vendor"
+
+});
+
+if(!vendor){
+
+return res.status(404).json({
+
+success:false,
+
+message:"Vendor not found"
+
+});
+
+}
+
+const match=
+
+await bcrypt.compare(
+
+password,
+
+vendor.password
+
+);
+
+if(!match){
+
+return res.status(401).json({
+
+success:false,
+
+message:"Invalid Credentials"
+
+});
+
+}
+
+const token=
+
+generateToken(
+
+vendor._id
+
+);
+
+res.json({
+
+success:true,
+
+token,
+
+user:vendor
+
+});
+
+}
+
+catch(err){
+
+res.status(500).json({
+
+success:false,
+
+message:err.message
+
+});
+
+}
+
+};

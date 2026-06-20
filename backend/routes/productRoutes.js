@@ -1,11 +1,12 @@
 import express from "express";
+import upload from "../middleware/upload.js";
 
 import{
 
 addProduct,
 
 getVendorProducts,
-
+getSingleProduct,
 updateProduct,
 
 deleteProduct,
@@ -24,6 +25,8 @@ router.post(
 
 "/add",
 
+upload.array("images",4),
+
 addProduct
 
 );
@@ -36,12 +39,15 @@ getVendorProducts
 
 );
 
+router.get(
+"/:id",
+getSingleProduct
+);
+
 router.put(
-
 "/update/:id",
-
+upload.array("images",4),
 updateProduct
-
 );
 
 router.delete(
@@ -59,5 +65,7 @@ router.patch(
 changeStatus
 
 );
+
+// 
 
 export default router;
