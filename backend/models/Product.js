@@ -31,7 +31,12 @@ unit:{
     required:true
 },
 
-description:{
+shortDescription:{
+type:String,
+required:true
+},
+
+aboutProduct:{
 type:String,
 required:true
 },
@@ -51,10 +56,33 @@ type:Number,
 required:true
 },
 
+mrp:{
+type:Number,
+required:true
+},
+
+rating:{
+type:Number,
+default:0
+},
+
+reviews:{
+type:Number,
+default:0
+},
+
+nutrition:[
+{
+label:String,
+value:String
+}
+],
+
 stock:{
 type:Number,
 required:true
 },
+
 
 images:{
 type:[String],

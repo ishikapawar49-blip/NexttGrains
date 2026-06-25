@@ -16,31 +16,35 @@ console.log("Cloud =", process.env.CLOUDINARY_CLOUD_NAME);
 console.log("Key =", process.env.CLOUDINARY_API_KEY);
 
 const{
-
 vendorId,
 name,
 category,
 quantity,
 unit,
-description,
+shortDescription,
+aboutProduct,
 packagingDate,
 expiryDate,
 price,
+mrp,
+rating,
+reviews,
+nutrition,
 stock
-
 }=req.body;
 
 if(
-
 !vendorId||
 !name||
 !category||
 !quantity||
 !unit||
-!description||
+!shortDescription||
+!aboutProduct||
 !packagingDate||
 !expiryDate||
 !price||
+!mrp||
 stock===undefined||
 !req.files||
 req.files.length<1||
@@ -74,43 +78,27 @@ imageUrls.push(uploaded.secure_url);
 
 }
 
-
+//  create produc
 const product=await Product.create({
-
 vendorId,
-
 name,
-
 category,
-
 quantity,
-
 unit,
-
-description,
-
+shortDescription,
+aboutProduct,
 packagingDate,
-
 expiryDate,
-
 price,
-
+mrp,
+rating,
+reviews,
+nutrition: nutrition ? JSON.parse(nutrition) : [],
 stock,
 thumbnail:imageUrls[0],
 images:imageUrls,
-
 status:
-
-stock==0
-
-?
-
-"Out Of Stock"
-
-:
-
-"Active"
-
+stock==0 ? "Out Of Stock" : "Active"
 });
 
 res.status(201).json({
@@ -192,7 +180,38 @@ message:err.message
 
 };
 
-// 
+// =====================
+// GET ALL ACTIVE PRODUCTS
+// =====================
+
+export const getAllProducts = async (req,res)=>{
+
+try{
+
+const products = await Product.find({
+status:"Active",
+stock:{ $gt:0 }
+})
+.sort({createdAt:-1});
+
+res.json({
+success:true,
+products
+});
+
+}
+
+catch(err){
+
+res.status(500).json({
+success:false,
+message:err.message
+});
+
+}
+
+};
+
 // =====================
 // GET SINGLE PRODUCT
 // =====================
@@ -250,9 +269,7 @@ try{
 const product=await Product.findById(req.params.id);
 
 if(!product){
-
 return res.status(404).json({
-
 success:false,
 message:"Product not found"
 
@@ -264,18 +281,17 @@ product.name=req.body.name;
 product.category=req.body.category;
 product.quantity=req.body.quantity;
 product.unit=req.body.unit;
-product.description=req.body.description;
+product.shortDescription=req.body.shortDescription;
+product.aboutProduct=req.body.aboutProduct;
 product.packagingDate=req.body.packagingDate;
 product.expiryDate=req.body.expiryDate;
 product.price=req.body.price;
+product.mrp=req.body.mrp;
+product.rating=req.body.rating;
+product.reviews=req.body.reviews;
+product.nutrition=req.body.nutrition?JSON.parse(req.body.nutrition):[];
 product.stock=req.body.stock;
-
-product.status=
-Number(req.body.stock)===0
-?
-"Out Of Stock"
-:
-"Active";
+product.status=Number(req.body.stock)===0 ? "Out Of Stock" : "Active";
 
 
 // Agar user new images upload kare

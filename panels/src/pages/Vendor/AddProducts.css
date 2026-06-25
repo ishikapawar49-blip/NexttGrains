@@ -145,6 +145,48 @@ font-size:15px;
 
 }
 
+.ngVendorForm select{
+
+width:100%;
+
+padding:14px;
+
+border-radius:10px;
+
+border:1px solid #d8d2c5;
+
+outline:none;
+
+font-size:15px;
+
+background:white;
+
+color:#333;
+
+}
+
+.ngFieldGroup{
+
+flex:1;
+
+display:flex;
+
+flex-direction:column;
+
+gap:6px;
+
+}
+
+.ngFieldGroup label{
+
+font-size:13px;
+
+font-weight:600;
+
+color:#355218;
+
+}
+
 .ngPreviewBox{
 
 position:relative;
@@ -198,5 +240,108 @@ font-size:16px;
 font-weight:bold;
 
 z-index:10;
+}
 
+.ngNutritionTitle{
+
+font-size:18px;
+font-weight:600;
+color:#355218;
+margin-top:10px;
+margin-bottom:5px;
+
+}
+
+.ngNutritionRow{
+
+display:flex;
+gap:10px;
+align-items:center;
+
+}
+
+.ngNutritionRow input{
+
+flex:1;
+
+}
+
+.ngNutritionRemoveBtn{
+
+width:45px !important;
+height:45px !important;
+
+background:#e53935 !important;
+color:white;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-size:18px;
+
+}
+
+.ngAddNutritionBtn{
+
+width:220px;
+
+background:#355218 !important;
+
+color:white;
+
+border:none;
+
+padding:12px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-size:14px;
+
+}
+
+.ngDiscountPreview{
+
+background:#EEF6E9;
+
+color:#355218;
+
+padding:12px;
+
+border-radius:10px;
+
+font-size:15px;
+
+font-weight:500;
+
+}
+
+.ngFieldGroup{
+flex:1;
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+.ngFieldGroup label{
+font-size:13px;
+font-weight:600;
+color:#355218;
+margin-left:2px;
+}
+
+.ngQtyRow{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.ngThreeCol{
+display:grid;
+grid-template-columns:1fr 1fr 1fr 1fr;
+gap:20px;
 }

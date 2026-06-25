@@ -155,6 +155,18 @@ lastIndex
 
 );
 
+const getDiscount = (mrp, price) => {
+
+if(!mrp || !price) return 0;
+
+return Math.round(
+
+((mrp - price) / mrp) * 100
+
+);
+
+};
+
     return (
         
 
@@ -289,12 +301,11 @@ value={search}
 onChange={(e)=>setSearch(e.target.value)}
 />
 
+
+
 <div className="ngVendorProductsGrid">
-
-{
-
+    {
 current.map(product=>(
-
 <div
 className="ngVendorMiniCard"
 key={product._id}
@@ -387,7 +398,7 @@ Delete
 </h3>
 <p className="ngVendorMiniDesc">
 
-{product.description}
+{product.shortDescription}
 
 </p>
 
@@ -397,12 +408,30 @@ Delete
 
 <div>
     
+<div className="ngVendorPriceRow">
+
 <h2 className="ngVendorPrice">
 
 ₹{product.price}
 
 </h2>
 
+<span className="ngVendorMrp">
+
+₹{product.mrp}
+
+</span>
+
+<span className="ngVendorDiscount">
+
+{getDiscount(
+product.mrp,
+product.price
+)}% OFF
+
+</span>
+
+</div>
 
 <div
 className={

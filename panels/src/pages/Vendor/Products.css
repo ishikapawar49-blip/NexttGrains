@@ -452,6 +452,26 @@ font-family:"Cormorant Garamond",serif;
 
 }
 
+.ngVendorPriceRow{
+
+display:flex;
+align-items:center;
+gap:8px;
+
+}
+
+.ngVendorMrp{
+
+font-size:14px;
+
+color:#999;
+
+text-decoration:line-through;
+
+font-weight:500;
+
+}
+
 .ngVendorMiniBottom p{
 font-size:12px;
 line-height:18px;
@@ -591,6 +611,22 @@ PAGINATION
     background:#222;
 
     color:white;
+
+}
+
+.ngVendorDiscount{
+
+font-size:10px;
+
+font-weight:700;
+
+color:#2E7D32;
+
+background:#EEF6E9;
+
+padding:0px 6px;
+
+border-radius:20px;
 
 }
 
