@@ -68,7 +68,7 @@
   font-size:15px;
 }
 
-.shop-sidebar input[type="shop-checkbox"]{
+.shop-sidebar input[type="checkbox"]{
   width:15px;
   height:17px;
 }
@@ -171,6 +171,10 @@
 }
 
 .shop-product-content h4{
+  font-family:"Cormorant Garamond",serif;
+font-weight:700;
+line-height:1.1;
+color:#201a16;
   font-size:17px;
   font-weight:700;
   margin-bottom:8px;
@@ -179,7 +183,44 @@
 .shop-product-content p{
   color:#756f66;
   font-size:14px;
-  margin-bottom:18px;
+  margin-bottom:8px;
+}
+/* .shop-product-qty{
+
+font-size:15px;
+
+color:#7b7468;
+
+margin-top:-8px;
+
+margin-bottom:18px;
+
+font-weight:500;
+
+} */
+
+.shop-product-desc{
+
+font-size:16px;
+
+line-height:1.45;
+
+color:#7a7267;
+
+margin-bottom:20px;
+
+}
+
+.shop-product-qty{
+
+font-weight:600;
+
+color:#6b655c;
+
+margin-left:4px;
+
+white-space:nowrap;
+
 }
 
 .shop-product-footer{
@@ -202,13 +243,13 @@
   border:none;
   background:#4e6f24;
   color:white;
-  width:90px;
-  height:46px;
+  width:72px;
+  height:40px;
   border-radius:16px;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:6px;
+  gap:4px;
   font-weight:700;
   cursor:pointer;
 }

@@ -215,8 +215,7 @@ message:err.message
 // =====================
 // GET SINGLE PRODUCT
 // =====================
-
-export const getSingleProduct = async (req, res) => {
+export const getSingleProduct = async (req,res)=>{
 
 try{
 
@@ -227,12 +226,254 @@ if(!product){
 return res.status(404).json({
 
 success:false,
+message:"Product not found"
+
+});
+
+}
+
+res.json({
+
+success:true,
+product
+
+});
+
+}
+
+catch(err){
+
+res.status(500).json({
+
+success:false,
+message:err.message
+
+});
+
+}
+
+};
+
+// recommended products
+export const getRecommendedProducts = async(req,res)=>{
+
+try{
+
+const current = await Product.findById(req.params.id);
+
+if(!current){
+
+return res.status(404).json({
+
+success:false,
 
 message:"Product not found"
 
 });
 
 }
+
+const products = await Product.find({
+
+category:current.category,
+
+_id:{
+
+$ne:req.params.id
+
+},
+
+status:"Active",
+
+stock:{
+
+$gt:0
+
+}
+
+})
+
+.limit(4)
+
+.sort({
+
+createdAt:-1
+
+});
+
+res.json({
+
+success:true,
+
+products
+
+});
+
+}
+
+catch(err){
+
+res.status(500).json({
+
+success:false,
+
+message:err.message
+
+});
+
+}
+
+};
+
+// categoryAPI
+export const getCategoryProducts=async(req,res)=>{
+
+try{
+
+const products=
+
+await Product.find({
+
+category:req.params.category,
+
+status:"Active",
+
+stock:{
+
+$gt:0
+
+}
+
+});
+
+res.json({
+
+success:true,
+
+products
+
+});
+
+}
+
+catch(err){
+
+res.status(500).json({
+
+success:false,
+
+message:err.message
+
+});
+
+}
+
+};
+
+// reviewAPI
+export const addReview=async(req,res)=>{
+
+try{
+
+const{
+
+name,
+
+rating,
+
+comment
+
+}=req.body;
+
+const product=
+
+await Product.findById(
+
+req.params.id
+
+);
+
+product.reviewList.push({
+
+name,
+
+rating,
+
+comment
+
+});
+
+product.reviews=
+
+product.reviewList.length;
+
+const avg=
+
+product.reviewList.reduce(
+
+(sum,item)=>
+
+sum+item.rating,
+
+0
+
+)
+
+/
+
+product.reviewList.length;
+
+product.rating=
+
+avg.toFixed(1);
+
+await product.save();
+
+res.json({
+
+success:true,
+
+product
+
+});
+
+}
+
+catch(err){
+
+res.status(500).json({
+
+success:false,
+
+message:err.message
+
+});
+
+}
+
+};
+// rating API
+export const updateRating=async(req,res)=>{
+
+try{
+
+const{
+
+rating
+
+}=req.body;
+
+const product=
+
+await Product.findById(
+
+req.params.id
+
+);
+
+product.rating=rating;
+
+await product.save();
 
 res.json({
 

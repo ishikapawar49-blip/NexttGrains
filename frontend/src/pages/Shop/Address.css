@@ -1,0 +1,1070 @@
+/* ===========================================================
+   NEXTTGRAINS ADDRESS DRAWER
+   PART - 2A
+=========================================================== */
+
+.ngAddressOverlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    backdrop-filter: blur(2px);
+    z-index: 9998;
+}
+
+.ngAddressDrawer{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100vh;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    z-index: 9999;
+    animation: ngAddressSlideIn .28s ease;
+    box-shadow: -10px 0 40px rgba(0,0,0,.12);
+}
+
+@keyframes ngAddressSlideIn{
+
+    from{
+
+        transform: translateX(100%);
+
+    }
+
+    to{
+
+        transform: translateX(0);
+
+    }
+
+}
+
+/* ================= HEADER ================= */
+
+.ngAddressHeader{
+
+    height:72px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 24px;
+
+    border-bottom:1px solid #ececec;
+
+    flex-shrink:0;
+
+    background:#fff;
+
+}
+
+.ngAddressHeading{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#222;
+
+    margin:0;
+
+}
+
+.ngAddressCloseBtn{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    background:#f5f5f5;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    font-size:23px;
+
+    transition:.25s;
+
+}
+
+.ngAddressCloseBtn:hover{
+
+    background:#ececec;
+
+    transform:rotate(90deg);
+
+}
+
+/* ================= SCROLL AREA ================= */
+
+.ngAddressScrollArea{
+
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:22px;
+
+    background:#f7f7f7;
+
+}
+
+.ngAddressScrollArea::-webkit-scrollbar{
+
+    width:7px;
+
+}
+
+.ngAddressScrollArea::-webkit-scrollbar-thumb{
+
+    background:#d5d5d5;
+
+    border-radius:20px;
+
+}
+
+.ngAddressScrollArea::-webkit-scrollbar-track{
+
+    background:transparent;
+
+}
+
+/* ================= CURRENT LOCATION ================= */
+
+.ngAddressCurrentLocationCard{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:12px 16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    cursor:pointer;
+
+    transition:.28s;
+
+    border:1px solid #ececec;
+
+    box-shadow:0 6px 22px rgba(0,0,0,.04);
+
+}
+
+.ngAddressCurrentLocationCard:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+}
+
+.ngAddressCurrentLeft{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+.ngAddressLocationIconBox{
+
+    width:48px;
+    height:48px;
+
+    border-radius:16px;
+
+    background:#18b75a15;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#266b42;
+
+    font-size:30px;
+
+    flex-shrink:0;
+
+}
+
+.ngAddressCurrentLeft h4{
+
+    margin:0;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    color:#222;
+
+}
+
+.ngAddressCurrentLeft p{
+
+    margin-top:1px;
+
+    margin-bottom:0;
+
+    color:#777;
+
+    font-size:12px;
+
+    line-height:20px;
+
+}
+
+.ngAddressArrowBtn{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    border:none;
+
+    background:#f3f3f3;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    font-size:20px;
+
+    transition:.25s;
+
+}
+
+.ngAddressArrowBtn:hover{
+
+    background:#266b42;
+
+    color:#fff;
+
+}
+
+/* ================= DIVIDER ================= */
+
+.ngAddressSectionDivider{
+
+    width:100%;
+
+    height:1px;
+
+    background:#e4e4e4;
+
+    margin:10px 0;
+
+}
+
+/* ================= SAVED ADDRESS ================= */
+
+.ngAddressSavedSection{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.ngAddressSectionTitle{
+
+    margin:0;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    color:#222;
+
+}
+
+/* ================= EMPTY STATE ================= */
+
+.ngAddressEmptyCard{
+    background:#fff;
+
+    border:2px dashed #dedede;
+
+    border-radius:18px;
+
+    padding:25px 25px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+}
+
+.ngAddressEmptyIcon{
+
+    font-size:58px;
+
+    color:#266b42;
+
+    margin-bottom:18px;
+
+}
+
+.ngAddressEmptyCard h4{
+
+    margin:0;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#266b42;
+
+}
+
+.ngAddressEmptyCard p{
+
+    margin-top:10px;
+
+    color:#777;
+
+    font-size:15px;
+
+    line-height:24px;
+
+    max-width:260px;
+
+}
+/* ===========================================================
+   NEXTTGRAINS ADDRESS DRAWER
+   PART - 2B
+=========================================================== */
+
+
+/* ================= ADD NEW ADDRESS ================= */
+
+.ngAddressAddCard{
+
+    margin-top:24px;
+
+    background:#ffffff;
+
+    border:1px solid #e9e9e9;
+
+    border-radius:18px;
+
+    padding:18px 20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.28s;
+
+    box-shadow:0 6px 20px rgba(0,0,0,.04);
+
+}
+
+.ngAddressAddCard:hover{
+
+    transform:translateY(-3px);
+
+    border-color:#266b42;
+
+    box-shadow:0 12px 28px rgba(24,183,90,.15);
+
+}
+
+.ngAddressAddLeft{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.ngAddressAddIcon{
+
+    font-size:28px;
+
+    color:#266b42;
+
+}
+
+.ngAddressAddLeft span{
+
+    font-size:17px;
+
+    font-weight:600;
+
+    color:#222;
+
+}
+
+.ngAddressAddArrow{
+
+    font-size:22px;
+
+    color:#888;
+
+    transition:.25s;
+
+}
+
+.ngAddressAddCard:hover .ngAddressAddArrow{
+
+    color:#266b42;
+
+    transform:translateX(5px);
+
+}
+
+
+/* ================= SAVED ADDRESS CARD ================= */
+
+.ngAddressSavedCard{
+
+    background:#fff;
+
+    border:1px solid #ececec;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    cursor:pointer;
+
+    transition:.28s;
+
+    box-shadow:0 6px 20px rgba(0,0,0,.04);
+
+}
+
+.ngAddressSavedCard:hover{
+
+    border-color:#266b42;
+
+    transform:translateY(-2px);
+
+    box-shadow:0 12px 26px rgba(24,183,90,.12);
+
+}
+
+.ngAddressSavedLeft{
+
+    display:flex;
+
+    gap:16px;
+
+}
+
+.ngAddressSavedIcon{
+
+    width:52px;
+
+    height:52px;
+
+    border-radius:14px;
+
+    background:#18b75a15;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#18b75a;
+
+    font-size:24px;
+
+    flex-shrink:0;
+
+}
+
+.ngAddressSavedContent h4{
+
+    margin:0;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    color:#222;
+
+}
+
+.ngAddressSavedContent p{
+
+    margin:7px 0 0;
+
+    font-size:14px;
+
+    color:#666;
+
+    line-height:22px;
+
+}
+
+.ngAddressDefaultBadge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-top:12px;
+
+    padding:5px 12px;
+
+    border-radius:30px;
+
+    background:#18b75a15;
+
+    color:#18b75a;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+.ngAddressEditBtn{
+
+    background:none;
+
+    border:none;
+
+    color:#18b75a;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.ngAddressEditBtn:hover{
+
+    color:#0f9446;
+
+}
+
+
+/* ================= FOOTER ================= */
+
+.ngAddressFooter{
+
+    background:#ffffff;
+
+    border-top:1px solid #ececec;
+
+    padding:18px 22px;
+
+    flex-shrink:0;
+
+}
+
+
+/* ================= CONTINUE BUTTON ================= */
+
+.ngAddressContinueBtn{
+
+    width:100%;
+
+    height:56px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#266b42;
+
+    color:#fff;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.28s;
+
+}
+
+.ngAddressContinueBtn:hover{
+
+    background:#266b42;
+
+    transform:translateY(-2px);
+
+}
+
+.ngAddressContinueBtn:active{
+
+    transform:scale(.98);
+
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:768px){
+
+.ngAddressDrawer{
+
+    width:100%;
+
+}
+
+.ngAddressScrollArea{
+
+    padding:18px;
+
+}
+
+.ngAddressHeader{
+
+    padding:0 18px;
+
+}
+
+.ngAddressHeading{
+
+    font-size:20px;
+
+}
+
+.ngAddressCurrentLocationCard{
+
+    padding:16px;
+
+}
+
+.ngAddressLocationIconBox{
+
+    width:50px;
+
+    height:50px;
+
+    font-size:25px;
+
+}
+
+.ngAddressCurrentLeft h4{
+
+    font-size:16px;
+
+}
+
+.ngAddressCurrentLeft p{
+
+    font-size:13px;
+
+}
+
+.ngAddressSectionTitle{
+
+    font-size:18px;
+
+}
+
+.ngAddressSavedCard{
+
+    padding:16px;
+
+}
+
+.ngAddressSavedIcon{
+
+    width:46px;
+
+    height:46px;
+
+    font-size:22px;
+
+}
+
+.ngAddressContinueBtn{
+
+    height:52px;
+
+    font-size:16px;
+
+}
+
+}
+
+
+/* ================= SMALL MOBILE ================= */
+
+@media(max-width:480px){
+
+.ngAddressHeading{
+
+    font-size:18px;
+
+}
+
+.ngAddressHeader{
+
+    height:64px;
+
+}
+
+.ngAddressFooter{
+
+    padding:15px;
+
+}
+
+.ngAddressScrollArea{
+
+    padding:15px;
+
+}
+
+.ngAddressCurrentLeft{
+
+    gap:12px;
+
+}
+
+.ngAddressSavedLeft{
+
+    gap:12px;
+
+}
+
+.ngAddressAddLeft span{
+
+    font-size:15px;
+
+}
+
+}
+
+
+/* ================= SMOOTH EFFECTS ================= */
+
+.ngAddressCurrentLocationCard,
+.ngAddressSavedCard,
+.ngAddressAddCard,
+.ngAddressContinueBtn,
+.ngAddressCloseBtn,
+.ngAddressArrowBtn{
+
+    transition:all .25s ease;
+
+}
+
+/* ===================================================
+ADDRESS FORM UI
+===================================================*/
+
+.ngAddressFormContainer{
+
+margin-top:20px;
+
+padding:18px;
+
+background:#fff;
+
+border-radius:16px;
+
+border:1px solid #ececec;
+
+box-shadow:0 6px 18px rgba(0,0,0,.05);
+
+}
+
+.ngAddressFormTitle{
+
+margin:0 0 18px;
+
+font-size:18px;
+
+font-weight:700;
+
+color:#222;
+
+}
+
+.ngAddressFormGrid{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:14px;
+
+}
+
+.ngAddressFull{
+
+grid-column:1 / 3;
+
+}
+
+.ngAddressInputGroup{
+
+display:flex;
+
+flex-direction:column;
+
+gap:6px;
+
+}
+
+.ngAddressInputGroup label{
+
+font-size:12px;
+
+font-weight:600;
+
+color:#666;
+
+}
+
+.ngAddressInput{
+
+width:100%;
+
+height:42px;
+
+padding:0 14px;
+
+border:1px solid #d9d9d9;
+
+border-radius:10px;
+
+font-size:14px;
+
+background:#fff;
+
+outline:none;
+
+transition:.25s;
+
+box-sizing:border-box;
+
+}
+
+.ngAddressInput:focus{
+
+border-color:#266b42;
+
+box-shadow:0 0 0 3px rgba(24,183,90,.12);
+
+}
+
+.ngAddressTypeRow{
+
+display:flex;
+
+gap:10px;
+
+margin-top:18px;
+
+}
+
+.ngAddressTypeBtn{
+
+height:38px;
+
+padding:0 18px;
+
+border:1px solid #ddd;
+
+background:#fff;
+
+border-radius:30px;
+
+cursor:pointer;
+
+font-size:13px;
+
+font-weight:600;
+
+transition:.25s;
+
+}
+
+.ngAddressTypeBtn:hover{
+
+border-color:#266b42;
+
+color:#266b42;
+
+}
+
+.ngAddressTypeActive{
+
+height:38px;
+
+padding:0 18px;
+
+border:none;
+
+background:#266b42;
+
+color:#fff;
+
+border-radius:30px;
+
+font-size:13px;
+
+font-weight:600;
+
+cursor:pointer;
+
+}
+
+.ngAddressButtonRow{
+
+display:flex;
+
+justify-content:flex-end;
+
+gap:12px;
+
+margin-top:22px;
+
+}
+
+.ngAddressCancelBtn{
+
+height:42px;
+
+padding:0 18px;
+
+border:none;
+
+background:#f3f3f3;
+
+border-radius:10px;
+
+font-size:14px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.ngAddressCancelBtn:hover{
+
+background:#e8e8e8;
+
+}
+
+.ngAddressSaveBtn{
+
+height:42px;
+
+padding:0 20px;
+
+border:none;
+
+background:#266b42;
+
+color:#fff;
+
+border-radius:10px;
+
+font-size:14px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.ngAddressSaveBtn:hover{
+
+background:#266b42;
+
+}
+
+.ngAddressEmptyAddBtn{
+
+margin-top:18px;
+
+height:42px;
+
+padding:0 20px;
+
+border:none;
+
+border-radius:10px;
+
+background:#266b42;
+
+color:#fff;
+
+font-size:14px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.ngAddressEmptyAddBtn:hover{
+
+background:#266b42;
+
+}

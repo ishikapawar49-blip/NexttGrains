@@ -1,4 +1,6 @@
 import "./Navbar.css";
+import { useCart } from "../../context/CartContext";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Search,
@@ -7,10 +9,15 @@ import {
   ShoppingCart,
   MapPin,
 } from "lucide-react";
-
 import { PiLeafLight } from "react-icons/pi";
 
 function Navbar() {
+const { cartCount, openCart, loadCart } = useCart();
+
+useEffect(()=>{
+   loadCart(); 
+},[]);
+
   return (
     <header className="navbar">
       <div className="navbar-container">
@@ -70,11 +77,15 @@ function Navbar() {
             <Heart />
           </button>
 
-          <button className="cart-btn">
-            <ShoppingCart />
-            <span>Cart</span>
-            <strong>0</strong>
-          </button>
+<button
+className="cart-btn"
+onClick={openCart}
+>
+<ShoppingCart />
+<span>Cart</span>
+<strong>{cartCount}</strong>
+</button>
+
         </div>
 
       </div>

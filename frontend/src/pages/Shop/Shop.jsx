@@ -1,4 +1,9 @@
 import "./Shop.css";
+import Cart from "./Cart";
+import { useCart } from "../../context/CartContext";
+import { useEffect,useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   Heart,
   Star,
@@ -6,112 +11,100 @@ import {
   Zap,
 } from "lucide-react";
 
-import wheat from "../../assets/pi3.jpg";
-import oil from "../../assets/pi4.jpg";
-import dal from "../../assets/pi5.jpg";
-import flour from "../../assets/pi6.jpg";
-import dryfruit from "../../assets/pi7.jpg";
-import ragi from "../../assets/pi8.jpg";
-import millet from "../../assets/pi9.jpg";
-import honey from "../../assets/b5.jpg";
-import turmeric from "../../assets/b4.jpg";
+function Shop() {
+const [products,setProducts] = useState([]);
+const { addToCart } = useCart();
+const [loading,setLoading] = useState(true);
+const [selectedCategories, setSelectedCategories] = useState([]);
+const [maxPrice, setMaxPrice] = useState(5000);
+const [sortBy, setSortBy] = useState("popular");
 
-const products = [
-  {
-    id: 1,
-    image: wheat,
-    title: "Sharbati Whole Wheat",
-    desc: "Stone-ground, MP harvested · 5 kg",
-    price: 349,
-    oldPrice: 449,
-    rating: 4.8,
-    discount: "22% OFF",
-  },
-  {
-    id: 2,
-    image: oil,
-    title: "Cold-Pressed Mustard Oil",
-    desc: "Wood-pressed · 1 L",
-    price: 289,
-    oldPrice: 399,
-    rating: 4.9,
-    discount: "28% OFF",
-  },
-  {
-    id: 3,
-    image: dal,
-    title: "Premium Masoor Dal",
-    desc: "Unpolished · 1 kg",
-    price: 159,
-    oldPrice: 199,
-    rating: 4.7,
-    discount: "20% OFF",
-  },
-  {
-    id: 4,
-    image: ragi,
-    title: "Heritage Ragi Flour",
-    desc: "Finger millet · 1 kg",
-    price: 129,
-    oldPrice: 169,
-    rating: 4.8,
-    discount: "24% OFF",
-  },
-  {
-    id: 5,
-    image: dryfruit,
-    title: "Royal Dry Fruit Mix",
-    desc: "Almonds · Cashews · Dates",
-    price: 749,
-    oldPrice: 999,
-    rating: 4.9,
-    discount: "25% OFF",
-  },
-  {
-    id: 6,
-    image: flour,
-    title: "Chakki Fresh Atta",
-    desc: "Traditional chakki · 5 kg",
-    price: 319,
-    oldPrice: 399,
-    rating: 4.8,
-    discount: "20% OFF",
-  },
-  {
-  id: 7,
-  image: millet,
-  title: "Ancient Bajra Millet",
-  desc: "Stone-ground · High Fiber · 2 kg",
-  price: 229,
-  oldPrice: 299,
-  rating: 4.8,
-  discount: "18% OFF",
-},
+useEffect(()=>{
 
-{
-  id: 8,
-  image: honey,
-  title: "Raw Forest Honey",
-  desc: "Unprocessed · Natural · 500 g",
-  price: 399,
-  oldPrice: 499,
-  rating: 4.9,
-  discount: "20% OFF",
-},
+getProducts();
 
-{
-  id: 9,
-  image: turmeric,
-  title: "Lakadong Turmeric",
-  desc: "High Curcumin · Premium · 250 g",
-  price: 189,
-  oldPrice: 249,
-  rating: 4.8,
-  discount: "24% OFF",
-},
+},[]);
+
+const getProducts = async()=>{
+
+try{
+
+const res = await axios.get(
+"http://localhost:5000/api/products/all"
+);
+
+setProducts(res.data.products);
+
+}
+
+catch(err){
+
+console.log(err);
+
+}
+
+finally{
+
+setLoading(false);
+
+}
+
+};
+
+const getDiscount=(mrp,price)=>{
+
+if(!mrp || !price) return 0;
+
+return Math.round(
+
+((mrp-price)/mrp)*100
+
+);
+};
+
+const categories = [
+  ...new Set(
+    products.map(product => product.category)
+  )
 ];
 
-function Shop() {
+let filteredProducts = [...products];
+
+// Category Filter
+if (selectedCategories.length > 0) {
+
+  filteredProducts = filteredProducts.filter(product =>
+    selectedCategories.includes(product.category)
+  );
+
+}
+
+// Price Filter
+filteredProducts = filteredProducts.filter(
+  product => product.price <= maxPrice
+);
+
+// Sorting
+if (sortBy === "low") {
+
+  filteredProducts.sort((a, b) => a.price - b.price);
+
+}
+
+else if (sortBy === "high") {
+
+  filteredProducts.sort((a, b) => b.price - a.price);
+
+}
+
+else if (sortBy === "latest") {
+
+  filteredProducts.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
+}
+
   return (
     <section className="shop-page">
 
@@ -126,10 +119,28 @@ function Shop() {
           <p>Every product residue-free, traceable to its farm, and stone-ground for maximum nutrition. </p>
         </div>
 
-        <select className="shop-sort">
-          <option>Sort: Popular</option>
-          <option>Price Low → High</option>
-          <option>Price High → Low</option>
+        <select
+
+className="shop-sort"
+
+value={sortBy}
+
+onChange={(e)=>setSortBy(e.target.value)}
+
+>
+         <option value="popular">Popular</option>
+
+<option value="low">
+Price Low → High
+</option>
+
+<option value="high">
+Price High → Low
+</option>
+
+<option value="latest">
+Latest
+</option>
         </select>
       </div>
 
@@ -139,37 +150,121 @@ function Shop() {
 
           <h3>Category</h3>
 
-          <label><input type="shop-checkbox" /> Grains</label>
-          <label><input type="shop-checkbox" /> Oils</label>
-          <label><input type="shop-checkbox" /> Pulses</label>
-          <label><input type="shop-checkbox" /> Millets</label>
-          <label><input type="shop-checkbox" /> Dry Fruits</label>
-          <label><input type="shop-checkbox" /> Flour</label>
+          {
+categories.map(cat=>(
 
-          <h3 className="shop-quality-title">Quality</h3>
+<label key={cat}>
 
-          <label>
-            <input type="shop-checkbox" />
-            Certified Organic only
-          </label>
+<input
+type="checkbox"
+
+checked={selectedCategories.includes(cat)}
+
+onChange={(e)=>{
+
+if(e.target.checked){
+
+setSelectedCategories([
+...selectedCategories,
+cat
+]);
+
+}else{
+
+setSelectedCategories(
+
+selectedCategories.filter(c=>c!==cat)
+
+);
+
+}
+
+}}
+/>
+
+{cat}
+
+</label>
+
+))
+}
 
           <h3 className="shop-quality-title">Price Range</h3>
 
-          <input type="range" />
+          <input
+
+type="range"
+
+min="0"
+
+max="5000"
+
+step="50"
+
+value={maxPrice}
+
+onChange={(e)=>
+
+setMaxPrice(Number(e.target.value))
+
+}
+
+/>
+
+<p>
+
+Under ₹{maxPrice}
+
+</p>
         </aside>
 
 <div className="shop-products-scroll">
         <div className="shop-product-grid">
+          {
+            loading
+?
 
-          {products.map((item) => (
-            <div className="shop-product-card" key={item.id}>
+<h2>Loading...</h2>
 
+:
+         filteredProducts.length === 0 ? (
+
+<div className="shopNoProduct">
+
+No Products Found
+
+</div>
+
+) : 
+
+filteredProducts.map((item) => (
+
+<Link
+
+to={`/product/${item._id}`}
+
+className="shop-product-card"
+
+key={item._id}
+
+style={{
+
+textDecoration:"none",
+
+color:"inherit"
+
+}}
+
+>
               <div className="shop-product-image">
 
-                <img src={item.image} alt="" />
+                <img src={item.thumbnail} alt="" />
 
                 <span className="shop-discount">
-                  {item.discount}
+                  {getDiscount(
+                item.mrp,
+                item.price
+                )}% OFF
                 </span>
 
                 <span className="shop-organic">
@@ -188,7 +283,10 @@ function Shop() {
 
                   <span className="shop-rating">
                     <Star size={16} fill="#F5B23D" color="#F5B23D" size={16} />
-                    {item.rating}
+                    {Number(item.rating || 4.5).toFixed(1)}
+                    <span className="shop-review-count">
+                    ({item.reviews || 0})
+                    </span>
                   </span>
 
                   <span className="shop-delivery">
@@ -198,27 +296,57 @@ function Shop() {
 
                 </div>
 
-                <h4>{item.title}</h4>
+                <h4>{item.name}</h4>
 
-                <p>{item.desc}</p>
+                <p className="shop-product-desc">
 
+  {item.shortDescription}
+
+  <span className="shop-product-qty">
+
+    • {item.quantity} {item.unit}
+
+  </span>
+
+</p>
                 <div className="shop-product-footer">
 
                   <div>
                     <strong>₹{item.price}</strong>
-                    <span>₹{item.oldPrice}</span>
+                    <span>₹{item.mrp}</span>
                   </div>
 
-                  <button className="shop-add-btn">
-                    <Plus size={18} />
-                    ADD
-                  </button>
+                 <button
+
+className="shop-add-btn"
+
+onClick={async(e)=>{
+
+e.preventDefault();
+
+await addToCart(
+
+item._id,
+
+1
+
+);
+
+}}
+
+>
+
+<Plus size={18}/>
+
+ADD
+
+</button>
 
                 </div>
 
               </div>
 
-            </div>
+            </Link>
           ))}
 
         </div>

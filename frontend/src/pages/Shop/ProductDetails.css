@@ -1,0 +1,504 @@
+/* ==========================================================
+   NexttGrains Product Details - Premium CSS
+   Replace your existing ProductDetails.css with this file.
+   Compatible with ngpd... class names.
+   ========================================================== */
+
+:root{
+  --ng-green:#557c2b;
+  --ng-light:#f7f3ea;
+  --ng-border:#e8e3d9;
+  --ng-text:#222;
+  --ng-muted:#666;
+  --ng-white:#fff;
+  --ng-radius:18px;
+  --ng-shadow:0 8px 30px rgba(0,0,0,.06);
+}
+
+*{box-sizing:border-box;}
+
+.ngpdPage{
+  background:var(--ng-light);
+  padding:30px 0 60px;
+}
+
+.ngpdWrapper{
+  width:min(1320px,94%);
+  margin:auto;
+}
+
+.ngpdBreadcrumb{
+  display:flex;
+  gap:12px;
+  color:#777;
+  font-size:14px;
+  margin-bottom:24px;
+}
+
+.ngpdHero{
+  display:grid;
+  grid-template-columns:530px 1fr;
+  gap:32px;
+  align-items:flex-start;
+}
+
+.ngpdHeroLeft{
+  top:90px;
+}
+
+.ngpdMainImage{
+  background:#fff;
+  border:1px solid var(--ng-border);
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:var(--ng-shadow);
+}
+
+.ngpdMainImage img{
+  width:100%;
+  height:520px;
+  object-fit:cover;
+  display:block;
+}
+
+.ngpdThumbStrip{
+  display:flex;
+  gap:12px;
+  margin-top:16px;
+  margin-bottom:10px;
+}
+
+.ngpdThumbItem{
+  width:84px;
+  height:84px;
+  border:2px solid transparent;
+  border-radius:14px;
+  overflow:hidden;
+  cursor:pointer;
+  background:#fff;
+}
+
+.ngpdThumbItem.active{
+  border-color:var(--ng-green);
+}
+
+.ngpdThumbItem img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.ngpdHeroRight{
+    background:transparent;
+    border:none;
+    box-shadow:none;
+    padding:0;
+    /* border:1px solid #ece8df; */
+    border-radius:18px;
+    padding:0px 12px;
+    /* box-shadow:0 8px 24px rgba(0,0,0,.04); */
+}
+
+.ngpdBadgeRow{
+  display:flex;
+  gap:10px;
+  margin-bottom:8px;
+}
+.ngpdBadge{
+  background:#edf5e5;
+  color:var(--ng-green);
+  padding:8px 16px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:13px;
+}
+
+.ngpdTitle{
+font-size:30px;
+line-height:1.2;
+font-weight:700;
+margin:0 0 14px;
+}
+
+.ngpdSubtitle{
+font-size:14px;
+color:#666;
+margin-top:0px;
+  margin-bottom:10px;
+}
+
+.ngpdRatingRow{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:4px;
+}
+
+.ngpdRatingBox{
+ display:flex;
+ align-items:center;
+ gap:8px;
+ font-weight:700;
+ font-size:22px;
+}
+
+.ngpdPriceRow{
+ display:flex;
+ align-items:center;
+ gap:16px;
+ margin-bottom:2px;
+}
+
+.ngpdPriceRow h2{
+font-size:26px;
+font-weight:700;
+ color:var(--ng-green);
+ margin:0;
+ margin-bottom:8px;
+}
+
+.ngpdPriceRow del{
+ color:#999;
+ font-size:18px;
+  margin-bottom:8px;
+}
+
+.ngpdDiscount{
+ background:#f4e4d0;
+ color:#cf6f1f;
+ padding:5px 12px;
+ font-size:12px;
+ border-radius:999px;
+ font-weight:600;
+  margin-bottom:8px;
+}
+
+.ngpdTax{
+ color:#666;
+ margin-bottom:8px;
+}
+
+.ngpdCartRow{
+ margin-bottom:30px;
+ display:flex;
+align-items:center;
+gap:14px;
+margin-top:0px;
+}
+
+.ngpdQtyBox{
+width:120px;
+height:40px;
+border-radius:30px;
+background:#efe7d8;
+border:none;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 16px;
+}
+
+.ngpdQtyBox button{
+width:20px;
+height:22px;
+border:none;
+background:none;
+font-size:14px;
+cursor:pointer;
+}
+
+.ngpdQtyBox span{
+font-size:18px;
+font-weight:600;
+}
+
+.ngpdCartBtn{
+width:180px;
+height:46px;
+border-radius:30px;
+font-size:16px;
+font-weight:600;
+background:#496225;
+border:none;
+color:#fff;
+cursor:pointer;
+}
+
+.ngpdWishlistBtn{
+width:46px;
+height:46px;
+border-radius:50%;
+background:#f8f1f1;
+border:1px solid #ddd;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+}
+
+.ngpdTrustGrid{
+display:flex;
+gap:16px;
+margin-top:0px;
+}
+
+.ngpdTrustCard{
+flex:1;
+border:1px solid var(--ng-border);
+background:#f5f0e6;
+border-radius:22px;
+padding:8px 14px;
+text-align:center;
+}
+
+.ngpdTrustCard svg{
+width:22px;
+height:22px;
+color:#557c2b;
+margin-bottom:2px;
+}
+
+.ngpdTrustCard h4{
+font-size:14px;
+margin:0px 0;
+font-weight:600;
+}
+
+.ngpdTrustCard p{
+font-size:12px;
+color:#666;
+margin:0;
+}
+
+.ngpdDivider{
+margin:20px 0 20px;
+border:none;
+border-top:1px solid #ddd7ca;
+}
+
+.ngpdAboutCard,
+.ngpdNutritionCardWrapper,
+.ngpdInfoSection,
+.ngpdDeliverySection,
+.ngpdReviewSection,
+.ngpdRelatedSection{
+background:transparent;
+border:none;
+padding:0;
+margin-top:40px;
+box-shadow:none;
+}
+
+.ngpdSectionTitle{
+ margin:0 0 22px;
+ font-size:34px;
+}
+
+.ngpdAboutText{
+ line-height:1.8;
+ color:#555;
+}
+
+.ngpdAboutSection{
+width:100%;
+}
+
+.ngpdAboutSection h3{
+font-size:16px;
+font-weight:700;
+margin-bottom:10px;
+color:#222;
+}
+
+.ngpdAboutSection p{
+font-size:14px;
+line-height:1.9;
+color:#666;
+margin-bottom:0px;
+max-width:100%;
+}
+
+.ngpdNutritionGrid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:14px;
+margin-top:0px
+}
+
+.ngpdNutritionHeading{
+margin-top:12px;
+margin-bottom:16px;
+}
+
+.ngpdNutritionCard{
+ border:1px solid var(--ng-border);
+ border-radius:16px;
+ padding:10px;
+ text-align:center;
+ background:#f6f1e7;
+ margin-bottom:10px;
+}
+
+.ngpdInfoList{
+    width:100%;
+    border-top:1px solid #e6dfd2;
+}
+
+.ngpdInfoRow{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid #e6dfd2;
+
+}
+
+.ngpdInfoRow span{
+    color:#7a7a7a;
+    font-size:15px;
+    font-weight:500;
+}
+
+.ngpdInfoRow b{
+    color:#222;
+    font-size:15px;
+    font-weight:600;
+}
+
+.ngpdDeliveryList{
+display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-top:10px;
+  }
+
+.ngpdDeliveryRow{
+    background:#f8f3e9;
+    border:1px solid #e7dece;
+    border-radius:18px;
+    padding:0px 10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    transition:.3s;
+    min-height:120px;
+}
+
+.ngpdDeliveryRow:hover{
+    background:#0c4e0a;
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+.ngpdDeliveryRow:hover .ngpdDeliveryIcon{
+    color:#e3d5d5;
+}
+
+.ngpdDeliveryRow:hover h4{
+    color:#e3d5d5;
+}
+
+.ngpdDeliveryRow:hover p{
+    color:rgba(255,255,255,0.85);
+}
+.ngpdDeliveryIcon{
+    font-size:30px;
+    color:#557c2b;
+    margin-bottom:4px;
+}
+
+.ngpdDeliveryRow h4{
+    font-size:18px;
+    font-weight:600;
+    margin-bottom:2px;
+    color:#222;
+}
+
+.ngpdDeliveryRow p{
+    font-size:14px;
+    color:#666;
+    line-height:1.6;
+}
+
+.ngpdReviewCard{
+ border-bottom:1px solid #eee;
+ padding:16px 0;
+}
+.ngpdReviewTop{
+ display:flex;
+ justify-content:space-between;
+ margin-bottom:10px;
+}
+
+.ngpdRelatedGrid{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:20px;
+}
+
+.ngpdRelatedCard{
+ border:1px solid var(--ng-border);
+ border-radius:18px;
+ overflow:hidden;
+ transition:.3s;
+ background:#fff;
+}
+.ngpdRelatedCard:hover{
+ transform:translateY(-4px);
+ box-shadow:var(--ng-shadow);
+}
+.ngpdRelatedImage img{
+ width:100%;
+ height:200px;
+ object-fit:cover;
+}
+.ngpdRelatedContent{
+ padding:16px;
+}
+.ngpdRelatedPrice{
+ display:flex;
+ gap:10px;
+ align-items:center;
+ margin:10px 0;
+}
+.ngpdRelatedPrice span{
+ text-decoration:line-through;
+ color:#888;
+}
+.ngpdViewBtn{
+ width:100%;
+ border:none;
+ background:var(--ng-green);
+ color:#fff;
+ height:44px;
+ border-radius:12px;
+ cursor:pointer;
+}
+
+@media(max-width:1100px){
+ .ngpdHero{grid-template-columns:1fr;}
+ .ngpdHeroLeft{position:static;}
+ .ngpdSectionGrid,
+ .ngpdInfoGrid,
+ .ngpdDeliveryGrid,
+ .ngpdRelatedGrid,
+ .ngpdTrustGrid{
+   grid-template-columns:1fr 1fr;
+ }
+}
+
+@media(max-width:700px){
+ .ngpdTitle{font-size:38px;}
+ .ngpdMainImage img{height:360px;}
+ .ngpdCartRow{grid-template-columns:1fr;}
+ .ngpdSectionGrid,
+ .ngpdInfoGrid,
+ .ngpdDeliveryGrid,
+ .ngpdNutritionGrid,
+ .ngpdRelatedGrid,
+ .ngpdTrustGrid{
+   grid-template-columns:1fr;
+ }
+}
