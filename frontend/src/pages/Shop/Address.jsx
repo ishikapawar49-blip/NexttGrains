@@ -1,23 +1,135 @@
 import "./Address.css";
+import axios from "axios";
+import { createPaymentOrder, verifyPayment } from "../../services/paymentApi";
+import { useCart } from "../../context/CartContext";
 import { useAddress } from "../../context/AddressContext";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+MapContainer,
+TileLayer,
+Marker,
+Circle,
+useMapEvents,
+useMap
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+iconRetinaUrl:
+"https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+
+iconUrl:
+"https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+
+shadowUrl:
+"https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
+
 import {
   IoClose,
   IoLocationOutline,
   IoAddCircleOutline,
   IoChevronForward,
+  IoCreateOutline,
+  IoTrashOutline
 } from "react-icons/io5";
 import { MdLocationOn } from "react-icons/md";
 
 function Address({ open, onClose,}) {
 const [ngAddressShowForm, setNgAddressShowForm] = useState(false);
+const navigate=useNavigate();
+const [editingAddress,setEditingAddress]=useState(null);
+const [mapCenter, setMapCenter] = useState({
+  lat: 21.1458,
+  lng: 79.0882,
+});
+
+const [markerPosition, setMarkerPosition] = useState({
+  lat: 21.1458,
+  lng: 79.0882,
+});
+const getAddressFromLatLng = async (lat, lng) => {
+
+try{
+
+const res = await axios.get(
+
+`https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=9629e5a8f11d4166ab0173291ad79706`
+
+);
+
+const result = res.data.results[0];
+
+if(!result) return;
+
+const c = result.components;
+
+setNgAddressFormData(prev=>({
+
+...prev,
+
+latitude:lat,
+
+longitude:lng,
+
+formattedAddress:result.formatted,
+
+area:
+
+c.suburb ||
+
+c.neighbourhood ||
+
+c.city_district ||
+
+"",
+
+city:
+
+c.city ||
+
+c.town ||
+
+c.village ||
+
+"",
+
+state:
+
+c.state ||
+
+"",
+
+pincode:
+
+c.postcode ||
+
+""
+
+}));
+
+}
+
+catch(err){
+
+console.log(err);
+
+}
+
+};
+
 const {
     addresses,
     selectedAddress,
     setSelectedAddress,
     loadAddresses,
     addAddress,
+    updateAddress,
+    deleteAddress
 } = useAddress();
+const { cart } = useCart();
 const [ngAddressFormData, setNgAddressFormData] = useState({
 
     fullName: "",
@@ -47,36 +159,189 @@ const [ngAddressFormData, setNgAddressFormData] = useState({
     addressType: "Home",
 
 });
+
 const handleCurrentLocation = () => {
 
 navigator.geolocation.getCurrentPosition(
+    (position) => {
 
-async(position)=>{
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
 
-const { latitude, longitude } = position.coords;
+        console.log(position.coords.accuracy);
 
-setNgAddressFormData({
+        setMapCenter({ lat, lng });
+        setMarkerPosition({ lat, lng });
 
-...ngAddressFormData,
+        getAddressFromLatLng(lat, lng);
 
-latitude,
+    },
+    (err) => {
+        console.log(err);
+    },
+    {
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 0,
+    }
+);
+};
 
-longitude,
+function ChangeMapCenter({ center }) {
+
+const map = useMap();
+
+useEffect(() => {
+
+map.setView(center,18,{
+
+animate:true
 
 });
 
-},
+},[center]);
 
-(error)=>{
-
-alert("Location permission denied");
+return null;
 
 }
 
+function LocationMarker({
+
+markerPosition,
+
+setMarkerPosition,
+
+setMapCenter,
+
+getAddressFromLatLng
+
+}){
+
+useMapEvents({
+
+dragend(){},
+
+click(e){
+
+setMarkerPosition(e.latlng);
+
+setMapCenter(e.latlng);
+
+getAddressFromLatLng(
+
+e.latlng.lat,
+
+e.latlng.lng
+
 );
+
+}
+
+});
+
+return (
+
+<Marker
+
+draggable={true}
+
+position={markerPosition}
+
+eventHandlers={{
+
+dragend:(e)=>{
+
+const latlng=e.target.getLatLng();
+
+setMarkerPosition(latlng);
+
+setMapCenter(latlng);
+
+getAddressFromLatLng(
+
+latlng.lat,
+
+latlng.lng
+
+);
+
+}
+}}
+
+/>
+
+);
+
+}
+//edit address
+const handleEdit = (address) => {
+
+setEditingAddress(address);
+
+setNgAddressFormData({
+
+fullName:address.fullName,
+
+mobile:address.mobile,
+
+houseNo:address.houseNo,
+
+floor:address.floor,
+
+landmark:address.landmark,
+
+area:address.area,
+
+city:address.city,
+
+state:address.state,
+
+pincode:address.pincode,
+
+latitude:address.latitude,
+
+longitude:address.longitude,
+
+formattedAddress:address.formattedAddress,
+
+addressType:address.addressType
+
+});
+
+setMarkerPosition({
+
+lat:address.latitude,
+
+lng:address.longitude
+
+});
+
+setMapCenter({
+
+lat:address.latitude,
+
+lng:address.longitude
+
+});
+
+setNgAddressShowForm(true);
 
 };
 
+// delete address
+const handleDelete = async(id)=>{
+
+const ok=window.confirm("Delete this address?");
+
+if(!ok) return;
+
+await deleteAddress(id);
+
+await loadAddresses();
+
+};
+
+// save address
 const handleSaveAddress = async () => {
  // Validation
     if (
@@ -91,7 +356,37 @@ const handleSaveAddress = async () => {
         alert("Please fill all required fields");
         return;
     }
-    const response = await addAddress(ngAddressFormData);
+     if(
+        !ngAddressFormData.latitude ||
+        !ngAddressFormData.longitude
+    ){
+        alert("Please use Current Location");
+        return;
+    }
+    // const response = await addAddress(ngAddressFormData);
+    let response;
+
+if(editingAddress){
+
+response=await updateAddress(
+
+editingAddress._id,
+
+ngAddressFormData
+
+);
+
+setEditingAddress(null);
+
+}else{
+
+response=await addAddress(
+
+ngAddressFormData
+
+);
+
+}
     await loadAddresses();
     if(response?.success){
 
@@ -112,10 +407,176 @@ const handleSaveAddress = async () => {
             formattedAddress:"",
             addressType:"Home"
         });
+}
+
+};
+
+// const handleContinue = () => {
+
+//     if (!selectedAddress) {
+
+//         alert("Please select an address");
+
+//         return;
+
+//     }
+
+//     localStorage.setItem(
+
+//         "selectedAddress",
+
+//         JSON.stringify(selectedAddress)
+
+//     );
+
+//     onClose();
+
+// };
+
+const handleContinue = async () => {
+
+    if(!selectedAddress){
+
+        alert("Please Select Address");
+
+        return;
 
     }
 
+    // Cart Context se ye values aayengi
+
+const subtotal =
+cart.cart.items.reduce(
+
+(sum,item)=>
+
+sum + item.product.price * item.quantity,
+
+0
+
+);
+
+const deliveryCharge =
+subtotal>499 ? 0 : 40;
+
+const platformFee=20;
+
+const handlingCharge=10;
+
+const grandTotal=
+
+subtotal+
+
+deliveryCharge+
+
+platformFee+
+
+handlingCharge;
+
+const paymentData={
+
+addressId:selectedAddress._id,
+
+items: cart.cart.items.map((item)=>{
+
+    console.log(item.product);
+
+    return {
+
+        product:item.product._id,
+
+        // vendor:item.product.vendor,
+         vendor: item.product.vendorId,
+        name:item.product.name,
+
+        image:item.product.images?.[0] || "",
+
+        price:item.product.price,
+
+        quantity:item.quantity,
+
+        total:item.product.price * item.quantity
+
+    }
+
+}),
+
+subtotal,
+
+deliveryCharge,
+
+platformFee,
+
+handlingCharge,
+
+discount:0,
+
+grandTotal
+
 };
+    const data=await createPaymentOrder(paymentData);
+
+    openRazorpay(data);
+
+};
+const openRazorpay=(data)=>{
+
+const options={
+
+key:"rzp_test_T99Efd6smK9xBC",
+
+amount:data.razorpayOrder.amount,
+
+currency:"INR",
+
+name:"NexttGrains",
+
+description:"Order Payment",
+
+image:"/logo.png",
+
+order_id:data.razorpayOrder.id,
+
+handler: async function (response) {
+
+    const verify = await verifyPayment({
+
+        razorpay_order_id: response.razorpay_order_id,
+
+        razorpay_payment_id: response.razorpay_payment_id,
+
+        razorpay_signature: response.razorpay_signature,
+
+    });
+
+    onClose();     // Close Drawer
+
+    if (verify.success) {
+
+        navigate("/payment/success");
+
+    }
+
+    else{
+
+        navigate("/payment/failed");
+
+    }
+},
+
+theme:{
+
+color:"#18B75A"
+
+}
+
+};
+
+const razor=new window.Razorpay(options);
+
+razor.open();
+
+}
 
 useEffect(() => {
 
@@ -217,6 +678,59 @@ onClick={handleCurrentLocation}
 
                     </div>
 
+{/* map */}
+<div className="ngAddressMapWrapper">
+
+<MapContainer
+
+center={mapCenter}
+
+zoom={21}
+scrollWheelZoom={true}
+
+doubleClickZoom={true}
+
+dragging={true}
+
+zoomControl={false}
+style={{
+
+height:"260px",
+
+width:"100%"
+
+}}
+
+>
+
+<TileLayer
+url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+/>
+
+<ChangeMapCenter
+center={mapCenter}
+/>
+
+<Circle
+center={markerPosition}
+radius={15}
+/>
+
+<LocationMarker
+
+markerPosition={markerPosition}
+
+setMarkerPosition={setMarkerPosition}
+
+setMapCenter={setMapCenter}
+
+getAddressFromLatLng={getAddressFromLatLng}
+
+/>
+
+</MapContainer>
+
+</div>
                     {/* Divider */}
 
                     <div className="ngAddressSectionDivider"/>
@@ -304,6 +818,46 @@ onClick={()=>setSelectedAddress(address)}
 
 </div>
 
+<div className="ngAddressActionButtons">
+
+<button
+
+className="ngAddressEditBtn"
+
+onClick={(e)=>{
+
+e.stopPropagation();
+
+handleEdit(address);
+
+}}
+
+>
+
+<IoCreateOutline/>
+
+</button>
+
+<button
+
+className="ngAddressDeleteBtn"
+
+onClick={(e)=>{
+
+e.stopPropagation();
+
+handleDelete(address._id);
+
+}}
+
+>
+
+<IoTrashOutline/>
+
+</button>
+
+</div>
+
 </div>
 
 ))
@@ -316,8 +870,22 @@ ngAddressShowForm && (
 
 <div className="ngAddressFormContainer">
 
-<h3 className="ngAddressFormTitle">
-Add Delivery Address
+<h3>
+
+{
+
+editingAddress
+
+?
+
+"Edit Address"
+
+:
+
+"Add Delivery Address"
+
+}
+
 </h3>
 
 <div className="ngAddressFormGrid">
@@ -423,6 +991,7 @@ landmark:e.target.value
 className="ngAddressInput"
 placeholder="Area"
 value={ngAddressFormData.area}
+// readOnly
 onChange={(e)=>
 setNgAddressFormData({
 ...ngAddressFormData,
@@ -588,7 +1157,19 @@ type="button"
 className="ngAddressSaveBtn"
 onClick={handleSaveAddress}
 >
-Save Address
+{
+
+editingAddress
+
+?
+
+"Update Address"
+
+:
+
+"Save Address"
+
+}
 </button>
 
 </div>
@@ -636,11 +1217,9 @@ onClick={()=>setNgAddressShowForm(true)}
 <button
     className="ngAddressContinueBtn"
     disabled={!selectedAddress}
-    onClick={() => {
-        console.log(selectedAddress);
-    }}
+    onClick={handleContinue}
 >
-    Continue
+    Proceed to Pay
 </button>
 
                 </div>

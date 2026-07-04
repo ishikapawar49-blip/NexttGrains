@@ -1,7 +1,11 @@
 import { createContext, useContext, useState } from "react";
 import axios from "axios";
-import { getAddresses, createAddress } from "../services/addressApi";
-
+import {
+    getAddresses,
+    createAddress,
+    updateAddress,
+    deleteAddress,
+} from "../services/addressApi";
 const AddressContext = createContext();
 export const AddressProvider = ({ children }) => {
 
@@ -75,6 +79,61 @@ const addAddress = async (address) => {
 
 };
 
+// edit and delete address functions
+const editAddress = async (id, address) => {
+
+    try {
+
+        setLoading(true);
+
+        const data = await updateAddress(id, address);
+
+        await loadAddresses();
+
+        return data;
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+    }
+
+    finally {
+
+        setLoading(false);
+
+    }
+
+};
+
+const removeAddress = async (id) => {
+
+    try {
+
+        setLoading(true);
+
+        await deleteAddress(id);
+
+        await loadAddresses();
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+    }
+
+    finally {
+
+        setLoading(false);
+
+    }
+
+};
+
     return (
 
         <AddressContext.Provider
@@ -87,6 +146,8 @@ value={{
     setLoading,
     loadAddresses,
     addAddress,
+    updateAddress: editAddress,
+    deleteAddress: removeAddress,
 }}
 
         >
@@ -98,5 +159,6 @@ value={{
     );
 
 };
+
 
 export const useAddress = () => useContext(AddressContext);

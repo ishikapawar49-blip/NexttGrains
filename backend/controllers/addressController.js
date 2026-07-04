@@ -93,3 +93,86 @@ export const getAddresses = async (req, res) => {
   }
 
 };
+// update address
+export const updateAddress = async (req,res)=>{
+
+try{
+
+const address = await Address.findOneAndUpdate(
+
+{
+
+_id:req.params.id,
+
+user:req.user.id
+
+},
+
+req.body,
+
+{
+
+new:true
+
+}
+
+);
+
+res.json({
+
+success:true,
+
+address
+
+});
+
+}
+
+catch(err){
+
+res.status(500).json({
+
+success:false,
+
+message:err.message
+
+});
+
+}
+
+};
+
+// delete address
+export const deleteAddress = async (req, res) => {
+
+    try {
+
+        await Address.findOneAndDelete({
+
+            _id: req.params.id,
+
+            user: req.user.id,
+
+        });
+
+        res.json({
+
+            success: true,
+
+            message: "Address deleted",
+
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+
+            success: false,
+
+            message: err.message,
+
+        });
+
+    }
+
+};

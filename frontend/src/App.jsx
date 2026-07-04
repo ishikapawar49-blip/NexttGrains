@@ -13,6 +13,7 @@ import Address from "./pages/Shop/Address";
 
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+import Payment from "./pages/Shop/Payment";
 
 function App() {
 const { cartOpen, closeCart} = useCart();   
@@ -101,6 +102,11 @@ element={<ProductDetails/>}
             </>
           }
         />
+
+<Route
+    path="/payment/:status"
+    element={<Payment />}
+/>
 
       </Routes>
 

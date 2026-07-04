@@ -6,6 +6,7 @@ import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import addressRoutes from "./routes/addressRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -17,6 +18,7 @@ app.use("/api/auth",authRoutes);
 app.use( "/api/products", productRoutes );
 app.use("/api/cart",cartRoutes);
 app.use("/api/address", addressRoutes);
+app.use("/api/payment", paymentRoutes);
 
 app.get("/",(req,res)=>{
 res.send("NexttGrains Backend Running");
