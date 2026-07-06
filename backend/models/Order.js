@@ -14,12 +14,17 @@ const orderItemSchema = new mongoose.Schema(
       required: true,
     },
 
-    name: {
+    productName: {
       type: String,
       required: true,
+      trim: true,
     },
+    productDescription: {
+  type: String,
+  default: "",
+},
 
-    image: {
+    productImage: {
       type: String,
       default: "",
     },
@@ -27,16 +32,19 @@ const orderItemSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: true,
+      min: 0,
     },
 
     quantity: {
       type: Number,
       required: true,
+      min: 1,
     },
 
-    total: {
+    subtotal: {
       type: Number,
       required: true,
+      min: 0,
     },
   },
   {
@@ -46,6 +54,13 @@ const orderItemSchema = new mongoose.Schema(
 
 const orderSchema = new mongoose.Schema(
   {
+    orderNumber: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
+
     // Customer
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -60,42 +75,56 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
 
-    // Products
-    items: [orderItemSchema],
+    // Ordered Products
+    items: {
+      type: [orderItemSchema],
+      required: true,
+    },
+
+    totalItems: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
 
     // Pricing
     subtotal: {
       type: Number,
       required: true,
-      default: 0,
-    },
-
-    deliveryCharge: {
-      type: Number,
-      default: 0,
-    },
-
-    platformFee: {
-      type: Number,
-      default: 0,
-    },
-
-    handlingCharge: {
-      type: Number,
-      default: 0,
+      min: 0,
     },
 
     discount: {
       type: Number,
       default: 0,
+      min: 0,
+    },
+
+    deliveryCharge: {
+      type: Number,
+      default: 0,
+      min: 0,
     },
 
     grandTotal: {
       type: Number,
       required: true,
+      min: 0,
     },
 
-    // Razorpay
+    // Payment
+    paymentMethod: {
+      type: String,
+      enum: ["COD", "UPI", "Card", "Net Banking"],
+      default: "COD",
+    },
+
+    paymentStatus: {
+      type: String,
+      enum: ["Pending", "Paid", "Failed", "Refunded"],
+      default: "Pending",
+    },
+
     razorpayOrderId: {
       type: String,
       default: "",
@@ -111,17 +140,7 @@ const orderSchema = new mongoose.Schema(
       default: "",
     },
 
-    paymentMethod: {
-      type: String,
-      default: "",
-    },
-
-    paymentStatus: {
-      type: String,
-      enum: ["Pending", "Paid", "Failed", "Refunded"],
-      default: "Pending",
-    },
-
+    // Order Status
     orderStatus: {
       type: String,
       enum: [
@@ -129,11 +148,28 @@ const orderSchema = new mongoose.Schema(
         "Confirmed",
         "Accepted",
         "Packed",
+        "Shipped",
         "Out For Delivery",
         "Delivered",
         "Cancelled",
       ],
       default: "Pending",
+    },
+
+    estimatedDeliveryDate: {
+      type: Date,
+      default: null,
+    },
+
+    deliveredAt: {
+      type: Date,
+      default: null,
+    },
+
+    cancelReason: {
+      type: String,
+      default: "",
+      trim: true,
     },
   },
   {

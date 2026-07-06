@@ -1,4 +1,5 @@
 import "./Shop.css";
+import { useWishlist } from "../../context/WishlistContext";
 import Cart from "./Cart";
 import { useCart } from "../../context/CartContext";
 import { useEffect,useState } from "react";
@@ -13,6 +14,7 @@ import {
 
 function Shop() {
 const [products,setProducts] = useState([]);
+const { toggleWishlist, isWishlisted, }=useWishlist();
 const { addToCart } = useCart();
 const [loading,setLoading] = useState(true);
 const [selectedCategories, setSelectedCategories] = useState([]);
@@ -270,11 +272,45 @@ color:"inherit"
                 <span className="shop-organic">
                   ORGANIC
                 </span>
+<button
 
-                <button className="shop-wishlist">
-                  <Heart size={18} />
-                </button>
+className="shop-wishlist"
 
+onClick={async(e)=>{
+
+e.preventDefault();
+
+e.stopPropagation();
+
+await toggleWishlist(item._id);
+
+}}
+
+>
+
+<Heart
+
+size={18}
+
+fill={
+
+isWishlisted(item._id)
+
+?
+
+"#ef4444"
+
+:
+
+"transparent"
+
+}
+
+color="#ef4444"
+
+/>
+
+</button>
               </div>
 
               <div className="shop-product-content">

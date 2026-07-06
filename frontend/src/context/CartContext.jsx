@@ -41,12 +41,14 @@ export const CartProvider = ({ children }) => {
         if (!userId) return;
 
         try {
-
-            const res = await axios.get(
-
-                `http://localhost:5000/api/cart/${userId}`
-
-            );
+const res = await axios.get(
+  `http://localhost:5000/api/cart/${userId}`,
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  }
+);
 
             setCart(res.data);
 
@@ -97,20 +99,18 @@ export const CartProvider = ({ children }) => {
         try {
 
             await axios.post(
-
-                "http://localhost:5000/api/cart/add",
-
-                {
-
-                    userId,
-
-                    productId,
-
-                    quantity
-
-                }
-
-            );
+"http://localhost:5000/api/cart/add",
+{
+  userId,
+  productId,
+  quantity
+},
+{
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`
+  }
+}
+);
 
             toast.success("Added to Cart");
 
@@ -136,16 +136,16 @@ export const CartProvider = ({ children }) => {
 
     const increase = async (productId) => {
 await axios.patch(
-
-"http://localhost:5000/api/cart/increase",
-
-{
-
-userId,
-
-productId
-
-}
+  "http://localhost:5000/api/cart/increase",
+  {
+    userId,
+    productId
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  }
 
 );
 
@@ -160,20 +160,18 @@ toast.success("Quantity Updated");
     // ==========================
 
     const decrease = async (productId) => {
-
-        await axios.patch(
-
-            "http://localhost:5000/api/cart/decrease",
-
-            {
-
-                userId,
-
-                productId
-
-            }
-
-        );
+await axios.patch(
+  "http://localhost:5000/api/cart/decrease",
+  {
+    userId,
+    productId
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  }
+);
 
         await loadCart();
         toast.success("Quantity Updated");
@@ -185,23 +183,18 @@ toast.success("Quantity Updated");
 
     const removeItem = async (productId) => {
 
-        await axios.delete(
-
-            "http://localhost:5000/api/cart/remove",
-
-            {
-
-                data: {
-
-                    userId,
-
-                    productId
-
-                }
-
-            }
-
-        );
+       await axios.delete(
+    "http://localhost:5000/api/cart/remove",
+    {
+        headers:{
+            Authorization:`Bearer ${localStorage.getItem("token")}`
+        },
+        data:{
+            userId,
+            productId
+        }
+    }
+);
 
         await loadCart();
         toast.success("Removed from Cart");
@@ -213,21 +206,17 @@ toast.success("Quantity Updated");
 
     const clearCart = async () => {
 
-        await axios.delete(
-
-            "http://localhost:5000/api/cart/clear",
-
-            {
-
-                data: {
-
-                    userId
-
-                }
-
-            }
-
-        );
+       await axios.delete(
+    "http://localhost:5000/api/cart/clear",
+    {
+        headers:{
+            Authorization:`Bearer ${localStorage.getItem("token")}`
+        },
+        data:{
+            userId
+        }
+    }
+);
 
         await loadCart();
 

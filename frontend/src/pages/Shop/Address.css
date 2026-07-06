@@ -1131,3 +1131,63 @@ color:#e53935;
 background:#ffd8d8;
 
 }
+.ngAddressFullPage{
+
+position:relative;
+
+top:unset;
+
+right:unset;
+
+width:100%;
+
+height:calc(100vh - 82px);
+
+box-shadow:none;
+
+animation:none;
+
+border-radius:0;
+
+}
+
+.ngAddressFullPage .ngAddressHeader{
+
+position:sticky;
+
+top:0;
+
+z-index:10;
+
+}
+
+.ngAddressFullPage .ngAddressScrollArea{
+
+padding:28px;
+
+}
+.ngAddressBackBtn{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    height:42px;
+    padding:0 16px;
+
+    border:none;
+    border-radius:10px;
+
+    background:#f5f5f5;
+    color:#222;
+
+    cursor:pointer;
+
+    font-size:15px;
+    font-weight:600;
+
+    transition:.25s;
+}
+
+.ngAddressBackBtn:hover{
+    background:#ececec;
+}

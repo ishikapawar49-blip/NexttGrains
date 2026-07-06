@@ -1,82 +1,90 @@
 import jwt from "jsonwebtoken";
-
 import User from "../models/User.js";
 
-const authMiddleware = async (
+const authMiddleware = async (req, res, next) => {
 
-req,
+    try {
 
-res,
+        let token;
 
-next
+        if (
+            req.headers.authorization &&
+            req.headers.authorization.startsWith("Bearer")
+        ) {
 
-)=>{
+            token = req.headers.authorization.split(" ")[1];
 
-try{
+            const decoded = jwt.verify(
+                token,
+                process.env.JWT_SECRET
+            );
 
-let token;
+            const user = await User.findById(decoded.id).select("-password");
 
-if(
+            if (!user) {
 
-req.headers.authorization &&
+                return res.status(404).json({
 
-req.headers.authorization.startsWith("Bearer")
+                    success: false,
 
-){
+                    message: "User not found.",
 
-token=
+                });
 
-req.headers.authorization.split(" ")[1];
+            }
 
-const decoded=
+            if (user.isBlocked) {
 
-jwt.verify(
+                return res.status(403).json({
 
-token,
+                    success: false,
 
-process.env.JWT_SECRET
+                    message: "Your account has been blocked.",
 
-);
+                });
 
-req.user=
+            }
 
-await User.findById(
+            req.user = {
 
-decoded.id
+                id: user._id,
 
-).select("-password");
+                role: user.role,
 
-next();
+                name: user.name,
 
-}
+            };
 
-else{
+            next();
 
-return res.status(401).json({
+        }
 
-success:false,
+        else {
 
-message:"Not Authorized"
+            return res.status(401).json({
 
-});
+                success: false,
 
-}
+                message: "Authorization token missing.",
 
-}
+            });
 
-catch(err){
+        }
 
-return res.status(401).json({
+    }
 
-success:false,
+    catch (error) {
 
-message:"Invalid Token"
+        return res.status(401).json({
 
-});
+            success: false,
 
-}
+            message: "Invalid or expired token.",
+
+        });
+
+    }
 
 };
-
 
 export default authMiddleware;

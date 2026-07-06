@@ -10,18 +10,21 @@ required:true,
 trim:true
 },
 
-email:{
-type:String,
-required:true,
-unique:true,
-trim:true,
-lowercase:true
+email: {
+  type: String,
+  required: true,
+  unique: true,
+  trim: true,
+  lowercase: true,
+  index: true,
 },
 
 phone:{
 type:String,
 required:true,
-unique:true
+unique:true,
+trim: true,
+match: /^[6-9]\d{9}$/,
 },
 
 password:{
@@ -29,70 +32,63 @@ type:String,
 required:true
 },
 
-role:{
+  role: {
+      type: String,
+      enum: ["customer", "vendor", "admin"],
+      default: "customer",
+    },
+ profileImage: {
+      type: String,
+      default: "",
+    },
+      gender: {
+      type: String,
+      enum: ["Male", "Female", "Other", ""],
+      default: "",
+    },
 
-type:String,
+ dateOfBirth: {
+      type: Date,
+      default: null,
+    },
 
-enum:[
+    businessName: {
+      type: String,
+      default: "",
+      trim: true,
+    },
 
-"customer",
+     gstNumber: {
+      type: String,
+      default: "",
+      trim: true,
+    },
 
-"vendor",
+address: {
+      type: String,
+      default: "",
+      trim: true,
+    },
 
-"admin"
 
-],
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
 
-default:"customer"
+    isBlocked: {
+      type: Boolean,
+      default: false,
+    },
 
-},
-
-businessName:{
-
-type:String,
-
-default:""
-
-},
-
-gstNumber:{
-
-type:String,
-
-default:""
-
-},
-
-address:{
-
-type:String,
-
-default:""
-
-},
-
-isVerified:{
-
-type:Boolean,
-
-default:false
-
-}
-
-},
-
-{
-
-timestamps:true
-
-}
-
+ lastLogin: {
+      type: Date,
+      default: null,
+    },
+  },
+  {
+    timestamps: true,
+  }
 );
 
-export default mongoose.model(
-
-"User",
-
-userSchema
-
-);
+export default mongoose.model("User", userSchema);

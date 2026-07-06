@@ -99,9 +99,12 @@ default:true
 
 deliveryTime:{
 type:String,
-default:"24 hrs"
+default: "5-7 Business Days",
 },
-
+averageRating:{
+type:Number,
+default:4.5
+},
 origin:{
 type:String,
 default:"India"

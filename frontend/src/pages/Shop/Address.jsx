@@ -33,12 +33,17 @@ import {
   IoAddCircleOutline,
   IoChevronForward,
   IoCreateOutline,
-  IoTrashOutline
+  IoTrashOutline,
+  IoArrowBack,
 } from "react-icons/io5";
 import { MdLocationOn } from "react-icons/md";
 
-function Address({ open, onClose,}) {
-const [ngAddressShowForm, setNgAddressShowForm] = useState(false);
+function Address({
+  open = true,
+  onClose = () => {},
+  fullPage = false,
+}) {
+    const [ngAddressShowForm, setNgAddressShowForm] = useState(false);
 const navigate=useNavigate();
 const [editingAddress,setEditingAddress]=useState(null);
 const [mapCenter, setMapCenter] = useState({
@@ -591,23 +596,32 @@ useEffect(() => {
     }
 
 }, [open]);
-    if (!open) return null;
-
+if (!fullPage && !open) return null;
     return (
 
         <>
 
             {/* Overlay */}
-
-            <div
-                className="ngAddressOverlay"
-                onClick={onClose}
-            />
+{
+!fullPage && (
+<div
+className="ngAddressOverlay"
+onClick={onClose}
+/>
+)
+}
 
             {/* Drawer */}
 
-            <aside className="ngAddressDrawer">
-
+<aside
+className={
+fullPage
+?
+"ngAddressDrawer ngAddressFullPage"
+:
+"ngAddressDrawer"
+}
+>
                 {/* Header */}
 
                 <div className="ngAddressHeader">
@@ -618,14 +632,24 @@ useEffect(() => {
 
                     </h2>
 
-                    <button
-                        className="ngAddressCloseBtn"
-                        onClick={onClose}
-                    >
-
-                        <IoClose />
-
-                    </button>
+               {
+  fullPage ? (
+    <button
+      className="ngAddressBackBtn"
+      onClick={() => navigate(-1)}
+    >
+      <IoArrowBack />
+      Back
+    </button>
+  ) : (
+    <button
+      className="ngAddressCloseBtn"
+      onClick={onClose}
+    >
+      <IoClose />
+    </button>
+  )
+}
 
                 </div>
 
@@ -1212,17 +1236,23 @@ onClick={()=>setNgAddressShowForm(true)}
 
                 {/* Footer */}
 
-                <div className="ngAddressFooter">
+  {
+!fullPage && (
+
+<div className="ngAddressFooter">
 
 <button
-    className="ngAddressContinueBtn"
-    disabled={!selectedAddress}
-    onClick={handleContinue}
+className="ngAddressContinueBtn"
+disabled={!selectedAddress}
+onClick={handleContinue}
 >
-    Proceed to Pay
+Proceed to Pay
 </button>
 
-                </div>
+</div>
+
+)
+}
 
             </aside>
 

@@ -58,27 +58,50 @@ export const createPaymentOrder = async (req, res) => {
 
         // Save Order
 
-        const order = await Order.create({
+const order = await Order.create({
 
-            user,
+    orderNumber:
+        "NG" +
+        Date.now(),
 
-            address: addressId,
+    user,
 
-            items,
+    address: addressId,
 
-            subtotal,
+    items: items.map(item => ({
 
-            deliveryCharge,
+        product: item.product,
 
-            platformFee,
+        vendor: item.vendor,
 
-            handlingCharge,
+        productName: item.name,
 
-            discount,
+        productDescription: "",
 
-            grandTotal,
+        productImage: item.image,
 
-        });
+        price: item.price,
+
+        quantity: item.quantity,
+
+        subtotal: item.total,
+
+    })),
+
+    totalItems: items.reduce(
+        (sum, item) => sum + item.quantity,
+        0
+    ),
+
+    subtotal,
+
+    deliveryCharge,
+
+    discount,
+
+    grandTotal,
+
+});
 
 
 

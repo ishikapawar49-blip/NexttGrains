@@ -273,32 +273,40 @@ message:"Product not found"
 
 }
 
+// const products = await Product.find({
+
+// category:current.category,
+
+// _id:{
+
+// $ne:req.params.id
+
+// },
+
+// status:"Active",
+
+// stock:{
+
+// $gt:0
+
+// }
+
+// })
+
+// .limit(4)
+
+// .sort({
+
+// createdAt:-1
+
+// });
 const products = await Product.find({
+    status: "Active",
+    stock: { $gt: 0 }
+}).sort({ createdAt: -1 });
 
-category:current.category,
-
-_id:{
-
-$ne:req.params.id
-
-},
-
-status:"Active",
-
-stock:{
-
-$gt:0
-
-}
-
-})
-
-.limit(4)
-
-.sort({
-
-createdAt:-1
-
+products.forEach(product => {
+    product.reviews = product.reviewList.length;
 });
 
 res.json({

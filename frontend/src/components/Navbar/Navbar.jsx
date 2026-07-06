@@ -1,4 +1,5 @@
 import "./Navbar.css";
+import { useWishlist } from "../../context/WishlistContext";
 import { useCart } from "../../context/CartContext";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -12,7 +13,21 @@ import {
 import { PiLeafLight } from "react-icons/pi";
 
 function Navbar() {
-const { cartCount, openCart, loadCart } = useCart();
+const {
+
+cartCount,
+
+openCart,
+
+loadCart
+
+}=useCart();
+
+const {
+
+wishlistCount
+
+}=useWishlist();
 
 useEffect(()=>{
    loadCart(); 
@@ -69,13 +84,23 @@ useEffect(()=>{
 
         {/* Actions */}
         <div className="nav-actions">
-          <button className="icon-btn">
-            <User />
-          </button>
+          <Link
+  to="/account"
+  className="icon-btn"
+>
+  <User />
+</Link>
 
-          <button className="icon-btn">
-            <Heart />
-          </button>
+<Link
+
+to="/wishlist"
+
+className="icon-btn"
+
+>
+
+<Heart/>
+</Link>
 
 <button
 className="cart-btn"

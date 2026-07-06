@@ -31,8 +31,19 @@ success:false,
 message:"Product not found"
 
 });
+}
+if (product.status !== "Active" || product.stock <= 0) {
+
+    return res.status(400).json({
+
+        success: false,
+
+        message: "Product is out of stock."
+
+    });
 
 }
+
 
 let cart=
 
@@ -64,21 +75,45 @@ i=>i.product.toString()===productId
 
 );
 
-if(item){
+if (item) {
 
-item.quantity+=quantity || 1;
+    const newQuantity = item.quantity + (quantity || 1);
 
-}
+    if (newQuantity > product.stock) {
 
-else{
+        return res.status(400).json({
 
-cart.items.push({
+            success: false,
 
-product:productId,
+            message: "Insufficient stock."
 
-quantity:quantity || 1
+        });
 
-});
+    }
+
+    item.quantity = newQuantity;
+
+} else {
+
+    if ((quantity || 1) > product.stock) {
+
+        return res.status(400).json({
+
+            success: false,
+
+            message: "Insufficient stock."
+
+        });
+
+    }
+
+    cart.items.push({
+
+        product: productId,
+
+        quantity: quantity || 1,
+
+    });
 
 }
 
@@ -150,31 +185,28 @@ cart:null
 let subtotal=0;
 
 let mrpTotal=0;
+cart.items.forEach((item) => {
 
-cart.items.forEach(item=>{
+    if (!item.product) return;
 
-subtotal+=
+    subtotal += item.product.price * item.quantity;
 
-item.product.price*
-
-item.quantity;
-
-mrpTotal+=
-
-item.product.mrp*
-
-item.quantity;
+    mrpTotal += item.product.mrp * item.quantity;
 
 });
 
 const savings=
 
 mrpTotal-subtotal;
+const FREE_DELIVERY_LIMIT = 499;
 
-const delivery=
+const DELIVERY_CHARGE = 40;
 
-subtotal>=499 ? 0 : 40;
+const delivery = subtotal >= FREE_DELIVERY_LIMIT
 
+? 0
+
+: DELIVERY_CHARGE;
 const grandTotal=
 
 subtotal+delivery;
@@ -197,24 +229,7 @@ grandTotal
 
 
 });
-const handlingCharge = 10;
-
-const platformFee = 2;
-
-const freeDeliveryLimit = 499;
-
-const payableAmount =
-
-subtotal +
-
-delivery +
-
-handlingCharge +
-
-platformFee;
-
 }
-
 catch(err){
 
 res.status(500).json({
@@ -255,7 +270,17 @@ await Cart.findOne({
 user:userId
 
 });
+if(!cart){
 
+    return res.status(404).json({
+
+        success:false,
+
+        message:"Cart not found."
+
+    });
+
+}
 const item=
 
 cart.items.find(
@@ -263,15 +288,48 @@ cart.items.find(
 i=>i.product.toString()===productId
 
 );
+if(!item){
 
+    return res.status(404).json({
+
+        success:false,
+
+        message:"Item not found."
+
+    });
+
+}
+const product = await Product.findById(productId);
+if(!product){
+
+    return res.status(404).json({
+
+        success:false,
+
+        message:"Product not found."
+
+    });
+
+}
+if(item.quantity >= product.stock){
+
+    return res.status(400).json({
+
+        success:false,
+
+        message:"Maximum stock reached."
+
+    });
+
+}
 item.quantity++;
 
 await cart.save();
 
 res.json({
 
-success:true
-
+success:true,
+message:"Quantity updated."
 });
 
 }
@@ -316,7 +374,17 @@ await Cart.findOne({
 user:userId
 
 });
+if(!cart){
 
+    return res.status(404).json({
+
+        success:false,
+
+        message:"Cart not found."
+
+    });
+
+}
 const item=
 
 cart.items.find(
@@ -324,7 +392,17 @@ cart.items.find(
 i=>i.product.toString()===productId
 
 );
+if(!item){
 
+    return res.status(404).json({
+
+        success:false,
+
+        message:"Item not found."
+
+    });
+
+}
 if(item.quantity>1){
 
 item.quantity--;
@@ -347,8 +425,8 @@ await cart.save();
 
 res.json({
 
-success:true
-
+success:true,
+message:"Quantity updated."
 });
 
 }
@@ -393,21 +471,46 @@ await Cart.findOne({
 user:userId
 
 });
+if(!cart){
 
-cart.items=
+    return res.status(404).json({
 
-cart.items.filter(
+        success:false,
 
-i=>i.product.toString()!==productId
+        message:"Cart not found."
+
+    });
+
+}
+const itemExists = cart.items.some(
+
+    item => item.product.toString() === productId
 
 );
 
+if (!itemExists) {
+
+    return res.status(404).json({
+
+        success: false,
+
+        message: "Product not found in cart."
+
+    });
+
+}
+
+cart.items = cart.items.filter(
+
+    item => item.product.toString() !== productId
+
+);
 await cart.save();
 
 res.json({
 
-success:true
-
+success:true,
+message:"Product removed from cart."
 });
 
 }
@@ -437,26 +540,32 @@ export const clearCart=async(req,res)=>{
 
 try{
 
-await Cart.findOneAndUpdate(
 
-{
+const cart = await Cart.findOne({
 
-user:req.body.userId
+    user:req.body.userId
 
-},
+});
 
-{
+if(!cart){
 
-items:[]
+    return res.status(404).json({
+
+        success:false,
+
+        message:"Cart not found."
+
+    });
 
 }
 
-);
+cart.items=[];
 
+await cart.save();
 res.json({
 
-success:true
-
+success:true,
+message:"Cart cleared successfully."
 });
 
 }

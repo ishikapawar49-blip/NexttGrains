@@ -1,0 +1,668 @@
+.ngOrders_page{
+    width:100%;
+    min-height:100vh;
+    background:#f7f8f3;
+    padding:40px 0 80px;
+}
+
+.ngOrders_container{
+    width:92%;
+    max-width:1350px;
+    margin:auto;
+}
+
+.ngOrders_container h1{
+    font-size:38px;
+    font-weight:700;
+    color:#214d33;
+    margin-bottom:8px;
+}
+
+.ngOrders_container>p{
+    color:#6f7d70;
+    margin-bottom:35px;
+    font-size:16px;
+}
+
+.ngOrders_loading{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    color:#24593b;
+}
+
+.ngOrders_top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:35px;
+}
+
+.ngOrders_search{
+    flex:1;
+    min-width:320px;
+    display:flex;
+    align-items:center;
+    background:#fff;
+    border-radius:15px;
+    padding:14px 18px;
+    box-shadow:0 10px 35px rgba(0,0,0,.06);
+}
+
+.ngOrders_search svg{
+    font-size:22px;
+    color:#4d6b57;
+}
+
+.ngOrders_search input{
+    flex:1;
+    margin-left:12px;
+    border:none;
+    outline:none;
+    background:none;
+    font-size:15px;
+}
+
+.ngOrders_top select{
+    height:52px;
+    border:none;
+    outline:none;
+    border-radius:14px;
+    padding:0 18px;
+    background:#fff;
+    font-size:15px;
+    box-shadow:0 10px 35px rgba(0,0,0,.06);
+    cursor:pointer;
+}
+
+.ngOrders_list{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+}
+.ngOrders_card{
+    background:#fff;
+    border-radius:22px;
+    padding:12px 22px;
+    box-shadow:0 15px 45px rgba(0,0,0,.06);
+    transition:.35s;
+    border:1px solid #eef0e9;
+}
+
+.ngOrders_card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 25px 55px rgba(0,0,0,.10);
+}
+
+.ngOrders_cardTop{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:40px;
+}
+
+.ngOrders_orderInfo{
+    display:flex;
+    gap:22px;
+    align-items:center;
+    flex:1;
+}
+
+.ngOrders_imageBox{
+    width:140px;
+height:140px;
+border-radius:18px;
+    background:#f6f7f2;
+    overflow:hidden;
+    flex-shrink:0;
+}
+
+.ngOrders_imageBox img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.ngOrders_info h3{
+    font-size:18px;
+    color:#22492f;
+    margin-bottom:2px;
+}
+
+.ngOrders_productName{
+    font-size:17px;
+    font-weight:600;
+    color:#555;
+    margin-bottom:10px;
+}
+
+.ngOrders_moreItems{
+    display:inline-block;
+    background:#edf8ef;
+    color:#2f6b44;
+    padding:5px 12px;
+    border-radius:30px;
+    font-size:13px;
+    margin-bottom:12px;
+}
+
+.ngOrders_meta{
+    display:flex;
+    gap:10px;
+    color:#8b8b8b;
+    font-size:14px;
+}
+
+.ngOrders_priceBox{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:12px;
+}
+
+.ngOrders_priceBox h2{
+    font-size:30px;
+    color:#1d4b30;
+}
+
+.ngOrders_priceBox small{
+    color:#8b8b8b;
+}
+.ngOrders_status{
+    padding:8px 18px;
+    border-radius:30px;
+    color:#fff;
+    font-size:13px;
+    font-weight:600;
+}
+
+.Pending{
+    background:#ff9800;
+}
+
+.Confirmed{
+    background:#1f8bff;
+}
+
+.Accepted{
+    background:#4caf50;
+}
+
+.Packed{
+    background:#7b5cff;
+}
+
+.Shipped{
+    background:#0097a7;
+}
+
+.OutForDelivery{
+    background:#ff5722;
+}
+
+.Delivered{
+    background:#2e7d32;
+}
+
+.Cancelled{
+    background:#d32f2f;
+}
+/* ===========================
+   CARD BOTTOM
+=========================== */
+
+.ngOrders_cardBottom{
+    margin-top:28px;
+    padding-top:22px;
+    border-top:1px solid #ecefe8;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.ngOrders_outlineBtn{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+
+    padding:13px 24px;
+
+    border:2px solid #2d6a4f;
+    background:#fff;
+
+    color:#2d6a4f;
+
+    border-radius:14px;
+
+    font-size:15px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.30s;
+}
+
+.ngOrders_outlineBtn:hover{
+
+    background:#2d6a4f;
+    color:#fff;
+
+}
+
+.ngOrders_trackBtn{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    padding:13px 26px;
+
+    background:linear-gradient(135deg,#3d7a57,#23563a);
+
+    color:#fff;
+
+    border:none;
+
+    border-radius:14px;
+
+    font-size:15px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.30s;
+
+    box-shadow:0 12px 25px rgba(43,95,67,.25);
+
+}
+
+.ngOrders_trackBtn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 18px 35px rgba(43,95,67,.35);
+
+}
+
+.ngOrders_trackBtn svg,
+.ngOrders_outlineBtn svg{
+
+    font-size:18px;
+
+}
+/* ===========================
+   EMPTY
+=========================== */
+
+.ngOrders_empty{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:90px 40px;
+
+    text-align:center;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.05);
+
+}
+
+.ngOrders_empty h2{
+
+    font-size:34px;
+
+    color:#214d33;
+
+    margin-bottom:14px;
+
+}
+
+.ngOrders_empty p{
+
+    color:#7a857d;
+
+    font-size:16px;
+
+    max-width:500px;
+
+    margin:auto;
+
+}
+/* ===========================
+   ANIMATION
+=========================== */
+
+.ngOrders_card{
+
+    animation:orderFade .45s ease;
+
+}
+
+@keyframes orderFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(18px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+/* ===========================
+   TABLET
+=========================== */
+
+@media(max-width:992px){
+
+.ngOrders_cardTop{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+}
+
+.ngOrders_priceBox{
+
+    width:100%;
+
+    align-items:flex-start;
+
+}
+
+.ngOrders_cardBottom{
+
+    justify-content:flex-start;
+
+}
+
+.ngOrders_container h1{
+
+    font-size:32px;
+
+}
+
+}
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+.ngOrders_page{
+
+    padding:20px 0 50px;
+
+}
+
+.ngOrders_container{
+
+    width:94%;
+
+}
+
+.ngOrders_container h1{
+
+    font-size:28px;
+
+}
+
+.ngOrders_top{
+
+    flex-direction:column;
+
+    align-items:stretch;
+
+}
+
+.ngOrders_search{
+
+    min-width:100%;
+
+}
+
+.ngOrders_top select{
+
+    width:100%;
+
+}
+
+.ngOrders_orderInfo{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+}
+
+.ngOrders_imageBox{
+
+    width:100px;
+
+    height:100px;
+
+}
+
+.ngOrders_info h3{
+
+    font-size:20px;
+
+}
+
+.ngOrders_productName{
+
+    font-size:15px;
+
+}
+
+.ngOrders_priceBox h2{
+
+    font-size:24px;
+
+}
+
+.ngOrders_card{
+
+    padding:20px;
+
+}
+
+.ngOrders_cardBottom{
+
+    flex-direction:column;
+
+}
+
+.ngOrders_outlineBtn,
+.ngOrders_trackBtn{
+
+    width:100%;
+
+}
+
+}
+@media(max-width:480px){
+
+.ngOrders_meta{
+
+    flex-direction:column;
+
+    gap:5px;
+
+}
+
+.ngOrders_meta span:nth-child(2){
+
+    display:none;
+
+}
+
+.ngOrders_imageBox{
+
+    width:85px;
+
+    height:85px;
+
+}
+
+.ngOrders_container h1{
+
+    font-size:25px;
+
+}
+
+.ngOrders_empty{
+
+    padding:60px 20px;
+
+}
+
+.ngOrders_empty h2{
+
+    font-size:26px;
+
+}
+
+}
+
+.ngOrders_productTitle{
+
+font-size:18px;
+
+font-weight:700;
+
+color:#203f2d;
+
+margin-bottom:4px;
+
+line-height:1.3;
+
+}
+.ngOrders_shortDesc{
+
+font-size:13px;
+
+color:#777;
+
+margin-bottom:8px;
+
+}
+.ngOrders_priceRow{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+margin-bottom:8px;
+
+}
+
+.ngOrders_price{
+
+font-size:17px;
+
+font-weight:700;
+
+color:#1b5e20;
+
+}
+
+.ngOrders_qty{
+
+font-size:13px;
+
+background:#eef7ef;
+
+padding:3px 10px;
+
+border-radius:20px;
+
+color:#2d6a4f;
+
+}
+.ngOrders_meta{
+
+display:flex;
+
+gap:18px;
+
+font-size:13px;
+
+color:#888;
+
+margin-bottom:5px;
+
+flex-wrap:wrap;
+
+}
+.ngOrders_payment{
+
+font-size:13px;
+
+color:#666;
+
+}
+.ngOrders_priceBox{
+
+min-width:150px;
+
+align-items:flex-end;
+
+gap:8px;
+
+}
+.ngOrders_total{
+
+font-size:22px;
+
+font-weight:700;
+
+color:#1f4d34;
+
+}
+
+.ngOrders_totalLabel{
+
+font-size:13px;
+
+color:#888;
+
+}
+.ngOrders_outlineBtn,
+.ngOrders_trackBtn{
+
+height:46px;
+
+padding:0 22px;
+
+font-size:14px;
+
+}
+.ngOrders_cardBottom{
+
+margin-top:18px;
+
+padding-top:16px;
+
+}

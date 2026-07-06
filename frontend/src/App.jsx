@@ -11,6 +11,13 @@ import OffersPage from "./pages/Offers/OfferPage";
 import Cart from "./pages/Shop/Cart";
 import Address from "./pages/Shop/Address";
 
+//Account
+import Account from "./pages/Account/Account";
+import Orders from "./pages/Account/Orders";
+import OrderDetails from "./pages/Account/OrderDetails";
+import Wishlist from "./pages/Account/Wishlist";
+import SavedAddresses from "./pages/Account/SavedAddresses";
+
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Payment from "./pages/Shop/Payment";
@@ -106,6 +113,46 @@ element={<ProductDetails/>}
 <Route
     path="/payment/:status"
     element={<Payment />}
+/>
+
+<Route
+  path="/account"
+  element={
+    <>
+      <Navbar />
+      <Account />
+    </>
+  }
+/>
+<Route
+  path="/orders"
+  element={
+    <>
+      <Navbar />
+      <Orders />
+    </>
+  }
+/>
+
+<Route
+    path="/orders/:orderId"
+    element={<OrderDetails />}
+/>
+<Route
+
+path="/wishlist"
+
+element={
+<>
+<Navbar/>
+<Wishlist/>
+</>
+}
+
+/>
+<Route
+  path="/addresses"
+  element={<SavedAddresses />}
 />
 
       </Routes>

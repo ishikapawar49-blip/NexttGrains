@@ -1,0 +1,78 @@
+.ngWishlist_page{
+padding:20px 36px 80px;
+background:#f7f5ef;
+min-height:100vh;
+}
+
+.ngWishlist_container{
+width:92%;
+max-width:1450px;
+margin:auto;
+}
+
+.ngWishlist_topBar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.ngWishlist_backBtn,
+.ngWishlist_clearBtn{
+display:flex;
+align-items:center;
+gap:8px;
+border:none;
+cursor:pointer;
+padding:12px 22px;
+border-radius:12px;
+font-size:15px;
+font-weight:600;
+transition:.3s;
+}
+
+.ngWishlist_backBtn{
+background:#fff;
+color:#214d36;
+border:1px solid #d8dfd3;
+}
+
+.ngWishlist_backBtn:hover{
+background:#214d36;
+color:#fff;
+}
+
+.ngWishlist_clearBtn{
+background:#d32f2f;
+color:#fff;
+}
+
+.ngWishlist_clearBtn:hover{
+background:#b71c1c;
+}
+
+.ngWishlist_heading{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
+
+.ngWishlist_heading h1{
+margin:0;
+font-size:38px;
+color:#1d4b34;
+font-weight:700;
+}
+
+.ngWishlist_heading p{
+margin-top:8px;
+color:#666;
+font-size:15px;
+}
+
+/* Wishlist Only */
+
+.ngWishlist_page .shop-product-grid{
+    grid-template-columns:repeat(4,1fr);
+}

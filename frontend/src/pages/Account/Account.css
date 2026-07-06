@@ -1,0 +1,1440 @@
+/* ==========================================
+   NEXTTGRAINS ACCOUNT PAGE
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.ngAcc_page{
+
+    min-height:100vh;
+
+    background:#F8F5EC;
+
+    padding:40px;
+
+    overflow-x:hidden;
+
+    font-family:"Poppins",sans-serif;
+
+}
+
+/* ==========================================
+   WRAPPER
+========================================== */
+
+.ngAcc_wrapper{
+
+    max-width:1500px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:320px 1fr;
+
+    gap:35px;
+
+    align-items:start;
+
+}
+
+/* ==========================================
+   SIDEBAR
+========================================== */
+
+.ngAcc_sidebar{
+
+    position:sticky;
+
+    top:30px;
+
+    background:#ffffff;
+
+    border-radius:30px;
+
+    padding:28px;
+
+    box-shadow:
+    0 18px 45px rgba(0,0,0,.06);
+
+}
+
+/* ==========================================
+   PROFILE CARD
+========================================== */
+
+.ngAcc_profileCard{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:35px;
+
+    padding-bottom:28px;
+
+    border-bottom:1px solid #ECECEC;
+
+}
+
+.ngAcc_avatar{
+
+    width:78px;
+
+    height:78px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:4px solid #E6F3DF;
+
+}
+
+.ngAcc_profileCard h2{
+
+    font-size:23px;
+
+    color:#234F1E;
+
+    font-family:"Cormorant Garamond",serif;
+
+    margin-bottom:4px;
+
+}
+
+.ngAcc_profileCard p{
+
+    font-size:14px;
+
+    color:#777;
+
+}
+
+/* ==========================================
+   MENU
+========================================== */
+
+.ngAcc_menu{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.ngAcc_menuItem{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 18px;
+
+    border-radius:18px;
+
+    cursor:pointer;
+
+    transition:.28s;
+
+}
+
+.ngAcc_menuItem:hover{
+
+    background:#F2F8ED;
+
+    transform:translateX(5px);
+
+}
+
+.ngAcc_menuItem > div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+.ngAcc_menuItem svg{
+
+    font-size:22px;
+
+    color:#2F6D39;
+
+}
+
+.ngAcc_menuItem span{
+
+    font-size:15px;
+
+    color:#333;
+
+    font-weight:500;
+
+}
+
+.ngAcc_menuItem strong{
+
+    color:#2F6D39;
+
+    font-size:14px;
+
+}
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+.ngAcc_logoutBtn{
+
+    width:100%;
+
+    margin-top:30px;
+
+    border:none;
+
+    background:#2F6D39;
+
+    color:white;
+
+    height:54px;
+
+    border-radius:16px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:12px;
+
+    cursor:pointer;
+
+    transition:.30s;
+
+}
+
+.ngAcc_logoutBtn:hover{
+
+    background:#25552D;
+
+    transform:translateY(-2px);
+
+}
+/* ==========================================
+   CONTENT
+========================================== */
+
+.ngAcc_content{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:35px;
+
+}
+
+/* ==========================================
+   HERO
+========================================== */
+
+.ngAcc_hero{
+
+    background:linear-gradient(
+        135deg,
+        #2F6D39,
+        #4C8D4F
+    );
+
+    color:white;
+
+    border-radius:30px;
+
+    padding:45px;
+
+    box-shadow:
+    0 20px 45px rgba(47,109,57,.22);
+
+}
+
+.ngAcc_hero h1{
+
+    font-size:44px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    margin-bottom:10px;
+
+}
+
+.ngAcc_hero p{
+
+    opacity:.92;
+
+    font-size:16px;
+
+    line-height:1.8;
+
+}
+
+/* ==========================================
+   STATS
+========================================== */
+
+.ngAcc_stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:24px;
+
+}
+
+.ngAcc_statCard{
+
+    background:white;
+
+    border-radius:26px;
+
+    padding:28px;
+
+    box-shadow:
+    0 14px 35px rgba(0,0,0,.05);
+
+    transition:.3s;
+
+}
+
+.ngAcc_statCard:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.ngAcc_statCard span{
+
+    display:block;
+
+    color:#888;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+
+}
+
+.ngAcc_statCard h2{
+
+    color:#234F1E;
+
+    font-size:34px;
+
+    margin-bottom:8px;
+
+    font-family:"Cormorant Garamond",serif;
+
+}
+
+.ngAcc_statCard p{
+
+    color:#666;
+
+    font-size:14px;
+
+}
+
+/* ==========================================
+   COMMON SECTION
+========================================== */
+
+.ngAcc_sectionHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:22px;
+
+}
+
+.ngAcc_sectionHeader h2{
+
+    font-size:30px;
+
+    color:#234F1E;
+
+    font-family:"Cormorant Garamond",serif;
+
+}
+
+.ngAcc_viewAllBtn{
+
+    border:none;
+
+    background:transparent;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    cursor:pointer;
+
+    color:#2F6D39;
+
+    font-weight:600;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.ngAcc_viewAllBtn:hover{
+
+    transform:translateX(5px);
+
+}
+
+/* ==========================================
+   RECENT ORDERS
+========================================== */
+
+.ngAcc_recentOrdersSection{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.ngAcc_recentOrders{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.ngAcc_recentOrderCard{
+
+    background:#ffffff;
+
+    border-radius:24px;
+
+    padding:22px 24px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.05);
+
+    transition:.3s;
+
+}
+
+.ngAcc_recentOrderCard:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.08);
+
+}
+
+.ngAcc_recentOrderLeft{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.ngAcc_recentOrderIcon{
+
+    width:68px;
+
+    height:68px;
+
+    border-radius:18px;
+
+    background:#EDF7E7;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.ngAcc_recentOrderIcon svg{
+
+    font-size:32px;
+
+    color:#2F6D39;
+
+}
+
+.ngAcc_recentOrderLeft h3{
+
+    color:#234F1E;
+
+    font-size:20px;
+
+    margin-bottom:8px;
+
+    font-family:"Cormorant Garamond",serif;
+
+}
+
+.ngAcc_recentOrderLeft p{
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+.ngAcc_recentOrderRight{
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+.ngAcc_status{
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.ngAcc_statusDelivered{
+
+    background:#EAF7EA;
+
+    color:#228B4E;
+
+}
+
+.ngAcc_statusPacked{
+
+    background:#FFF4DD;
+
+    color:#C68700;
+
+}
+
+.ngAcc_statusDelivery{
+
+    background:#E8F2FF;
+
+    color:#1F6ED4;
+
+}
+/* ==========================================
+   RECOMMENDED
+========================================== */
+
+.ngAcc_recommendedSection{
+
+    margin-top:10px;
+
+}
+
+.ngAcc_recommendedGrid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:24px;
+
+}
+
+.ngAcc_recommendedCard{
+
+    background:white;
+
+    border-radius:26px;
+
+    overflow:hidden;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.05);
+
+    transition:.35s;
+
+}
+
+.ngAcc_recommendedCard:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.ngAcc_recommendedCard img{
+
+    width:100%;
+
+    height:230px;
+
+    object-fit:cover;
+
+}
+
+.ngAcc_recommendedContent{
+
+    padding:22px;
+
+}
+
+.ngAcc_organicTag{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    background:#EDF8EC;
+
+    color:#2F6D39;
+
+    padding:7px 14px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    margin-bottom:16px;
+
+}
+
+.ngAcc_organicTag svg{
+
+    font-size:14px;
+
+}
+
+.ngAcc_recommendedContent h3{
+
+    font-size:20px;
+
+    color:#234F1E;
+
+    margin-bottom:18px;
+
+    line-height:1.4;
+
+    font-family:"Cormorant Garamond",serif;
+
+    min-height:56px;
+
+}
+
+.ngAcc_recommendedBottom{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.ngAcc_recommendedBottom h2{
+
+    color:#234F1E;
+
+    font-size:28px;
+
+    font-family:"Cormorant Garamond",serif;
+
+}
+
+.ngAcc_recommendedBottom button{
+
+    border:none;
+
+    background:#2F6D39;
+
+    color:white;
+
+    width:88px;
+
+    height:42px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.ngAcc_recommendedBottom button:hover{
+
+    background:#234F1E;
+
+}
+
+/* ==========================================
+   QUICK ACTIONS
+========================================== */
+
+.ngAcc_quickActionSection{
+
+    margin-top:8px;
+
+}
+
+.ngAcc_quickActionGrid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:24px;
+
+}
+
+.ngAcc_quickCard{
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:28px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.05);
+
+}
+
+.ngAcc_quickCard:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.08);
+
+}
+
+.ngAcc_quickCard svg{
+
+    font-size:34px;
+
+    color:#2F6D39;
+
+    margin-bottom:18px;
+
+}
+
+.ngAcc_quickCard h4{
+
+    color:#234F1E;
+
+    font-size:22px;
+
+    margin-bottom:10px;
+
+    font-family:"Cormorant Garamond",serif;
+
+}
+
+.ngAcc_quickCard p{
+
+    color:#777;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+}
+/* ==========================================
+   MEMBERSHIP
+========================================== */
+
+.ngAcc_membershipSection{
+
+    margin-top:10px;
+
+}
+
+.ngAcc_membershipCard{
+
+    background:linear-gradient(
+        135deg,
+        #2F6D39,
+        #4F8D53
+    );
+
+    border-radius:30px;
+
+    padding:45px;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    overflow:hidden;
+
+    position:relative;
+
+    box-shadow:0 22px 45px rgba(47,109,57,.28);
+
+}
+
+.ngAcc_membershipCard::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:320px;
+
+    height:320px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.06);
+
+    right:-80px;
+
+    top:-80px;
+
+}
+
+.ngAcc_membershipLeft{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:620px;
+
+}
+
+.ngAcc_membershipBadge{
+
+    display:inline-block;
+
+    background:#DDBB52;
+
+    color:#234F1E;
+
+    padding:8px 18px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    margin-bottom:18px;
+
+}
+
+.ngAcc_membershipLeft h2{
+
+    font-size:42px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    margin-bottom:18px;
+
+}
+
+.ngAcc_membershipLeft p{
+
+    line-height:1.9;
+
+    opacity:.95;
+
+    margin-bottom:30px;
+
+}
+
+.ngAcc_membershipBtn{
+
+    border:none;
+
+    background:white;
+
+    color:#2F6D39;
+
+    padding:15px 34px;
+
+    border-radius:14px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.ngAcc_membershipBtn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.ngAcc_membershipRight{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+.ngAcc_membershipCircle{
+
+    width:170px;
+
+    height:170px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.14);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    backdrop-filter:blur(12px);
+
+}
+
+.ngAcc_membershipCircle svg{
+
+    font-size:75px;
+
+    color:#F4E39A;
+
+}
+
+/* ==========================================
+   INSIGHTS
+========================================== */
+
+.ngAcc_insightsSection{
+
+    margin-top:5px;
+
+}
+
+.ngAcc_insightGrid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:24px;
+
+}
+
+.ngAcc_insightCard{
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:30px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.05);
+
+    transition:.35s;
+
+}
+
+.ngAcc_insightCard:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.ngAcc_insightCard svg{
+
+    font-size:36px;
+
+    color:#2F6D39;
+
+    margin-bottom:20px;
+
+}
+
+.ngAcc_insightCard h3{
+
+    color:#234F1E;
+
+    font-size:22px;
+
+    margin-bottom:16px;
+
+    font-family:"Cormorant Garamond",serif;
+
+}
+
+.ngAcc_insightCard strong{
+
+    display:block;
+
+    font-size:34px;
+
+    color:#2F6D39;
+
+    margin-bottom:10px;
+
+}
+
+.ngAcc_insightCard p{
+
+    color:#777;
+
+    line-height:1.7;
+
+}
+
+/* ==========================================
+   CTA
+========================================== */
+
+.ngAcc_accountBottom{
+
+    margin-top:10px;
+
+    margin-bottom:20px;
+
+}
+
+.ngAcc_accountBottomCard{
+
+    background:#ffffff;
+
+    border-radius:28px;
+
+    padding:40px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 18px 40px rgba(0,0,0,.05);
+
+}
+
+.ngAcc_accountBottomCard h2{
+
+    font-size:40px;
+
+    color:#234F1E;
+
+    margin-bottom:14px;
+
+    font-family:"Cormorant Garamond",serif;
+
+}
+
+.ngAcc_accountBottomCard p{
+
+    max-width:650px;
+
+    color:#666;
+
+    line-height:1.9;
+
+}
+
+.ngAcc_shopNowBtn{
+
+    border:none;
+
+    background:#2F6D39;
+
+    color:white;
+
+    height:58px;
+
+    padding:0 34px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.ngAcc_shopNowBtn:hover{
+
+    background:#234F1E;
+
+    transform:translateY(-3px);
+
+}
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#C9C9C9;
+
+    border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#A9A9A9;
+
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+.ngAcc_sidebar,
+.ngAcc_hero,
+.ngAcc_statCard,
+.ngAcc_recentOrderCard,
+.ngAcc_recommendedCard,
+.ngAcc_quickCard,
+.ngAcc_membershipCard,
+.ngAcc_insightCard,
+.ngAcc_accountBottomCard{
+
+    animation:ngAcc_fadeUp .6s ease both;
+
+}
+
+@keyframes ngAcc_fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(28px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media(max-width:1200px){
+
+.ngAcc_wrapper{
+
+    grid-template-columns:1fr;
+
+}
+
+.ngAcc_sidebar{
+
+    position:relative;
+
+    top:0;
+
+}
+
+.ngAcc_recommendedGrid{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.ngAcc_quickActionGrid{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.ngAcc_insightGrid{
+
+    grid-template-columns:1fr;
+
+}
+
+.ngAcc_stats{
+
+    grid-template-columns:repeat(3,1fr);
+
+}
+
+.ngAcc_membershipCard{
+
+    flex-direction:column;
+
+    text-align:center;
+
+    gap:40px;
+
+}
+
+.ngAcc_accountBottomCard{
+
+    flex-direction:column;
+
+    text-align:center;
+
+    gap:30px;
+
+}
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+.ngAcc_page{
+
+    padding:20px;
+
+}
+
+.ngAcc_hero{
+
+    padding:30px;
+
+}
+
+.ngAcc_hero h1{
+
+    font-size:34px;
+
+}
+
+.ngAcc_stats{
+
+    grid-template-columns:1fr;
+
+}
+
+.ngAcc_recommendedGrid{
+
+    grid-template-columns:1fr;
+
+}
+
+.ngAcc_quickActionGrid{
+
+    grid-template-columns:1fr;
+
+}
+
+.ngAcc_membershipLeft h2{
+
+    font-size:30px;
+
+}
+
+.ngAcc_accountBottomCard h2{
+
+    font-size:30px;
+
+}
+
+.ngAcc_sectionHeader{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:15px;
+
+}
+
+.ngAcc_recentOrderCard{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:20px;
+
+}
+
+.ngAcc_recentOrderRight{
+
+    width:100%;
+
+}
+
+.ngAcc_status{
+
+    width:100%;
+
+    text-align:center;
+
+}
+
+}
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media(max-width:480px){
+
+.ngAcc_page{
+
+    padding:14px;
+
+}
+
+.ngAcc_sidebar{
+
+    padding:20px;
+
+    border-radius:24px;
+
+}
+
+.ngAcc_hero{
+
+    border-radius:24px;
+
+}
+
+.ngAcc_hero h1{
+
+    font-size:30px;
+
+}
+
+.ngAcc_profileCard{
+
+    flex-direction:column;
+
+    text-align:center;
+
+}
+
+.ngAcc_menuItem{
+
+    padding:15px;
+
+}
+
+.ngAcc_statCard{
+
+    padding:22px;
+
+}
+
+.ngAcc_recommendedCard img{
+
+    height:190px;
+
+}
+
+.ngAcc_membershipCard{
+
+    padding:28px;
+
+}
+
+.ngAcc_accountBottomCard{
+
+    padding:28px;
+
+}
+
+.ngAcc_shopNowBtn{
+
+    width:100%;
+
+    justify-content:center;
+
+}
+
+.ngAcc_membershipBtn{
+
+    width:100%;
+
+}
+
+}
