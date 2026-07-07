@@ -1,24 +1,21 @@
 import "./App.css";
-
+import ProductManagement from "./pages/Admin/ProductManagement";
 import {
 BrowserRouter,
 Routes,
-Route
+Route,
+ Navigate 
 } from "react-router-dom";
 
 /* ================= ADMIN ================= */
-
 import AdminSidebar from "./components/Admin/AdminSidebar";
 import AdminNavbar from "./components/Admin/AdminNavbar";
 import Customers from "./pages/Admin/Customer";
 
 /* ================= VENDOR ================= */
-
 import VendorSidebar from "./components/Vendor/VendorSidebar";
-
 import VendorLogin from "./components/Vendor/VendorLogin";
 import VendorSignup from "./components/Vendor/VendorSignup";
-
 import VendorDashboard from "./pages/Vendor/VendorDashboard";
 import Products from "./pages/Vendor/Products";
 import AddProducts from "./pages/Vendor/AddProducts";
@@ -31,36 +28,41 @@ return(
 
 <Routes>
 
+
 {/* ================= ADMIN ================= */}
-
 <Route
-
 path="/admin"
-
-element={
-
-<div className="ngAdminLayout">
-
-<AdminSidebar/>
-
-<div className="ngAdminRight">
-
-<AdminNavbar/>
-
-<div className="ngAdminMainContent">
-
-<Customers/>
-
-</div>
-
-</div>
-
-</div>
-
-}
-
+element={<Navigate to="/admin/customers" replace />}
+/>
+<Route
+  path="/admin/customers"
+  element={
+    <div className="ngAdminLayout">
+      <AdminSidebar />
+      <div className="ngAdminRight">
+        <AdminNavbar />
+        <div className="ngAdminMainContent">
+          <Customers />
+        </div>
+      </div>
+    </div>
+  }
 />
 
+<Route
+  path="/admin/products"
+  element={
+    <div className="ngAdminLayout">
+      <AdminSidebar />
+      <div className="ngAdminRight">
+        <AdminNavbar />
+        <div className="ngAdminMainContent">
+          <ProductManagement />
+        </div>
+      </div>
+    </div>
+  }
+/>
 
 {/* ================= VENDOR AUTH ================= */}
 

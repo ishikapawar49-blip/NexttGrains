@@ -10,6 +10,27 @@ ref:"User",
 required:true
 },
 
+productId: {
+    type: String,
+    unique: true,
+    required: true
+},
+
+sku: {
+    type: String,
+    unique: true
+},
+
+vendorName: {
+    type: String,
+    default: ""
+},
+
+brand: {
+    type: String,
+    default: ""
+},
+
 name:{
 type:String,
 required:true,
@@ -55,10 +76,19 @@ price:{
 type:Number,
 required:true
 },
-
 mrp:{
 type:Number,
 required:true
+},
+
+discount: {
+    type: Number,
+    default: 0
+},
+
+tax: {
+    type: Number,
+    default: 0
 },
 
 rating:{
@@ -118,6 +148,20 @@ default:true
 sold:{
 type:Number,
 default:0
+},
+minStock: {
+    type: Number,
+    default: 20
+},
+
+featured: {
+    type: Boolean,
+    default: false
+},
+
+published: {
+    type: Boolean,
+    default: true
 },
 
 nutrition:[

@@ -1,11 +1,13 @@
-if (req.user.role !== "admin") {
+const adminMiddleware = (req, res, next) => {
 
-    return res.status(403).json({
+    if (req.user.role !== "admin") {
+        return res.status(403).json({
+            success: false,
+            message: "Admin access only"
+        });
+    }
 
-        success: false,
+    next();
+};
 
-        message: "Admin access only.",
-
-    });
-
-}
+export default adminMiddleware;

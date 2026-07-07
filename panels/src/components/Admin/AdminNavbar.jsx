@@ -4,7 +4,7 @@ import "./AdminNavbar.css";
 import {
     Search,
     Moon,
-    Bell
+    Bell,
 } from "lucide-react";
 
 const AdminNavbar = () => {

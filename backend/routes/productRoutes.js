@@ -12,7 +12,14 @@ addReview,
 updateRating,
 updateProduct,
 deleteProduct,
-changeStatus
+changeStatus,
+getAdminProducts,
+getProductStats,
+filterProducts,
+exportProductsExcel,
+exportProductsPDF,
+getCategories,
+getVendors,
 }
 from "../controllers/productController.js";
 
@@ -30,8 +37,6 @@ router.get("/recommended/:id",getRecommendedProducts);
 router.get("/category/:category",getCategoryProducts);
 router.post("/review/:id",addReview);
 router.patch("/rating/:id",updateRating);
-router.get("/:id",getSingleProduct);
-
 
 router.put(
     "/update/:id",
@@ -51,4 +56,12 @@ router.patch(
     authMiddleware,
     changeStatus
 );
+router.get("/admin/all", getAdminProducts);
+router.get("/admin/stats", getProductStats);
+router.get("/admin/filter", filterProducts);
+router.get("/admin/categories",getCategories);
+router.get("/admin/vendors",getVendors);
+router.get("/admin/export/excel", exportProductsExcel);
+router.get("/admin/export/pdf", exportProductsPDF);
+router.get("/:id",getSingleProduct);
 export default router;

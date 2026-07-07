@@ -1,6 +1,7 @@
 import React from "react";
 import "./Customer.css";
-
+import{ getCustomers, toggleBlockCustomer, deleteCustomer, exportExcel, exportPDF} from "../../services/customerApi";
+import { useEffect, useState } from "react";
 import {
   FiDownload,
   FiPlus,
@@ -16,38 +17,246 @@ import { MdWorkspacePremium } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 
 function Customers() {
+const [customers,setCustomers]=useState([]);
+const [stats,setStats]=useState([]);
+const [showExport,setShowExport]=useState(false);
+const [search,setSearch]=useState("");
+const [segmentFilter, setSegmentFilter] = useState("All");
+const [cityFilter, setCityFilter] = useState("All");
+const [joinedFilter, setJoinedFilter] = useState("Newest");
+const [spentFilter, setSpentFilter] = useState("None");
 
-const stats=[
+const loadCustomers=async()=>{
+
+const res=
+
+await getCustomers();
+
+setCustomers(
+
+res.data.customers
+
+);
+
+const data=
+
+res.data.customers;
+setStats([
 
 {
+
 title:"TOTAL CUSTOMERS",
-value:"12,901",
-change:"+4.2%",
+
+value:data.length,
+
 icon:<FiUsers/>
+
 },
 
 {
+
 title:"NEW THIS WEEK",
-value:"342",
-change:"+8.1%",
-icon:<FiUserPlus/>
-},
 
-{
-title:"VIP SEGMENT",
-value:"218",
-change:"+12",
-icon:<MdWorkspacePremium/>
-},
+value:data.filter(
 
-{
-title:"ACTIVE CITIES",
-value:"84",
-change:"+3",
-icon:<HiOutlineLocationMarker/>
+x=>{
+
+const diff=
+
+(Date.now()
+
+-new Date(x.joined))
+
+/
+
+86400000;
+
+return diff<=7;
+
 }
 
+).length,
+
+icon:<FiUserPlus/>
+
+},
+
+{
+
+title:"VIP SEGMENT",
+
+value:data.filter(
+
+x=>x.segment==="VIP"
+
+).length,
+
+icon:<MdWorkspacePremium/>
+
+},
+
+{
+
+title:"ACTIVE CITIES",
+
+value:
+
+new Set(
+
+data.map(
+
+x=>x.city
+
+)
+
+).size,
+
+icon:<HiOutlineLocationMarker/>
+
+}
+
+]);
+
+};
+
+const filtered = customers
+.filter(item=>{
+
+const searchMatch =
+item.name.toLowerCase().includes(search.toLowerCase()) ||
+item.email.toLowerCase().includes(search.toLowerCase()) ||
+item.phone.includes(search);
+
+const segmentMatch =
+segmentFilter==="All"
+?true
+:(item.isBlocked
+?"Blocked"
+:item.segment)===segmentFilter;
+
+const cityMatch =
+cityFilter==="All"
+?true
+:item.city===cityFilter;
+
+return searchMatch && segmentMatch && cityMatch;
+
+})
+.sort((a,b)=>{
+
+if(joinedFilter==="Newest"){
+return new Date(b.joined)-new Date(a.joined);
+}
+
+if(joinedFilter==="Oldest"){
+return new Date(a.joined)-new Date(b.joined);
+}
+
+if(spentFilter==="High"){
+return b.spent-a.spent;
+}
+
+if(spentFilter==="Low"){
+return a.spent-b.spent;
+}
+
+return 0;
+
+});
+
+const cities = [
+"All",
+...new Set(
+customers.map(x=>x.city)
+)
 ];
+const handleDelete = async (id) => {
+
+    const ok = window.confirm(
+
+        "Delete this customer?"
+
+    );
+
+    if (!ok) return;
+
+    try {
+
+        await deleteCustomer(id);
+
+        loadCustomers();
+
+    }
+
+    catch (err) {
+
+        console.log(err);
+
+    }
+
+};
+
+const downloadExcel = async () => {
+
+    const res = await exportExcel();
+
+const blob = new Blob(
+
+[res.data],
+
+{
+
+type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+}
+
+);
+
+const url = URL.createObjectURL(blob);
+
+const a=document.createElement("a");
+
+a.href=url;
+
+a.download="Customers.xlsx";
+
+a.click();
+
+URL.revokeObjectURL(url);
+};
+
+const downloadPDF = async () => {
+
+    const res = await exportPDF();
+
+const blob = new Blob(
+
+[res.data],
+
+{
+
+type:"application/pdf"
+
+}
+
+);
+
+const url = URL.createObjectURL(blob);
+
+const a = document.createElement("a");
+
+a.href = url;
+
+a.download = "Customers.pdf";
+
+a.click();
+
+URL.revokeObjectURL(url);
+};
+
+useEffect(()=>{
+loadCustomers();
+},[]);
 
 return(
 
@@ -73,22 +282,61 @@ Manage shoppers, segments and lifetime value.
 
 <div className="custHeaderBtns">
 
-<button className="custExportBtn">
+<div className="custExportWrapper">
+
+<button
+
+className="custExportBtn"
+
+onClick={()=>
+
+setShowExport(
+
+!showExport
+
+)
+
+}
+
+>
 
 <FiDownload/>
 
-Export CSV
+Export
 
 </button>
 
-<button className="custAddBtn">
+{
 
-<FiPlus/>
+showExport &&
 
-Add Customer
+<div className="custExportMenu">
+
+<button
+
+onClick={downloadExcel}
+
+>
+
+Export Excel
 
 </button>
 
+<button
+
+onClick={downloadPDF}
+
+>
+
+Export PDF
+
+</button>
+
+</div>
+
+}
+
+</div>
 </div>
 
 </div>
@@ -119,19 +367,11 @@ key={index}
 {item.value}
 
 </h2>
-
-<span>
-
-▲ {item.change}
-
 <span className="custGray">
 
-vs last week
+Live
 
 </span>
-
-</span>
-
 </div>
 
 <div className="custIcon">
@@ -157,46 +397,84 @@ vs last week
 <FiSearch/>
 
 <input
-
+value={search}
 type="text"
-
 placeholder="Search by name, email or phone..."
-
+onChange={ e=>setSearch( e.target.value ) }
 />
 
 </div>
 
 <div className="custFilters">
 
-<button>
+<select
+value={segmentFilter}
+onChange={(e)=>setSegmentFilter(e.target.value)}
+>
 
-<FiFilter/>
+<option>All</option>
+<option>VIP</option>
+<option>Active</option>
+<option>New</option>
+<option>Blocked</option>
 
-Segment
+</select>
 
-</button>
+<select
+value={cityFilter}
+onChange={(e)=>setCityFilter(e.target.value)}
+>
 
-<button>
+{
+cities.map(city=>(
 
-<FiMapPin/>
+<option
+key={city}
+value={city}
+>
 
-City
+{city}
 
-</button>
+</option>
 
-<button>
+))
+}
 
-Joined
+</select>
 
-</button>
+<select
+value={joinedFilter}
+onChange={(e)=>setJoinedFilter(e.target.value)}
+>
 
-<button>
+<option value="Newest">
+Newest
+</option>
 
+<option value="Oldest">
+Oldest
+</option>
+
+</select>
+
+<select
+value={spentFilter}
+onChange={(e)=>setSpentFilter(e.target.value)}
+>
+
+<option value="None">
 Spent
+</option>
 
-<FiChevronRight/>
+<option value="High">
+High → Low
+</option>
 
-</button>
+<option value="Low">
+Low → High
+</option>
+
+</select>
 
 </div>
 
@@ -215,7 +493,7 @@ Spent
               <th></th>
 
               <th>CUSTOMER</th>
-
+              <th>EMAIL</th>
               <th>PHONE</th>
 
               <th>CITY</th>
@@ -238,143 +516,9 @@ Spent
 
             {
 
-            [
+           filtered.map((item)=>(
 
-            {
-
-            initials:"AS",
-
-            name:"Aarav Sharma",
-
-            email:"user1@nexttgrains.in",
-
-            phone:"+91 9800000000",
-
-            city:"Mumbai",
-
-            orders:3,
-
-            spent:"₹2,400",
-
-            segment:"VIP",
-
-            joined:"2024-01-12"
-
-            },
-
-            {
-
-            initials:"DP",
-
-            name:"Diya Patel",
-
-            email:"user2@nexttgrains.in",
-
-            phone:"+91 9800000131",
-
-            city:"Delhi",
-
-            orders:5,
-
-            spent:"₹3,380",
-
-            segment:"Active",
-
-            joined:"2024-02-12"
-
-            },
-
-            {
-
-            initials:"RG",
-
-            name:"Rohan Gupta",
-
-            email:"user3@nexttgrains.in",
-
-            phone:"+91 9800000262",
-
-            city:"Bengaluru",
-
-            orders:7,
-
-            spent:"₹4,360",
-
-            segment:"Active",
-
-            joined:"2024-03-12"
-
-            },
-
-            {
-
-            initials:"IV",
-
-            name:"Ishita Verma",
-
-            email:"user4@nexttgrains.in",
-
-            phone:"+91 9800000393",
-
-            city:"Pune",
-
-            orders:9,
-
-            spent:"₹5,340",
-
-            segment:"New",
-
-            joined:"2024-04-12"
-
-            },
-
-            {
-
-            initials:"KS",
-
-            name:"Kabir Singh",
-
-            email:"user5@nexttgrains.in",
-
-            phone:"+91 9800000524",
-
-            city:"Hyderabad",
-
-            orders:11,
-
-            spent:"₹6,320",
-
-            segment:"Active",
-
-            joined:"2024-05-12"
-
-            },
-
-            {
-
-            initials:"MI",
-
-            name:"Meera Iyer",
-
-            email:"user6@nexttgrains.in",
-
-            phone:"+91 9800000655",
-
-            city:"Kolkata",
-
-            orders:13,
-
-            spent:"₹7,300",
-
-            segment:"VIP",
-
-            joined:"2024-06-12"
-
-            }
-
-            ].map((item,index)=>(
-
-            <tr key={index}>
+           <tr key={item._id}>
 
               <td>
 
@@ -388,7 +532,15 @@ Spent
 
                   <div className="custAvatar">
 
-                    {item.initials}
+                    {
+
+item.name
+
+.substring(0,2)
+
+.toUpperCase()
+
+}
 
                   </div>
 
@@ -411,7 +563,11 @@ Spent
                 </div>
 
               </td>
+               <td>
 
+{item.email}
+
+</td>
               <td>
 
                 {item.phone}
@@ -432,23 +588,49 @@ Spent
 
               <td>
 
-                {item.spent}
+                ₹{item.spent}
 
               </td>
 
               <td>
 
-                <span className={`custBadge ${item.segment}`}>
+                <span
 
-                  {item.segment}
+className={`custBadge ${item.isBlocked?"Blocked":item.segment}`}
 
-                </span>
+>
+
+{
+
+item.isBlocked
+
+?
+
+"Blocked"
+
+:
+
+item.segment
+
+}
+
+</span>
 
               </td>
 
               <td>
 
-                {item.joined}
+               {
+
+new Date(
+
+item.joined
+
+)
+
+.toLocaleDateString()
+
+}
 
               </td>
 
@@ -456,23 +638,56 @@ Spent
 
                 <div className="custActions">
 
-                  <button>
+<button
 
-                    View
+onClick={async()=>{
 
-                  </button>
+await toggleBlockCustomer(
 
-                  <button>
+item._id
 
-                    Edit
+);
 
-                  </button>
+loadCustomers();
 
-                  <button className="delete">
+}}
 
-                    Delete
+>
 
-                  </button>
+{
+
+item.isBlocked
+
+?
+
+"Unblock"
+
+:
+
+"Block"
+
+}
+
+</button>
+                 <button
+
+className="delete"
+
+onClick={()=>
+
+handleDelete(
+
+item._id
+
+)
+
+}
+
+>
+
+Delete
+
+</button>
 
                 </div>
 
@@ -495,7 +710,15 @@ Spent
 
     <div className="custPageInfo">
 
-        Showing 1–14 of 14
+      Showing
+
+1-
+
+{filtered.length}
+
+of
+
+{customers.length}
 
     </div>
 

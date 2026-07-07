@@ -21,7 +21,7 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
-  LogOut
+  LogOut,
 } from "lucide-react";
 
 const menuItems=[
@@ -34,7 +34,7 @@ const menuItems=[
 
 {
 title:"Customers",
-path:"/customers",
+path:"/admin/customers",
 icon:<Users size={22}/>
 },
 
@@ -46,7 +46,7 @@ icon:<Store size={22}/>
 
 {
 title:"Products",
-path:"/products",
+path:"/admin/products",
 icon:<Boxes size={22}/>
 },
 
@@ -154,16 +154,19 @@ export default function AdminSidebar() {
 
         {menuItems.map((item, index) => (
 
-          <div
-            className={`menuItem ${index === 0 ? "active" : ""}`}
-            key={index}
-          >
+<NavLink
+    to={item.path}
+    key={index}
+    className={({ isActive }) =>
+        `menuItem ${isActive ? "active" : ""}`
+    }
+>
 
-            {item.icon}
+    {item.icon}
 
-            {!collapsed && <span>{item.title}</span>}
+    {!collapsed && <span>{item.title}</span>}
 
-          </div>
+</NavLink>
 
         ))}
 

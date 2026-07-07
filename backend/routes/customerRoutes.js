@@ -1,24 +1,38 @@
 import express from "express";
 
+import authMiddleware from "../middleware/authMiddleware.js";
+import adminMiddleware from "../middleware/adminMiddleware.js";
+
 import {
+    getCustomers,
+    getCustomer,
+    updateCustomer,
+    toggleBlockCustomer,
+    deleteCustomer,
+    exportCustomersExcel,
+exportCustomersPDF
+} from "../controllers/customerController.js";
 
-getCustomers,
-addCustomer,
-deleteCustomer,
-updateCustomer
+const router = express.Router();
 
-}
+router.get("/", getCustomers);
 
-from "../controllers/customerController.js";
+router.get(
+    "/:id",
+    authMiddleware,
+    adminMiddleware,
+    getCustomer
+);
+router.get("/:id", getCustomer);
 
-const router=express.Router();
+router.put("/:id", updateCustomer);
 
-router.get("/",getCustomers);
+router.put("/block/:id", toggleBlockCustomer);
 
-router.post("/",addCustomer);
+router.delete("/:id", deleteCustomer);
 
-router.put("/:id",updateCustomer);
+router.get("/export/excel", exportCustomersExcel);
 
-router.delete("/:id",deleteCustomer);
+router.get("/export/pdf", exportCustomersPDF);
 
 export default router;

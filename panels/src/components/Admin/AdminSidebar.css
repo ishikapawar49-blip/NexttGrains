@@ -168,3 +168,23 @@
 .collapsed .logoutBtn{
     display:none;
 }
+.menuItem{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+text-decoration:none;
+
+color:inherit;
+
+}
+.menuItem.active{
+
+background:#2F6B2F;
+
+color:#fff;
+
+}

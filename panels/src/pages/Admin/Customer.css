@@ -591,6 +591,89 @@
 
 }
 
+.custBadge.Blocked{
+
+background:#FFE5E5;
+
+color:#D92F2F;
+
+}
+
+.custExportWrapper{
+
+position:relative;
+
+}
+
+.custExportMenu{
+
+position:absolute;
+
+right:0;
+
+top:48px;
+
+width:180px;
+
+background:white;
+
+border-radius:12px;
+
+box-shadow:0 8px 30px rgba(0,0,0,.12);
+
+overflow:hidden;
+
+z-index:100;
+
+}
+
+.custExportMenu button{
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+background:white;
+
+text-align:left;
+
+cursor:pointer;
+
+font-size:14px;
+
+}
+
+.custExportMenu button:hover{
+
+background:#EEF5E6;
+
+}
+
+.custFilters select{
+
+height:40px;
+
+padding:0 14px;
+
+border:none;
+
+border-radius:10px;
+
+background:#fff;
+
+box-shadow:0 2px 8px rgba(0,0,0,.05);
+
+cursor:pointer;
+
+font-size:13px;
+
+outline:none;
+
+color:#444;
+
+}
 /* ===========================
       RESPONSIVE
 =========================== */
