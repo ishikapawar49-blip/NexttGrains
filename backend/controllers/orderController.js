@@ -3,8 +3,8 @@ import Cart from "../models/Cart.js";
 import Product from "../models/Product.js";
 import Address from "../models/Address.js";
 import Payment from "../models/Payment.js";
-
-
+import ExcelJS from "exceljs";
+import PDFDocument from "pdfkit";
 /* ===========================================================
    HELPER : GENERATE ORDER NUMBER
 =========================================================== */
@@ -175,34 +175,35 @@ export const placeOrder = async (req, res) => {
 
 
 
-            orderItems.push({
+ orderItems.push({
 
-                product: product._id,
+product: product._id,
 
-                vendor: product.vendorId,
+vendor: product.vendorId,
 
 productName: product.name,
 
 productDescription:
+    product.shortDescription ||
+    "",
 
-product.shortDescription ||
+sku:
+    product.sku || "",
 
-product.description ||
+unit:
+    product.unit || "",
 
-"",
-                productImage:
+productImage:
+    product.thumbnail ||
+    product.images[0],
 
-                    product.thumbnail ||
+price: product.price,
 
-                    product.images[0],
+quantity: item.quantity,
 
-                price: product.price,
+subtotal: itemSubtotal
 
-                quantity: item.quantity,
-
-                subtotal: itemSubtotal,
-
-            });
+});
 
         }
 
@@ -211,28 +212,44 @@ product.description ||
         /* ==========================
            PRICE CALCULATION
         ========================== */
+const discount = 0;
 
-        const deliveryCharge =
+const couponCode = "";
 
-            subtotal >= 499
+const couponDiscount = 0;
 
-                ? 0
+const platformFee =
+    subtotal >= 500
+        ? 0
+        : 9;
 
-                : 40;
+const handlingCharge =
+    subtotal >= 500
+        ? 0
+        : 12;
 
+const packingCharge = 8;
 
+const deliveryCharge =
+    subtotal >= 499
+        ? 0
+        : 40;
 
-        const discount = 0;
+const taxableAmount =
+    subtotal -
+    discount -
+    couponDiscount;
 
+const tax =
+    Number((taxableAmount * 0.05).toFixed(2));
 
-
-        const grandTotal =
-
-            subtotal +
-
-            deliveryCharge -
-
-            discount;
+const grandTotal =
+    taxableAmount +
+    platformFee +
+    handlingCharge +
+    packingCharge +
+    deliveryCharge +
+    tax;
 
 
 
@@ -255,34 +272,83 @@ product.description ||
 
         const order = await Order.create({
 
-            orderNumber,
+orderNumber,
 
-            user: userId,
+user: userId,
 
-            address: addressId,
+address: addressId,
 
-            items: orderItems,
+items: orderItems,
 
-            totalItems,
+totalItems,
 
-            subtotal,
+subtotal,
 
-            discount,
+discount,
 
-            deliveryCharge,
+couponCode,
 
-            grandTotal,
+couponDiscount,
 
-            paymentMethod,
+platformFee,
 
-  paymentStatus: "Pending",
+handlingCharge,
 
-            orderStatus: "Pending",
+packingCharge,
 
-            estimatedDeliveryDate,
+deliveryCharge,
 
-        });
+tax,
 
+grandTotal,
+
+paymentMethod,
+
+paymentStatus: "Pending",
+
+orderStatus: "Pending",
+
+estimatedDeliveryDate,
+
+deliveryPartner: "",
+
+trackingId: "",
+
+trackingUrl: "",
+
+adminRemark: "",
+
+customerRemark: "",
+
+refundAmount: 0,
+
+refundStatus: "None",
+
+returnRequested: false,
+
+returnReason: "",
+
+deliveryOTP:
+    Math.floor(
+        1000 +
+        Math.random() * 9000
+    ).toString(),
+
+statusHistory: [
+
+{
+
+status: "Pending",
+
+updatedBy: null,
+
+note: "Order Placed"
+
+}
+
+]
+
+});
 
 
         /* ==========================
@@ -401,9 +467,7 @@ export const getMyOrders = async (req, res) => {
         const { userId } = req.params;
 
         const orders = await Order.find({
-
             user: userId,
-
         })
 
 .populate({
@@ -422,16 +486,34 @@ export const getMyOrders = async (req, res) => {
             createdAt: -1,
 
         });
+        const formattedOrders = orders.map(order => ({
+    ...order.toObject(),
 
-        return res.status(200).json({
+    status: order.orderStatus,
 
-            success: true,
+    paymentStatus: order.paymentStatus,
 
-            totalOrders: orders.length,
+    tracking:{
 
-            orders,
+        deliveryPartner:order.deliveryPartner,
 
-        });
+        trackingId:order.trackingId,
+
+        trackingUrl:order.trackingUrl,
+
+        estimatedDeliveryDate:order.estimatedDeliveryDate,
+
+        deliveredAt:order.deliveredAt
+
+    },
+
+    history:order.statusHistory
+}));
+return res.status(200).json({
+    success: true,
+    totalOrders: formattedOrders.length,
+    orders: formattedOrders
+});
 
     }
 
@@ -465,22 +547,48 @@ export const getOrderDetails = async (req, res) => {
 
             .populate({
 
-                path: "user",
+path:"user",
 
-                select: "name email phone",
+select:"name email phone email profileImage"
 
-            })
+})
 
             .populate({
 
-                path: "address",
+path:"address",
 
-            })
+select:`
+fullName
+phone
+addressLine1
+addressLine2
+city
+state
+country
+pincode
+landmark
+addressType
+`
+})
 
 .populate({
-    path: "items.product",
-    select:
-      "name thumbnail images shortDescription category quantity unit price mrp rating"
+
+path:"items.product",
+
+select:`
+name
+thumbnail
+images
+category
+quantity
+unit
+price
+mrp
+rating
+brand
+sku
+`
+
 })
 
         if (!order) {
@@ -495,22 +603,99 @@ export const getOrderDetails = async (req, res) => {
 
         }
 
-        const payment = await Payment.findOne({
+       const payment =
+await Payment.findOne({
 
-            order: order._id,
+order:order._id
 
-        });
+}).select(
 
-        return res.status(200).json({
+`
+amount
+currency
+paymentMethod
+paymentStatus
+gateway
+razorpayOrderId
+razorpayPaymentId
+paidAt
+`
 
-            success: true,
+);
 
-            order,
+       return res.status(200).json({
 
-            payment,
+success:true,
 
-        });
+order:{
 
+...order.toObject(),
+
+customer:{
+
+id:order.user?._id,
+
+name:order.user?.name,
+
+email:order.user?.email,
+
+phone:order.user?.phone,
+
+profileImage:order.user?.profileImage
+
+},
+
+deliveryAddress:order.address,
+
+pricing:{
+
+subtotal:order.subtotal,
+
+discount:order.discount,
+
+couponDiscount:order.couponDiscount,
+
+platformFee:order.platformFee,
+
+handlingCharge:order.handlingCharge,
+
+packingCharge:order.packingCharge,
+
+deliveryCharge:order.deliveryCharge,
+
+tax:order.tax,
+
+grandTotal:order.grandTotal
+
+},
+
+tracking:{
+
+deliveryPartner:order.deliveryPartner,
+
+trackingId:order.trackingId,
+
+trackingUrl:order.trackingUrl,
+
+estimatedDeliveryDate:
+
+order.estimatedDeliveryDate,
+
+deliveredAt:
+
+order.deliveredAt
+
+},
+
+statusHistory:
+
+order.statusHistory
+
+},
+
+payment
+
+});
     }
 
     catch (error) {
@@ -700,143 +885,71 @@ export const cancelOrder = async (req, res) => {
 /* ===========================================================
    UPDATE ORDER STATUS
 =========================================================== */
-
 export const updateOrderStatus = async (req, res) => {
-
-    try {
-
-        const { orderId } = req.params;
-
-        const { orderStatus } = req.body;
-
-        const validStatus = [
-
-            "Pending",
-
-            "Confirmed",
-
-            "Accepted",
-
-            "Packed",
-
-            "Shipped",
-
-            "Out For Delivery",
-
-            "Delivered",
-
-            "Cancelled",
-
-        ];
-
-
-
-        if (!validStatus.includes(orderStatus)) {
-
-            return res.status(400).json({
-
-                success: false,
-
-                message: "Invalid order status.",
-
-            });
-
-        }
-
-
-
-        const order = await Order.findById(orderId);
-
-        if (!order) {
-
-            return res.status(404).json({
-
-                success: false,
-
-                message: "Order not found.",
-
-            });
-
-        }
-
-
-
-        if (order.orderStatus === "Cancelled") {
-
-            return res.status(400).json({
-
-                success: false,
-
-                message: "Cancelled order cannot be updated.",
-
-            });
-
-        }
-
-
-
-        order.orderStatus = orderStatus;
-
-
-
-        if (orderStatus === "Delivered") {
-
-            order.deliveredAt = new Date();
-
-
-
-            await Payment.findOneAndUpdate(
-
-                {
-
-                    order: order._id,
-
-                },
-
-                {
-
-                    paymentStatus: "Paid",
-
-                    paidAt: new Date(),
-
-                }
-
-            );
-
-        }
-
-
-
-        await order.save();
-
-
-
-        return res.status(200).json({
-
-            success: true,
-
-            message: "Order status updated successfully.",
-
-            order,
-
-        });
-
+  try {
+
+    const { orderId } = req.params;
+
+    const {
+      orderStatus,
+      paymentStatus,
+      deliveryPartner,
+      trackingId,
+      trackingUrl,
+      adminRemark,
+      updatedBy
+    } = req.body;
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found"
+      });
     }
 
-    catch (error) {
+    order.orderStatus = orderStatus;
+    order.paymentStatus = paymentStatus;
+    order.deliveryPartner = deliveryPartner;
+    order.trackingId = trackingId;
+    order.trackingUrl = trackingUrl;
+    order.adminRemark = adminRemark;
+    order.lastUpdatedBy = updatedBy;
 
-        console.error(error);
-
-        return res.status(500).json({
-
-            success: false,
-
-            message: "Internal Server Error.",
-
-        });
-
+    if (orderStatus === "Delivered") {
+      order.deliveredAt = new Date();
+      order.paymentStatus = "Paid";
     }
 
+    if (orderStatus === "Cancelled") {
+      order.paymentStatus = "Refunded";
+    }
+
+    order.statusHistory.push({
+      status: orderStatus,
+      updatedBy,
+      note: adminRemark || ""
+    });
+
+    await order.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Order Updated",
+      order
+    });
+
+  } catch (error) {
+
+    console.log(error);
+
+    return res.status(500).json({
+      success:false,
+      message:"Internal Server Error"
+    });
+
+  }
 };
 
 /* ===========================================================
@@ -909,37 +1022,371 @@ export const getVendorOrders = async (req, res) => {
 
 export const getAllOrders = async (req, res) => {
 
+try{
+
+const{
+
+page=1,
+
+limit=10,
+
+search="",
+
+status="",
+
+paymentStatus="",
+
+paymentMethod=""
+
+}=req.query;
+
+const query={
+
+isDeleted:false
+
+};
+
+if(search){
+
+query.$or=[
+
+{
+
+orderNumber:{
+
+$regex:search,
+
+$options:"i"
+
+}
+
+}
+
+];
+
+}
+
+if(status){
+
+query.orderStatus=status;
+
+}
+
+if(paymentStatus){
+
+query.paymentStatus=paymentStatus;
+
+}
+
+if(paymentMethod){
+
+query.paymentMethod=paymentMethod;
+
+}
+
+const totalOrders=
+
+await Order.countDocuments(query);
+
+const orders=
+
+await Order.find(query)
+
+.populate({
+
+path:"user",
+
+select:
+
+"name email phone profileImage"
+
+})
+
+.populate({
+
+path:"address",
+
+select:
+
+"fullName phone city state addressLine1 pincode"
+
+})
+
+.sort({
+
+createdAt:-1
+
+})
+
+.skip(
+
+(page-1)*limit
+
+)
+
+.limit(
+
+Number(limit)
+
+);
+
+const formattedOrders=
+
+orders.map(order=>({
+
+...order.toObject(),
+
+customerName:
+
+order.user?.name ||
+
+"Customer",
+
+customerPhone:
+
+order.user?.phone ||
+
+"",
+
+city:
+
+order.address?.city ||
+
+"",
+
+totalProducts:
+
+order.items.length,
+
+totalQuantity:
+
+order.totalItems,
+
+payment:
+
+order.paymentMethod,
+
+paymentState:
+
+order.paymentStatus,
+
+status:
+
+order.orderStatus
+
+}));
+
+return res.status(200).json({
+
+success:true,
+
+totalOrders,
+
+currentPage:Number(page),
+
+totalPages:Math.ceil(
+
+totalOrders/limit
+
+),
+
+orders:formattedOrders
+
+});
+
+}
+
+catch(error){
+
+console.error(error);
+
+return res.status(500).json({
+
+success:false,
+
+message:"Internal Server Error."
+
+});
+
+}
+
+};
+
+/* ===========================================================
+   GET ORDER STATS (ADMIN DASHBOARD)
+=========================================================== */
+
+export const getOrderStats = async (req, res) => {
+
     try {
 
-        const orders = await Order.find()
+        const today = new Date();
 
-            .populate({
+        today.setHours(0, 0, 0, 0);
 
-                path: "user",
+        const totalOrders =
+            await Order.countDocuments({
+                isDeleted: false
+            });
 
-                select: "name email phone",
+        const todayOrders =
+            await Order.countDocuments({
 
-            })
+                isDeleted: false,
 
-            .populate({
-
-                path: "address",
-
-            })
-
-            .sort({
-
-                createdAt: -1,
+                createdAt: {
+                    $gte: today
+                }
 
             });
+
+        const pendingOrders =
+            await Order.countDocuments({
+
+                isDeleted: false,
+
+                orderStatus: "Pending"
+
+            });
+
+        const confirmedOrders =
+            await Order.countDocuments({
+
+                isDeleted: false,
+
+                orderStatus: "Confirmed"
+
+            });
+
+        const packedOrders =
+            await Order.countDocuments({
+
+                isDeleted: false,
+
+                orderStatus: "Packed"
+
+            });
+
+        const shippedOrders =
+            await Order.countDocuments({
+
+                isDeleted: false,
+
+                orderStatus: "Shipped"
+
+            });
+
+        const outForDelivery =
+            await Order.countDocuments({
+
+                isDeleted: false,
+
+                orderStatus: "Out For Delivery"
+
+            });
+
+        const deliveredOrders =
+            await Order.countDocuments({
+
+                isDeleted: false,
+
+                orderStatus: "Delivered"
+
+            });
+
+        const cancelledOrders =
+            await Order.countDocuments({
+
+                isDeleted: false,
+
+                orderStatus: "Cancelled"
+
+            });
+
+        const returnedOrders =
+            await Order.countDocuments({
+
+                isDeleted: false,
+
+                orderStatus: "Returned"
+
+            });
+
+        const revenue =
+            await Order.aggregate([
+
+                {
+
+                    $match: {
+
+                        isDeleted: false,
+
+                        orderStatus: "Delivered"
+
+                    }
+
+                },
+
+                {
+
+                    $group: {
+
+                        _id: null,
+
+                        totalRevenue: {
+
+                            $sum: "$grandTotal"
+
+                        }
+
+                    }
+
+                }
+
+            ]);
+
+        const averageOrderValue =
+            totalOrders > 0
+                ? (
+                    revenue[0]?.totalRevenue || 0
+                ) / totalOrders
+                : 0;
 
         return res.status(200).json({
 
             success: true,
 
-            totalOrders: orders.length,
+            stats: {
 
-            orders,
+                totalOrders,
+
+                todayOrders,
+
+                pendingOrders,
+
+                confirmedOrders,
+
+                packedOrders,
+
+                shippedOrders,
+
+                outForDelivery,
+
+                deliveredOrders,
+
+                cancelledOrders,
+
+                returnedOrders,
+
+                revenue:
+                    revenue[0]?.totalRevenue || 0,
+
+                averageOrderValue:
+                    Number(
+                        averageOrderValue.toFixed(2)
+                    )
+
+            }
 
         });
 
@@ -953,10 +1400,542 @@ export const getAllOrders = async (req, res) => {
 
             success: false,
 
-            message: "Internal Server Error.",
+            message: "Internal Server Error."
 
         });
 
     }
+
+};
+
+/* ===========================================================
+   FILTER ORDERS
+=========================================================== */
+
+export const filterOrders = async (req, res) => {
+
+    try {
+
+        const {
+
+            search = "",
+
+            status = "",
+
+            paymentStatus = "",
+
+            paymentMethod = "",
+
+            deliveryPartner = "",
+
+            fromDate = "",
+
+            toDate = "",
+
+            page = 1,
+
+            limit = 10
+
+        } = req.query;
+
+        const query = {
+
+            isDeleted: false
+
+        };
+
+        if (search) {
+
+            query.orderNumber = {
+
+                $regex: search,
+
+                $options: "i"
+
+            };
+
+        }
+
+        if (status) {
+
+            query.orderStatus = status;
+
+        }
+
+        if (paymentStatus) {
+
+            query.paymentStatus = paymentStatus;
+
+        }
+
+        if (paymentMethod) {
+
+            query.paymentMethod = paymentMethod;
+
+        }
+
+        if (deliveryPartner) {
+
+            query.deliveryPartner = deliveryPartner;
+
+        }
+
+        if (fromDate || toDate) {
+
+            query.createdAt = {};
+
+            if (fromDate) {
+
+                query.createdAt.$gte = new Date(fromDate);
+
+            }
+
+            if (toDate) {
+
+                const endDate = new Date(toDate);
+
+                endDate.setHours(23,59,59,999);
+
+                query.createdAt.$lte = endDate;
+
+            }
+
+        }
+
+        const totalOrders =
+
+            await Order.countDocuments(query);
+
+        const orders =
+
+            await Order.find(query)
+
+            .populate({
+
+                path:"user",
+
+                select:"name phone email"
+
+            })
+
+            .populate({
+
+                path:"address",
+
+                select:"fullName city state"
+
+            })
+
+            .sort({
+
+                createdAt:-1
+
+            })
+
+            .skip(
+
+                (page-1)*limit
+
+            )
+
+            .limit(
+
+                Number(limit)
+
+            );
+
+        return res.status(200).json({
+
+            success:true,
+
+            totalOrders,
+
+            currentPage:Number(page),
+
+            totalPages:
+
+                Math.ceil(totalOrders/limit),
+
+            orders
+
+        });
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        return res.status(500).json({
+
+            success:false,
+
+            message:"Internal Server Error."
+
+        });
+
+    }
+
+};
+
+/* ===========================================================
+   EXPORT ORDERS EXCEL
+=========================================================== */
+
+export const exportOrdersExcel = async (req, res) => {
+
+    try {
+
+        const orders = await Order.find({
+
+            isDeleted:false
+
+        })
+
+        .populate({
+
+            path:"user",
+
+            select:"name email phone"
+
+        })
+
+        .sort({
+
+            createdAt:-1
+
+        });
+
+        const workbook = new ExcelJS.Workbook();
+
+        const worksheet = workbook.addWorksheet("Orders");
+
+        worksheet.columns=[
+
+            {
+
+                header:"Order No",
+
+                key:"orderNumber",
+
+                width:20
+
+            },
+
+            {
+
+                header:"Customer",
+
+                key:"customer",
+
+                width:25
+
+            },
+
+            {
+
+                header:"Payment",
+
+                key:"payment",
+
+                width:18
+
+            },
+
+            {
+
+                header:"Status",
+
+                key:"status",
+
+                width:18
+
+            },
+
+            {
+
+                header:"Items",
+
+                key:"items",
+
+                width:10
+
+            },
+
+            {
+
+                header:"Subtotal",
+
+                key:"subtotal",
+
+                width:15
+
+            },
+
+            {
+
+                header:"Delivery",
+
+                key:"delivery",
+
+                width:15
+
+            },
+
+            {
+
+                header:"Tax",
+
+                key:"tax",
+
+                width:12
+
+            },
+
+            {
+
+                header:"Grand Total",
+
+                key:"grandTotal",
+
+                width:18
+
+            },
+
+            {
+
+                header:"Date",
+
+                key:"date",
+
+                width:20
+
+            }
+
+        ];
+
+        orders.forEach(order=>{
+
+            worksheet.addRow({
+
+                orderNumber:order.orderNumber,
+
+                customer:
+
+                    order.user?.name ||
+
+                    "Customer",
+
+                payment:
+
+                    order.paymentMethod,
+
+                status:
+
+                    order.orderStatus,
+
+                items:
+
+                    order.totalItems,
+
+                subtotal:
+
+                    order.subtotal,
+
+                delivery:
+
+                    order.deliveryCharge,
+
+                tax:
+
+                    order.tax,
+
+                grandTotal:
+
+                    order.grandTotal,
+
+                date:
+
+                    order.createdAt
+
+            });
+
+        });
+
+        res.setHeader(
+
+            "Content-Type",
+
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+        );
+
+        res.setHeader(
+
+            "Content-Disposition",
+
+            "attachment; filename=Orders.xlsx"
+
+        );
+
+        await workbook.xlsx.write(res);
+
+        res.end();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        return res.status(500).json({
+
+            success:false,
+
+            message:"Failed to export excel."
+
+        });
+
+    }
+
+};
+
+/* ===========================================================
+   EXPORT ORDERS PDF
+=========================================================== */
+
+export const exportOrdersPDF = async(req,res)=>{
+
+try{
+
+const orders=
+
+await Order.find({
+
+isDeleted:false
+
+})
+
+.populate({
+
+path:"user",
+
+select:"name"
+
+})
+
+.sort({
+
+createdAt:-1
+
+});
+
+const doc=
+
+new PDFDocument({
+
+margin:40
+
+});
+
+res.setHeader(
+
+"Content-Type",
+
+"application/pdf"
+
+);
+
+res.setHeader(
+
+"Content-Disposition",
+
+"attachment; filename=Orders.pdf"
+
+);
+
+doc.pipe(res);
+
+doc
+
+.fontSize(18)
+
+.text(
+
+"NextTGrains Orders Report",
+
+{
+
+align:"center"
+
+}
+
+);
+
+doc.moveDown();
+
+orders.forEach(order=>{
+
+doc
+
+.fontSize(11)
+
+.text(
+
+`Order : ${order.orderNumber}`
+
+);
+
+doc.text(
+
+`Customer : ${order.user?.name}`
+
+);
+
+doc.text(
+
+`Status : ${order.orderStatus}`
+
+);
+
+doc.text(
+
+`Payment : ${order.paymentMethod}`
+
+);
+
+doc.text(
+
+`Grand Total : ₹${order.grandTotal}`
+
+);
+
+doc.text(
+
+`Date : ${order.createdAt.toLocaleDateString()}`
+
+);
+
+doc.moveDown();
+
+});
+
+doc.end();
+
+}
+
+catch(error){
+
+console.error(error);
+
+return res.status(500).json({
+
+success:false,
+
+message:"Failed to export pdf."
+
+});
+
+}
 
 };

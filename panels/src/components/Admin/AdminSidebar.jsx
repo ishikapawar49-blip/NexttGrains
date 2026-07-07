@@ -40,7 +40,7 @@ icon:<Users size={22}/>
 
 {
 title:"Vendors",
-path:"/vendors",
+path:"/admin/vendors",
 icon:<Store size={22}/>
 },
 
@@ -52,75 +52,77 @@ icon:<Boxes size={22}/>
 
 {
 title:"Orders",
-path:"/orders",
+path:"/admin/orders",
 icon:<ShoppingCart size={22}/>
 },
 
 {
 title:"Inventory",
-path:"/inventory",
+path:"/admin/inventory",
 icon:<PackageSearch size={22}/>
 },
 
 {
 title:"Coupons",
-path:"/coupons",
+path:"/admin/coupons",
 icon:<Ticket size={22}/>
 },
 
+
 {
 title:"Banners",
-path:"/banners",
+path:"/admin/banners",
 icon:<Image size={22}/>
 },
 
 {
 title:"Blogs",
-path:"/blogs",
+path:"/admin/blogs",
 icon:<Newspaper size={22}/>
 },
 
 {
 title:"CMS",
-path:"/cms",
+path:"/admin/cms",
 icon:<FileText size={22}/>
 },
 
+
 {
 title:"Finance",
-path:"/finance",
+path:"/admin/finance",
 icon:<Wallet size={22}/>
 },
 
 {
 title:"Reports",
-path:"/reports",
+path:"/admin/reports",
 icon:<BarChart3 size={22}/>
 },
 
 {
 title:"Notifications",
-path:"/notifications",
+path:"/admin/notifications",
 icon:<Bell size={22}/>
 },
 
 {
 title:"Support Tickets",
-path:"/support",
+path:"/admin/support",
 icon:<LifeBuoy size={22}/>
 },
 
 {
 title:"Audit Logs",
-path:"/auditlogs",
+path:"/admin/auditlogs",
 icon:<ScrollText size={22}/>
 },
 
 {
 title:"Settings",
-path:"/settings",
+path:"/admin/settings",
 icon:<Settings size={22}/>
-}
+},
 
 ];
 

@@ -1918,3 +1918,22 @@ button:disabled{
     text-align:center;
 
 }
+/* Rating */
+
+.pm-rating{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:4px;
+}
+
+.pm-rating-star{
+    color:#F4B400;
+    font-size:18px;
+}
+
+.pm-rating-value{
+    font-size:15px;
+    font-weight:600;
+    color:#475467;
+}

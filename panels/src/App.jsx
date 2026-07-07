@@ -11,6 +11,8 @@ Route,
 import AdminSidebar from "./components/Admin/AdminSidebar";
 import AdminNavbar from "./components/Admin/AdminNavbar";
 import Customers from "./pages/Admin/Customer";
+import OrderManagement from "./pages/Admin/OrderManagement";
+import CouponManagement from "./pages/Admin/CouponManagement";
 
 /* ================= VENDOR ================= */
 import VendorSidebar from "./components/Vendor/VendorSidebar";
@@ -58,6 +60,35 @@ element={<Navigate to="/admin/customers" replace />}
         <AdminNavbar />
         <div className="ngAdminMainContent">
           <ProductManagement />
+        </div>
+      </div>
+    </div>
+  }
+/>
+<Route
+  path="/admin/orders"
+  element={
+    <div className="ngAdminLayout">
+      <AdminSidebar />
+      <div className="ngAdminRight">
+        <AdminNavbar />
+        <div className="ngAdminMainContent">
+          <OrderManagement />
+        </div>
+      </div>
+    </div>
+  }
+/>
+
+<Route
+  path="/admin/coupons"
+  element={
+    <div className="ngAdminLayout">
+      <AdminSidebar />
+      <div className="ngAdminRight">
+        <AdminNavbar />
+        <div className="ngAdminMainContent">
+          <CouponManagement />
         </div>
       </div>
     </div>

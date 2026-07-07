@@ -20,7 +20,8 @@ import {
 import {
   FaLeaf,
   FaBoxOpen,
-  FaRupeeSign
+  FaRupeeSign,
+   FaStar
 } from "react-icons/fa";
 
 import {
@@ -1374,18 +1375,18 @@ product.status
 
 
 {/* RATING */}
-
 <td>
+  <div className="pm-rating">
+    <FaStar className="pm-rating-star" />
 
-⭐
-{(product.rating || 0).toFixed(1)}
+    <span className="pm-rating-value">
+      {(product.rating || 0).toFixed(1)}
+    </span>
+  </div>
 
-<br/>
-
-<small>
+  <small>
     {product.reviews || 0} Reviews
-</small>
-
+  </small>
 </td>
 
 {/* ACTIONS */}
