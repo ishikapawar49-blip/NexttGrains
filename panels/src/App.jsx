@@ -13,6 +13,7 @@ import AdminNavbar from "./components/Admin/AdminNavbar";
 import Customers from "./pages/Admin/Customer";
 import OrderManagement from "./pages/Admin/OrderManagement";
 import CouponManagement from "./pages/Admin/CouponManagement";
+import BlogsManagement from "./pages/Admin/BlogsManagement";
 
 /* ================= VENDOR ================= */
 import VendorSidebar from "./components/Vendor/VendorSidebar";
@@ -94,7 +95,20 @@ element={<Navigate to="/admin/customers" replace />}
     </div>
   }
 />
-
+<Route
+  path="/admin/blogs"
+  element={
+    <div className="ngAdminLayout">
+      <AdminSidebar />
+      <div className="ngAdminRight">
+        <AdminNavbar />
+        <div className="ngAdminMainContent">
+          <BlogsManagement />
+        </div>
+      </div>
+    </div>
+  }
+/>
 {/* ================= VENDOR AUTH ================= */}
 
 <Route

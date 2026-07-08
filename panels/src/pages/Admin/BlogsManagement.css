@@ -1,0 +1,835 @@
+/* ==========================================================
+   BLOGS MANAGEMENT PAGE
+========================================================== */
+
+.blogs-management{
+
+    width:100%;
+
+    min-height:100vh;
+
+    padding:30px;
+
+    background:#f8f7f2;
+
+    box-sizing:border-box;
+
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.blogs-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:20px;
+
+    margin-bottom:35px;
+
+}
+
+.blogs-header h1{
+
+    margin:0;
+
+    color:#29461a;
+
+    font-size:46px;
+
+    font-weight:700;
+
+    font-family:"Cormorant Garamond",serif;
+
+}
+
+.blogs-header p{
+
+    margin-top:8px;
+
+    color:#767676;
+
+    font-size:17px;
+
+    font-weight:500;
+
+    line-height:1.6;
+
+}
+
+/* ==========================================================
+   CREATE BUTTON
+========================================================== */
+
+.blogs-create-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+
+    min-width:180px;
+
+    height:54px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:14px;
+
+    background:#4f6f1d;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+.blogs-create-btn:hover{
+
+    background:#3f5a17;
+
+    transform:translateY(-2px);
+
+    box-shadow:0 12px 24px rgba(79,111,29,.25);
+
+}
+
+.blogs-create-btn svg{
+
+    font-size:15px;
+
+}
+
+/* ==========================================================
+   STATS
+========================================================== */
+
+.blogs-stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:22px;
+
+    margin-bottom:30px;
+
+}
+
+.blogs-stat-card{
+
+    background:#fff;
+
+    border:1px solid #ebe7dc;
+
+    border-radius:22px;
+
+    padding:24px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    transition:.35s;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+
+}
+
+.blogs-stat-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 16px 34px rgba(0,0,0,.10);
+
+}
+
+.blogs-stat-card span{
+
+    display:block;
+
+    margin-bottom:12px;
+
+    color:#808080;
+
+    font-size:14px;
+
+    font-weight:500;
+
+}
+
+.blogs-stat-card h2{
+
+    margin:0;
+
+    color:#29461a;
+
+    font-size:40px;
+
+    font-weight:700;
+
+    font-family:"Cormorant Garamond",serif;
+
+}
+
+/* ==========================================================
+   STAT ICONS
+========================================================== */
+
+.blogs-icon{
+
+    width:64px;
+
+    height:64px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#fff;
+
+    flex-shrink:0;
+
+}
+
+.blogs-icon svg{
+
+    font-size:24px;
+
+}
+
+.blogs-green{
+
+    background:#4f6f1d;
+
+}
+
+.blogs-yellow{
+
+    background:#d7a52d;
+
+}
+
+/* ==========================================================
+   SEARCH BAR
+========================================================== */
+
+.blogs-search-box{
+
+    width:100%;
+
+    height:58px;
+
+    background:#fff;
+
+    border:1px solid #e6e2d6;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:0 20px;
+
+    margin-bottom:30px;
+
+    box-shadow:0 5px 16px rgba(0,0,0,.05);
+
+}
+
+.blogs-search-box svg{
+
+    color:#909090;
+
+    font-size:16px;
+
+    margin-right:14px;
+
+}
+
+.blogs-search-box input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    color:#333;
+
+    font-size:15px;
+
+    font-weight:500;
+
+}
+
+.blogs-search-box input::placeholder{
+
+    color:#9c9c9c;
+
+}
+/* ==========================================================
+   TABLE WRAPPER
+========================================================== */
+
+.blogs-table-wrapper{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    background:#ffffff;
+
+    border:1px solid #ebe7dc;
+
+    border-radius:22px;
+
+    box-shadow:0 8px 24px rgba(0,0,0,.05);
+
+}
+
+/* ==========================================================
+   TABLE
+========================================================== */
+
+.blogs-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:1200px;
+
+}
+
+/* ==========================================================
+   TABLE HEAD
+========================================================== */
+
+.blogs-table thead{
+
+    background:#f5f3eb;
+
+}
+
+.blogs-table thead tr{
+
+    border-bottom:1px solid #e6e2d6;
+
+}
+
+.blogs-table thead th{
+
+    padding:20px 18px;
+
+    text-align:left;
+
+    color:#4d4d4d;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    white-space:nowrap;
+
+}
+
+/* ==========================================================
+   TABLE BODY
+========================================================== */
+
+.blogs-table tbody tr{
+
+    transition:.30s;
+
+    border-bottom:1px solid #f0ede5;
+
+}
+
+.blogs-table tbody tr:last-child{
+
+    border-bottom:none;
+
+}
+
+.blogs-table tbody tr:hover{
+
+    background:#faf9f5;
+
+}
+
+.blogs-table tbody td{
+
+    padding:18px;
+
+    vertical-align:middle;
+
+    color:#444;
+
+    font-size:14px;
+
+}
+
+/* ==========================================================
+   CHECKBOX
+========================================================== */
+
+.blogs-table input[type="checkbox"]{
+
+    width:17px;
+
+    height:17px;
+
+    cursor:pointer;
+
+    accent-color:#4f6f1d;
+
+}
+
+/* ==========================================================
+   BLOG INFO
+========================================================== */
+
+.blog-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    min-width:260px;
+
+}
+
+/* ==========================================================
+   BLOG IMAGE
+========================================================== */
+
+.blog-info img{
+
+    width:78px;
+
+    height:58px;
+
+    border-radius:12px;
+
+    object-fit:cover;
+
+    border:1px solid #ebe7dc;
+
+    flex-shrink:0;
+
+    background:#f3f3f3;
+
+}
+
+/* ==========================================================
+   BLOG CONTENT
+========================================================== */
+
+.blog-info div{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.blog-info h4{
+
+    margin:0;
+
+    color:#29461a;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    line-height:1.4;
+
+}
+
+.blog-info span{
+
+    margin-top:5px;
+
+    color:#8a8a8a;
+
+    font-size:13px;
+
+    word-break:break-word;
+
+}
+/* ==========================================================
+   CATEGORY
+========================================================== */
+
+.blog-category{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:7px 16px;
+
+    border-radius:50px;
+
+    background:#eef6e5;
+
+    color:#4f6f1d;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    white-space:nowrap;
+
+}
+
+/* ==========================================================
+   STATUS
+========================================================== */
+
+.blog-status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:100px;
+
+    padding:8px 18px;
+
+    border-radius:50px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.blog-status-published{
+
+    background:#eaf7ea;
+
+    color:#22863a;
+
+}
+
+.blog-status-draft{
+
+    background:#fff7df;
+
+    color:#c49000;
+
+}
+
+/* ==========================================================
+   ACTION BUTTONS
+========================================================== */
+
+.blog-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.blog-actions button{
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:.30s;
+
+}
+
+.blog-actions button svg{
+
+    font-size:15px;
+
+}
+
+/* ==========================================================
+   VIEW
+========================================================== */
+
+.blog-view-btn{
+
+    background:#eef4ff;
+
+    color:#2563eb;
+
+}
+
+.blog-view-btn:hover{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================================
+   EDIT
+========================================================== */
+
+.blog-edit-btn{
+
+    background:#eef9ea;
+
+    color:#4f6f1d;
+
+}
+
+.blog-edit-btn:hover{
+
+    background:#4f6f1d;
+
+    color:#fff;
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================================
+   DELETE
+========================================================== */
+
+.blog-delete-btn{
+
+    background:#fff1f1;
+
+    color:#d83b3b;
+
+}
+
+.blog-delete-btn:hover{
+
+    background:#d83b3b;
+
+    color:#fff;
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================================
+   EMPTY
+========================================================== */
+
+.blogs-empty{
+
+    text-align:center;
+
+    padding:70px 20px !important;
+
+    color:#8b8b8b;
+
+    font-size:15px;
+
+    font-weight:500;
+
+}
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+.blogs-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:20px;
+
+    padding:18px 5px;
+
+}
+
+.blogs-footer span{
+
+    color:#6f6f6f;
+
+    font-size:14px;
+
+    font-weight:500;
+
+}
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+
+.blogs-table-wrapper::-webkit-scrollbar{
+
+    height:8px;
+
+}
+
+.blogs-table-wrapper::-webkit-scrollbar-thumb{
+
+    background:#4f6f1d;
+
+    border-radius:20px;
+
+}
+
+.blogs-table-wrapper::-webkit-scrollbar-track{
+
+    background:#ececec;
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media(max-width:1200px){
+
+    .blogs-stats{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .blogs-management{
+
+        padding:18px;
+
+    }
+
+    .blogs-header{
+
+        flex-direction:column;
+
+        gap:20px;
+
+    }
+
+    .blogs-create-btn{
+
+        width:100%;
+
+    }
+
+    .blogs-stats{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .blogs-header h1{
+
+        font-size:34px;
+
+    }
+
+    .blogs-header p{
+
+        font-size:15px;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .blog-info{
+
+        min-width:220px;
+
+    }
+
+    .blog-info img{
+
+        width:60px;
+
+        height:50px;
+
+    }
+
+    .blog-info h4{
+
+        font-size:14px;
+
+    }
+
+    .blog-info span{
+
+        font-size:12px;
+
+    }
+
+    .blog-actions{
+
+        gap:6px;
+
+    }
+
+    .blog-actions button{
+
+        width:34px;
+
+        height:34px;
+
+    }
+
+}
