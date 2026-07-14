@@ -5,6 +5,9 @@ import Address from "../models/Address.js";
 import Payment from "../models/Payment.js";
 import ExcelJS from "exceljs";
 import PDFDocument from "pdfkit";
+import { generateAnalytics } from "../utils/reportAnalytics.js";
+import Report from "../models/Report.js";
+
 /* ===========================================================
    HELPER : GENERATE ORDER NUMBER
 =========================================================== */
@@ -349,33 +352,31 @@ note: "Order Placed"
 ]
 
 });
-
-
         /* ==========================
            UPDATE PRODUCT STOCK
         ========================== */
-
-        for (const item of cart.items) {
-
-            await Product.findByIdAndUpdate(
-
-                item.product._id,
-
-                {
-
-                    $inc: {
-
-                        stock: -item.quantity,
-
-                        sold: item.quantity,
-
-                    },
-
-                }
-
-            );
-
+await User.findByIdAndUpdate(
+    userId,
+    {
+        $inc: {
+            totalOrders: 1
         }
+    }
+);
+for (const item of cart.items) {
+
+    await Product.findByIdAndUpdate(
+        item.product._id,
+        {
+            $inc: {
+                stock: -item.quantity,
+                sold: item.quantity,
+                totalRevenue: item.product.price * item.quantity,
+                totalProfit: item.product.price * item.quantity
+            }
+        }
+    );
+}
 
 /* ==========================
    CREATE PAYMENT
@@ -933,6 +934,20 @@ export const updateOrderStatus = async (req, res) => {
     });
 
     await order.save();
+
+    // 
+
+// const analytics = await generateAnalytics();
+
+// await Report.create({
+
+//     reportName: "Live Dashboard",
+
+//     reportType: "Realtime",
+
+//     ...analytics
+
+// });
 
     return res.status(200).json({
       success: true,

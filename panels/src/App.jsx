@@ -4,7 +4,7 @@ import {
 BrowserRouter,
 Routes,
 Route,
- Navigate 
+Navigate 
 } from "react-router-dom";
 
 /* ================= ADMIN ================= */
@@ -14,6 +14,8 @@ import Customers from "./pages/Admin/Customer";
 import OrderManagement from "./pages/Admin/OrderManagement";
 import CouponManagement from "./pages/Admin/CouponManagement";
 import BlogsManagement from "./pages/Admin/BlogsManagement";
+import FinanceManagement from "./pages/Admin/FinanceManagement";
+import Report from "./pages/Admin/Report";
 
 /* ================= VENDOR ================= */
 import VendorSidebar from "./components/Vendor/VendorSidebar";
@@ -104,6 +106,34 @@ element={<Navigate to="/admin/customers" replace />}
         <AdminNavbar />
         <div className="ngAdminMainContent">
           <BlogsManagement />
+        </div>
+      </div>
+    </div>
+  }
+/>
+<Route
+  path="/admin/finance"
+  element={
+    <div className="ngAdminLayout">
+      <AdminSidebar />
+      <div className="ngAdminRight">
+        <AdminNavbar />
+        <div className="ngAdminMainContent">
+          <FinanceManagement />
+        </div>
+      </div>
+    </div>
+  }
+/>
+<Route
+  path="/admin/reports"
+  element={
+    <div className="ngAdminLayout">
+      <AdminSidebar />
+      <div className="ngAdminRight">
+        <AdminNavbar />
+        <div className="ngAdminMainContent">
+          <Report />
         </div>
       </div>
     </div>

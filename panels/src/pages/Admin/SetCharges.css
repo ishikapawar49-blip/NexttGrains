@@ -1,0 +1,845 @@
+/* ==========================================================
+   OVERLAY
+========================================================== */
+
+.finance-popup-overlay{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.55);
+
+backdrop-filter:blur(4px);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:30px;
+
+z-index:9999;
+
+animation:financeFade .25s ease;
+
+}
+
+@keyframes financeFade{
+
+from{
+
+opacity:0;
+
+}
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+/* ==========================================================
+   POPUP
+========================================================== */
+
+.finance-popup{
+
+width:100%;
+
+max-width:1250px;
+
+max-height:92vh;
+
+overflow-y:auto;
+
+background:#ffffff;
+
+border-radius:22px;
+
+box-shadow:0 25px 70px rgba(0,0,0,.18);
+
+animation:financePopup .28s ease;
+
+}
+
+@keyframes financePopup{
+
+from{
+
+opacity:0;
+
+transform:translateY(30px) scale(.96);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0) scale(1);
+
+}
+
+}
+
+.finance-popup::-webkit-scrollbar{
+
+width:9px;
+
+}
+
+.finance-popup::-webkit-scrollbar-thumb{
+
+background:#c7d8c8;
+
+border-radius:20px;
+
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.finance-popup-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:24px 32px;
+
+border-bottom:1px solid #ececec;
+
+position:sticky;
+
+top:0;
+
+background:#fff;
+
+z-index:50;
+
+}
+
+.finance-popup-header h2{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+font-size:28px;
+
+font-weight:700;
+
+color:#20402f;
+
+}
+
+.finance-popup-header h2 svg{
+
+color:#2e7d32;
+
+}
+
+.finance-popup-close{
+
+width:48px;
+
+height:48px;
+
+border:none;
+
+border-radius:12px;
+
+cursor:pointer;
+
+background:#f5f5f5;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:18px;
+
+transition:.25s;
+
+}
+
+.finance-popup-close:hover{
+
+background:#e53935;
+
+color:#fff;
+
+}
+
+/* ==========================================================
+   FORM
+========================================================== */
+
+.finance-popup-form{
+
+padding:32px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:26px;
+
+}
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+.finance-setting-card{
+
+background:#ffffff;
+
+border:1px solid #e8ece8;
+
+border-radius:18px;
+
+padding:24px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.04);
+
+transition:.3s;
+
+}
+
+.finance-setting-card:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 18px 35px rgba(0,0,0,.07);
+
+}
+
+.finance-setting-title{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+margin-bottom:8px;
+
+}
+
+.finance-setting-title h3{
+
+font-size:20px;
+
+font-weight:700;
+
+color:#1f3c2f;
+
+}
+
+.finance-setting-title svg{
+
+font-size:22px;
+
+color:#2e7d32;
+
+}
+
+.finance-setting-card p{
+
+margin:10px 0 20px;
+
+font-size:14px;
+
+color:#777;
+
+line-height:1.7;
+
+}
+/* ==========================================================
+   GRID LAYOUTS
+========================================================== */
+
+.finance-two-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:22px;
+
+}
+
+.finance-three-grid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:22px;
+
+}
+
+.finance-four-grid{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:20px;
+
+}
+
+.finance-two-column{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:20px;
+
+}
+
+/* ==========================================================
+   INPUT GROUP
+========================================================== */
+
+.finance-input-group{
+
+display:flex;
+
+flex-direction:column;
+
+gap:8px;
+
+}
+
+.finance-input-group label{
+
+font-size:14px;
+
+font-weight:600;
+
+color:#32463d;
+
+}
+
+.finance-input-group input,
+
+.finance-input-group select,
+
+.finance-input-group textarea{
+
+width:100%;
+
+padding:13px 15px;
+
+border:1px solid #dce6dd;
+
+border-radius:12px;
+
+background:#fff;
+
+font-size:15px;
+
+font-family:inherit;
+
+transition:.25s;
+
+outline:none;
+
+}
+
+.finance-input-group textarea{
+
+resize:vertical;
+
+min-height:120px;
+
+}
+
+.finance-input-group input:focus,
+
+.finance-input-group select:focus,
+
+.finance-input-group textarea:focus{
+
+border-color:#2e7d32;
+
+box-shadow:0 0 0 4px rgba(46,125,50,.12);
+
+}
+
+.finance-input-group input::placeholder,
+
+.finance-input-group textarea::placeholder{
+
+color:#a4a4a4;
+
+}
+
+/* ==========================================================
+   CHECKBOX
+========================================================== */
+
+.finance-input-group input[type="checkbox"]{
+
+width:22px;
+
+height:22px;
+
+accent-color:#2e7d32;
+
+cursor:pointer;
+
+margin-top:8px;
+
+box-shadow:none;
+
+}
+
+.finance-input-group input[type="checkbox"]:focus{
+
+box-shadow:none;
+
+}
+
+/* ==========================================================
+   DELIVERY RULE
+========================================================== */
+
+.finance-delivery-rule{
+
+background:#f8faf8;
+
+border:1px solid #e8ede8;
+
+border-radius:16px;
+
+padding:20px;
+
+margin-bottom:18px;
+
+transition:.25s;
+
+}
+
+.finance-delivery-rule:hover{
+
+background:#f1f8f2;
+
+border-color:#d8e7d8;
+
+}
+
+.finance-rule-grid{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:18px;
+
+align-items:end;
+
+}
+
+/* ==========================================================
+   ADD RULE BUTTON
+========================================================== */
+
+.finance-add-rule{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:10px;
+
+margin-top:10px;
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+cursor:pointer;
+
+border-radius:12px;
+
+background:#2e7d32;
+
+color:#fff;
+
+font-size:15px;
+
+font-weight:600;
+
+transition:.25s;
+
+}
+
+.finance-add-rule:hover{
+
+background:#256c2a;
+
+transform:translateY(-2px);
+
+}
+
+/* ==========================================================
+   REMOVE RULE BUTTON
+========================================================== */
+
+.finance-delete-rule{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+margin-top:16px;
+
+padding:11px 18px;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+background:#fdeaea;
+
+color:#d32f2f;
+
+font-size:14px;
+
+font-weight:600;
+
+transition:.25s;
+
+}
+
+.finance-delete-rule:hover{
+
+background:#d32f2f;
+
+color:#fff;
+
+}
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+.finance-popup-footer{
+
+display:flex;
+
+justify-content:flex-end;
+
+align-items:center;
+
+gap:18px;
+
+margin-top:12px;
+
+padding-top:28px;
+
+border-top:1px solid #ececec;
+
+}
+
+/* ==========================================================
+   CANCEL BUTTON
+========================================================== */
+
+.finance-cancel-btn{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:10px;
+
+padding:13px 26px;
+
+border:none;
+
+border-radius:12px;
+
+background:#f3f3f3;
+
+color:#555;
+
+font-size:15px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.finance-cancel-btn:hover{
+
+background:#dddddd;
+
+}
+
+/* ==========================================================
+   SAVE BUTTON
+========================================================== */
+
+.finance-save-btn{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:10px;
+
+padding:13px 28px;
+
+border:none;
+
+border-radius:12px;
+
+background:#2e7d32;
+
+color:#fff;
+
+font-size:15px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.3s;
+
+box-shadow:0 10px 24px rgba(46,125,50,.22);
+
+}
+
+.finance-save-btn:hover{
+
+background:#256c2a;
+
+transform:translateY(-2px);
+
+}
+
+.finance-save-btn:disabled{
+
+opacity:.7;
+
+cursor:not-allowed;
+
+transform:none;
+
+}
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+
+.finance-popup::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+.finance-popup::-webkit-scrollbar-track{
+
+background:#f3f5f3;
+
+}
+
+.finance-popup::-webkit-scrollbar-thumb{
+
+background:#c8d7c8;
+
+border-radius:20px;
+
+}
+
+.finance-popup::-webkit-scrollbar-thumb:hover{
+
+background:#9eb89f;
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media(max-width:1200px){
+
+.finance-four-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.finance-three-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.finance-rule-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:900px){
+
+.finance-popup{
+
+max-width:96%;
+
+max-height:94vh;
+
+}
+
+.finance-popup-form{
+
+padding:22px;
+
+}
+
+.finance-two-grid,
+
+.finance-two-column,
+
+.finance-three-grid,
+
+.finance-four-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.finance-rule-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.finance-popup-footer{
+
+flex-direction:column-reverse;
+
+align-items:stretch;
+
+}
+
+.finance-save-btn,
+
+.finance-cancel-btn{
+
+width:100%;
+
+justify-content:center;
+
+}
+
+}
+
+@media(max-width:600px){
+
+.finance-popup-overlay{
+
+padding:12px;
+
+}
+
+.finance-popup-header{
+
+padding:18px;
+
+}
+
+.finance-popup-header h2{
+
+font-size:22px;
+
+}
+
+.finance-popup-form{
+
+padding:18px;
+
+gap:18px;
+
+}
+
+.finance-setting-card{
+
+padding:18px;
+
+}
+
+.finance-setting-title h3{
+
+font-size:17px;
+
+}
+
+.finance-setting-title svg{
+
+font-size:18px;
+
+}
+
+.finance-input-group input,
+
+.finance-input-group select,
+
+.finance-input-group textarea{
+
+padding:12px;
+
+font-size:14px;
+
+}
+
+.finance-add-rule{
+
+font-size:14px;
+
+padding:12px;
+
+}
+
+.finance-delete-rule{
+
+width:100%;
+
+justify-content:center;
+
+}
+
+}

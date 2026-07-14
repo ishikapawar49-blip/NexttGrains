@@ -14,6 +14,8 @@ import orderRoutes from "./routes/orderRoutes.js";
 import wishlistRoutes from "./routes/wishlistRoutes.js";
 import couponRoutes from "./routes/couponRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js"
+import financeRoutes from "./routes/financeRoutes.js";
+import reportRoutes from "./routes/reportRoutes.js";
 // import notificationRoutes from "./routes/notificationRoutes.js";
 dotenv.config();
 connectDB();
@@ -33,6 +35,8 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/coupons", couponRoutes);
 app.use("/api/blogs", blogRoutes);
+app.use("/api/finance", financeRoutes);
+app.use("/api/reports",reportRoutes);
 // app.use("/api/notification", notificationRoutes);
 
 app.get("/",(req,res)=>{

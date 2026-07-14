@@ -212,9 +212,9 @@ couponSchema.pre("save", async function () {
    Indexes
 =========================================== */
 
-couponSchema.index({
-    couponCode:1
-});
+// couponSchema.index({
+//     couponCode:1
+// });
 
 couponSchema.index({
     status:1

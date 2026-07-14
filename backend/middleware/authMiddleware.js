@@ -13,11 +13,16 @@ const authMiddleware = async (req, res, next) => {
         ) {
 
             token = req.headers.authorization.split(" ")[1];
+ console.log("========== AUTH MIDDLEWARE ==========");
+console.log("Authorization Header:", req.headers.authorization);
+console.log("Token:", token);
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
 
             const decoded = jwt.verify(
                 token,
                 process.env.JWT_SECRET
             );
+console.log("Decoded Token:", decoded);
 
             const user = await User.findById(decoded.id).select("-password");
 
@@ -73,18 +78,31 @@ const authMiddleware = async (req, res, next) => {
 
     }
 
-    catch (error) {
+    // catch (error) {
 
-        return res.status(401).json({
+    //     return res.status(401).json({
 
-            success: false,
+    //         success: false,
 
-            message: "Invalid or expired token.",
+    //         message: "Invalid or expired token.",
 
-        });
+    //     });
 
-    }
+    // }
+catch (error) {
 
+    console.log("========== AUTH ERROR ==========");
+    console.log(error);
+
+    return res.status(401).json({
+
+        success: false,
+
+        message: error.message,
+
+    });
+
+}
 };
 
 export default authMiddleware;

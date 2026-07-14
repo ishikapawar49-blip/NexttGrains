@@ -91,8 +91,8 @@ icon:<CreditCard size={22}/>
 },
 
 {
-title:"KYC Documents",
-path:"/vendor/kyc",
+title:"Profile Management",
+path:"/vendor/profile",
 icon:<BadgeCheck size={22}/>
 }
 

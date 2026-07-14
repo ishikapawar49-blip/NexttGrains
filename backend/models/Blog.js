@@ -278,9 +278,9 @@ blogSchema.index({
     description:"text"
 });
 
-blogSchema.index({
-    slug:1
-});
+// blogSchema.index({
+//     slug:1
+// });
 
 blogSchema.index({
     category:1

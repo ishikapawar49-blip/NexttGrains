@@ -149,6 +149,22 @@ sold:{
 type:Number,
 default:0
 },
+
+totalRevenue: {
+    type: Number,
+    default: 0
+},
+
+totalProfit: {
+    type: Number,
+    default: 0
+},
+
+isDeleted: {
+    type: Boolean,
+    default: false
+},
+
 minStock: {
     type: Number,
     default: 20
