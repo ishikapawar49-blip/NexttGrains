@@ -977,19 +977,15 @@ export const getVendorOrders = async (req, res) => {
 
         const { vendorId } = req.params;
 
-        const orders = await Order.find({
-
-            "items.vendor": vendorId,
-
-        })
+       const orders = await Order.find({
+    isDeleted: false,
+    "items.vendor": vendorId,
+})
 
         .populate({
-
-            path: "user",
-
-            select: "name email phone",
-
-        })
+    path: "user",
+    select: "name"
+})
 
         .populate({
 
@@ -1003,16 +999,62 @@ export const getVendorOrders = async (req, res) => {
 
         });
 
-        return res.status(200).json({
+        // new
+        const formattedOrders = orders.map((order) => {
 
-            success: true,
+const vendorItems = order.items
+    .filter(item => item.vendor.toString() === vendorId)
+    .map(item => ({
 
-            totalOrders: orders.length,
+        productId: item.product,
 
-            orders,
+        productName: item.productName,
 
-        });
+        productDescription: item.productDescription,
 
+        sku: item.sku,
+
+        productImage: item.productImage,
+
+        quantity: item.quantity,
+
+        unit: item.unit,
+
+        productPrice: item.price,
+
+        subtotal: item.subtotal,
+
+    }));
+
+return {
+
+    orderId: order._id,
+
+    orderNumber: order.orderNumber,
+
+    customerName: order.user?.name || "Customer",
+
+    paymentStatus: order.paymentStatus,
+
+    deliveryStatus: order.orderStatus,
+
+    paymentMethod: order.paymentMethod,
+
+    orderDate: order.createdAt,
+
+    items: vendorItems,
+
+};
+});
+      return res.status(200).json({
+
+    success: true,
+
+    totalOrders: formattedOrders.length,
+
+    orders: formattedOrders,
+
+});
     }
 
     catch (error) {
