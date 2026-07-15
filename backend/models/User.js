@@ -234,49 +234,34 @@ default:"Pending"
 
 },
 
-aadhaar:{
+aadhaar: {
 
-number:{
-type:String,
-default:""
-},
+  number: {
+    type: String,
+    default: ""
+  },
 
-front:{
+  file: {
 
-url:{
-type:String,
-default:""
-},
+    url: {
+      type: String,
+      default: ""
+    },
 
-publicId:{
-type:String,
-default:""
-}
+    publicId: {
+      type: String,
+      default: ""
+    }
 
-},
+  },
 
-back:{
-
-url:{
-type:String,
-default:""
-},
-
-publicId:{
-type:String,
-default:""
-}
+  status: {
+    type: String,
+    enum: ["Pending", "Verified", "Rejected"],
+    default: "Pending"
+  }
 
 },
-
-status:{
-type:String,
-enum:["Pending","Verified","Rejected"],
-default:"Pending"
-}
-
-},
-
 gst:{
 
 number:{

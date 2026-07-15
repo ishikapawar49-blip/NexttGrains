@@ -1,5 +1,5 @@
 import "./App.css";
-import ProductManagement from "./pages/Admin/ProductManagement";
+
 import {
 BrowserRouter,
 Routes,
@@ -16,6 +16,7 @@ import CouponManagement from "./pages/Admin/CouponManagement";
 import BlogsManagement from "./pages/Admin/BlogsManagement";
 import FinanceManagement from "./pages/Admin/FinanceManagement";
 import Report from "./pages/Admin/Report";
+import ProductManagement from "./pages/Admin/ProductManagement";
 
 /* ================= VENDOR ================= */
 import VendorSidebar from "./components/Vendor/VendorSidebar";
@@ -24,6 +25,7 @@ import VendorSignup from "./components/Vendor/VendorSignup";
 import VendorDashboard from "./pages/Vendor/VendorDashboard";
 import Products from "./pages/Vendor/Products";
 import AddProducts from "./pages/Vendor/AddProducts";
+import ProfileManagement from "./pages/Vendor/ProfileManagement";
 
 function App(){
 
@@ -244,6 +246,30 @@ element={
 <div className="ngVendorRight">
 
 <AddProducts/>
+
+</div>
+
+</div>
+
+}
+
+/>
+
+{/* ================= PROFILE MANAGEMENT ================= */}
+
+<Route
+
+path="/vendor/profile"
+
+element={
+
+<div className="ngVendorLayout">
+
+<VendorSidebar/>
+
+<div className="ngVendorRight">
+
+<ProfileManagement/>
 
 </div>
 
