@@ -5,6 +5,7 @@ import Product from "../models/Product.js";
 import Finance from "../models/Finance.js";
 import Coupon from "../models/Coupon.js";
 import { generateAnalytics } from "../utils/reportAnalytics.js";
+import { generateVendorAnalytics } from "../utils/vendorReportAnalytics.js";
 import PDFDocument from "pdfkit";
 
 /* ==========================================================
@@ -617,6 +618,45 @@ align:"center"
 );
 
 doc.end();
+
+}
+
+catch(error){
+
+console.log(error);
+
+res.status(500).json({
+
+success:false,
+
+message:error.message
+
+});
+
+}
+
+};
+
+// VENDOR
+/* ==========================================================
+   VENDOR DASHBOARD ANALYTICS
+========================================================== */
+
+export const getVendorDashboardAnalytics = async (req, res) => {
+
+try{
+
+const vendorId = req.user.id;
+
+const analytics = await generateVendorAnalytics(vendorId);
+
+res.status(200).json({
+
+success:true,
+
+analytics
+
+});
 
 }
 

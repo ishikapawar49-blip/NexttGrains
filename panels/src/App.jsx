@@ -27,6 +27,7 @@ import Products from "./pages/Vendor/Products";
 import AddProducts from "./pages/Vendor/AddProducts";
 import ProfileManagement from "./pages/Vendor/ProfileManagement";
 import Order from "./pages/Vendor/Order";
+import VendorReport from "./pages/Vendor/Report";
 
 function App(){
 
@@ -303,6 +304,31 @@ element={
 }
 
 />
+
+{/* ================= VENDOR REPORTS ================= */}
+
+<Route
+
+path="/vendor/reports"
+
+element={
+
+<div className="ngVendorLayout">
+
+<VendorSidebar/>
+
+<div className="ngVendorRight">
+
+<VendorReport/>
+
+</div>
+
+</div>
+
+}
+
+/>
+
 </Routes>
 
 </BrowserRouter>

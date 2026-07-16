@@ -37,22 +37,16 @@ icon:<Boxes size={22}/>
 },
 
 {
-title:"Inventory",
-path:"/vendor/inventory",
-icon:<PackageSearch size={22}/>
-},
-
-{
 title:"Orders",
 path:"/vendor/orders",
 icon:<ShoppingCart size={22}/>
 },
 
-{
-title:"Customers",
-path:"/vendor/customers",
-icon:<Users size={22}/>
-},
+// {
+// title:"Customers",
+// path:"/vendor/customers",
+// icon:<Users size={22}/>
+// },
 
 {
 title:"Reports",
@@ -72,17 +66,12 @@ path:"/vendor/notifications",
 icon:<Bell size={22}/>
 },
 
-{
-title:"Store Settings",
-path:"/vendor/store",
-icon:<Store size={22}/>
-},
+// {
+// title:"Store Settings",
+// path:"/vendor/store",
+// icon:<Store size={22}/>
+// },
 
-{
-title:"GST Details",
-path:"/vendor/gst",
-icon:<FileText size={22}/>
-},
 
 {
 title:"Bank Details",

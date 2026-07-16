@@ -1,11 +1,31 @@
-if (req.user.role !== "vendor") {
+const vendorMiddleware = (req, res, next) => {
 
-    return res.status(403).json({
+    if (!req.user) {
 
-        success: false,
+        return res.status(401).json({
 
-        message: "Vendor access only.",
+            success: false,
 
-    });
+            message: "Unauthorized."
 
-}
+        });
+
+    }
+
+    if (req.user.role !== "vendor") {
+
+        return res.status(403).json({
+
+            success: false,
+
+            message: "Vendor access only."
+
+        });
+
+    }
+
+    next();
+
+};
+
+export default vendorMiddleware;

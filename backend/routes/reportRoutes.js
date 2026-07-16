@@ -1,5 +1,6 @@
 import express from "express";
-
+import authMiddleware from "../middleware/authMiddleware.js";
+import vendorMiddleware from "../middleware/vendorMiddleware.js";
 import {
 
 createReport,
@@ -7,6 +8,8 @@ createReport,
 getReports,
 
 getDashboardAnalytics,
+
+getVendorDashboardAnalytics,
 
 getRevenueChart,
 
@@ -78,6 +81,20 @@ getDashboardAnalytics
 
 );
 
+/* ==========================================
+   VENDOR DASHBOARD ANALYTICS
+========================================== */
+router.get(
+
+"/vendor/dashboard",
+
+authMiddleware,
+
+vendorMiddleware,
+
+getVendorDashboardAnalytics
+
+);
 /* ==========================================
    Revenue Chart
 ========================================== */

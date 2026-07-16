@@ -729,7 +729,61 @@ border-radius:20px;
 background:#d4a017;
 border-radius:20px;
 }
+/* REFRESH */
 
+.ven-orderpage-refresh-btn{
+
+    height:46px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    padding:0 18px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:999px;
+
+    background:#2F6B2F;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.30s;
+
+    font-family:"Poppins",sans-serif;
+
+}
+
+.ven-orderpage-refresh-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+
+    0 14px 30px rgba(88,122,23,.25);
+
+}
+
+.ven-orderpage-refresh-btn:disabled{
+
+    opacity:.65;
+
+    cursor:not-allowed;
+
+}
 /* ==========================================================
 ANIMATIONS
 ========================================================== */
