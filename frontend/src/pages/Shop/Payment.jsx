@@ -124,8 +124,8 @@ export default function Payment() {
               <strong
                 className={
                   success
-                    ? "green"
-                    : "red"
+                    ? "ngPaymentgreen"
+                    : "ngPaymentred"
                 }
               >
                 {success

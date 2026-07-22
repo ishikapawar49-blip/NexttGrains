@@ -8,6 +8,8 @@ Navigate
 } from "react-router-dom";
 
 /* ================= ADMIN ================= */
+import AdminLogin from "./components/Admin/AdminLogin";
+import AdminProtectedRoute from "./components/Admin/AdminProtectedRoute";
 import AdminSidebar from "./components/Admin/AdminSidebar";
 import AdminNavbar from "./components/Admin/AdminNavbar";
 import Customers from "./pages/Admin/Customer";
@@ -17,6 +19,7 @@ import BlogsManagement from "./pages/Admin/BlogsManagement";
 import FinanceManagement from "./pages/Admin/FinanceManagement";
 import Report from "./pages/Admin/Report";
 import ProductManagement from "./pages/Admin/ProductManagement";
+import VendorManagement from "./pages/Admin/VendorManagement";
 
 /* ================= VENDOR ================= */
 import VendorSidebar from "./components/Vendor/VendorSidebar";
@@ -38,7 +41,13 @@ return(
 <Routes>
 
 
+
 {/* ================= ADMIN ================= */}
+<Route
+  path="/admin/login"
+  element={<AdminLogin />}
+/>
+
 <Route
 path="/admin"
 element={<Navigate to="/admin/customers" replace />}
@@ -46,6 +55,7 @@ element={<Navigate to="/admin/customers" replace />}
 <Route
   path="/admin/customers"
   element={
+    <AdminProtectedRoute>
     <div className="ngAdminLayout">
       <AdminSidebar />
       <div className="ngAdminRight">
@@ -55,12 +65,14 @@ element={<Navigate to="/admin/customers" replace />}
         </div>
       </div>
     </div>
+    </AdminProtectedRoute>
   }
 />
 
 <Route
   path="/admin/products"
   element={
+    <AdminProtectedRoute>
     <div className="ngAdminLayout">
       <AdminSidebar />
       <div className="ngAdminRight">
@@ -70,11 +82,13 @@ element={<Navigate to="/admin/customers" replace />}
         </div>
       </div>
     </div>
+    </AdminProtectedRoute>
   }
 />
 <Route
   path="/admin/orders"
   element={
+    <AdminProtectedRoute>
     <div className="ngAdminLayout">
       <AdminSidebar />
       <div className="ngAdminRight">
@@ -84,12 +98,14 @@ element={<Navigate to="/admin/customers" replace />}
         </div>
       </div>
     </div>
+    </AdminProtectedRoute>
   }
 />
 
 <Route
   path="/admin/coupons"
   element={
+    <AdminProtectedRoute>
     <div className="ngAdminLayout">
       <AdminSidebar />
       <div className="ngAdminRight">
@@ -99,11 +115,13 @@ element={<Navigate to="/admin/customers" replace />}
         </div>
       </div>
     </div>
+    </AdminProtectedRoute>
   }
 />
 <Route
   path="/admin/blogs"
   element={
+    <AdminProtectedRoute>
     <div className="ngAdminLayout">
       <AdminSidebar />
       <div className="ngAdminRight">
@@ -113,11 +131,13 @@ element={<Navigate to="/admin/customers" replace />}
         </div>
       </div>
     </div>
+    </AdminProtectedRoute>
   }
 />
 <Route
   path="/admin/finance"
   element={
+    <AdminProtectedRoute>
     <div className="ngAdminLayout">
       <AdminSidebar />
       <div className="ngAdminRight">
@@ -127,11 +147,13 @@ element={<Navigate to="/admin/customers" replace />}
         </div>
       </div>
     </div>
+    </AdminProtectedRoute>
   }
 />
 <Route
   path="/admin/reports"
   element={
+    <AdminProtectedRoute>
     <div className="ngAdminLayout">
       <AdminSidebar />
       <div className="ngAdminRight">
@@ -141,8 +163,28 @@ element={<Navigate to="/admin/customers" replace />}
         </div>
       </div>
     </div>
+    </AdminProtectedRoute>
   }
 />
+
+<Route
+  path="/admin/vendors"
+  element={
+    <AdminProtectedRoute>
+    <div className="ngAdminLayout">
+      <AdminSidebar />
+      <div className="ngAdminRight">
+        <AdminNavbar />
+        <div className="ngAdminMainContent">
+          <VendorManagement />
+        </div>
+      </div>
+    </div>
+    </AdminProtectedRoute>
+  }
+/>
+
+{/* VENDOR  */}
 {/* ================= VENDOR AUTH ================= */}
 
 <Route

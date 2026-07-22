@@ -1,21 +1,14 @@
 import express from "express";
-
 import {
-
 registerUser,
-
 loginUser,
-
+adminLogin,
+adminRegister,
 getProfile,
-
 vendorRegister,
-
 vendorLogin
-
 }
-
 from "../controllers/authController.js";
-
 import authMiddleware from "../middleware/authMiddleware.js";
 
 const router=express.Router();
@@ -58,7 +51,20 @@ vendorLogin
 
 );
 
+router.post(
 
+"/admin-login",
+
+adminLogin
+
+);
+router.post(
+
+"/admin-register",
+
+adminRegister
+
+);
 // PROFILE
 
 router.get(

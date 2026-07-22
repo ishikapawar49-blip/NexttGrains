@@ -1,0 +1,893 @@
+/* ==========================================================
+GOOGLE FONT
+========================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+/* ==========================================================
+OVERLAY
+========================================================== */
+
+.admin-vendor-detail-overlay{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(15,23,42,.55);
+
+backdrop-filter:blur(8px);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:40px;
+
+z-index:9999;
+
+animation:adminVendorFade .25s ease;
+
+}
+
+/* ==========================================================
+MODAL
+========================================================== */
+
+.admin-vendor-detail-modal{
+
+width:100%;
+
+max-width:1300px;
+
+max-height:92vh;
+
+overflow-y:auto;
+
+background:#ffffff;
+
+border-radius:28px;
+
+box-shadow:0 30px 80px rgba(0,0,0,.20);
+
+animation:adminVendorScale .25s ease;
+
+}
+
+/* ==========================================================
+HEADER
+========================================================== */
+
+.admin-vendor-detail-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:28px 34px;
+
+border-bottom:1px solid #eef2f7;
+
+}
+
+/* ==========================================================
+PROFILE
+========================================================== */
+
+.admin-vendor-detail-profile{
+
+display:flex;
+
+align-items:center;
+
+gap:20px;
+
+}
+
+.admin-vendor-detail-image{
+
+width:82px;
+
+height:82px;
+
+border-radius:50%;
+
+object-fit:cover;
+
+border:4px solid #22c55e;
+
+}
+
+.admin-vendor-detail-avatar{
+
+width:82px;
+
+height:82px;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+background:#22c55e;
+
+color:#fff;
+
+font-size:28px;
+
+font-weight:700;
+
+}
+
+.admin-vendor-detail-profile h2{
+
+font-size:28px;
+
+font-weight:700;
+
+color:#111827;
+
+margin-bottom:6px;
+
+}
+
+.admin-vendor-detail-profile p{
+
+font-size:15px;
+
+color:#6b7280;
+
+}
+
+/* ==========================================================
+CLOSE BUTTON
+========================================================== */
+
+.admin-vendor-detail-close{
+
+width:48px;
+
+height:48px;
+
+border:none;
+
+border-radius:14px;
+
+background:#f3f4f6;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.admin-vendor-detail-close:hover{
+
+background:#fee2e2;
+
+color:#dc2626;
+
+}
+
+/* ==========================================================
+BODY
+========================================================== */
+
+.admin-vendor-detail-body{
+
+display:grid;
+
+grid-template-columns:2fr 1fr;
+
+gap:28px;
+
+padding:34px;
+
+}
+
+/* ==========================================================
+LEFT & RIGHT
+========================================================== */
+
+.admin-vendor-detail-left,
+
+.admin-vendor-detail-right{
+
+display:flex;
+
+flex-direction:column;
+
+gap:24px;
+
+}
+
+/* ==========================================================
+CARD
+========================================================== */
+
+.admin-vendor-detail-card{
+
+background:#ffffff;
+
+border:1px solid #edf2f7;
+
+border-radius:22px;
+
+padding:24px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+transition:.25s;
+
+}
+
+.admin-vendor-detail-card:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 18px 40px rgba(0,0,0,.08);
+
+}
+
+.admin-vendor-detail-card h3{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+font-size:18px;
+
+font-weight:700;
+
+color:#111827;
+
+margin-bottom:22px;
+
+}
+/* ==========================================================
+GRID
+========================================================== */
+
+.admin-vendor-detail-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:22px;
+
+}
+
+.admin-vendor-detail-full{
+
+grid-column:1/-1;
+
+}
+
+/* ==========================================================
+LABELS & VALUES
+========================================================== */
+
+.admin-vendor-detail-grid label{
+
+display:block;
+
+font-size:13px;
+
+font-weight:600;
+
+color:#6b7280;
+
+margin-bottom:8px;
+
+}
+
+.admin-vendor-detail-grid p{
+
+font-size:15px;
+
+font-weight:500;
+
+color:#111827;
+
+line-height:1.7;
+
+word-break:break-word;
+
+}
+
+/* ==========================================================
+STATISTICS
+========================================================== */
+
+.admin-vendor-detail-stats{
+
+display:grid;
+
+grid-template-columns:1fr;
+
+gap:18px;
+
+}
+
+.admin-vendor-detail-stat-box{
+
+background:#f8fafc;
+
+border:1px solid #e5e7eb;
+
+border-radius:18px;
+
+padding:22px;
+
+transition:.25s;
+
+}
+
+.admin-vendor-detail-stat-box:hover{
+
+background:#ffffff;
+
+border-color:#22c55e;
+
+transform:translateY(-3px);
+
+box-shadow:0 12px 28px rgba(0,0,0,.08);
+
+}
+
+.admin-vendor-detail-stat-box span{
+
+display:block;
+
+font-size:13px;
+
+font-weight:600;
+
+color:#6b7280;
+
+margin-bottom:10px;
+
+}
+
+.admin-vendor-detail-stat-box h2{
+
+font-size:28px;
+
+font-weight:700;
+
+color:#111827;
+
+}
+
+/* ==========================================================
+STATUS LIST
+========================================================== */
+
+.admin-vendor-detail-status-list{
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
+}
+
+.admin-vendor-detail-status-item{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:14px 0;
+
+border-bottom:1px solid #eef2f7;
+
+}
+
+.admin-vendor-detail-status-item:last-child{
+
+border-bottom:none;
+
+}
+
+.admin-vendor-detail-status-item label{
+
+font-size:14px;
+
+font-weight:600;
+
+color:#6b7280;
+
+}
+
+.admin-vendor-detail-status-item span{
+
+font-size:14px;
+
+font-weight:600;
+
+color:#111827;
+
+}
+
+/* ==========================================================
+STATUS CHIPS
+========================================================== */
+
+.admin-vendor-detail-chip{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:8px 16px;
+
+border-radius:999px;
+
+font-size:12px;
+
+font-weight:700;
+
+text-transform:capitalize;
+
+}
+
+/* ---------- Pending ---------- */
+
+.admin-vendor-detail-chip.pending{
+
+background:#fef3c7;
+
+color:#b45309;
+
+}
+
+/* ---------- Verified ---------- */
+
+.admin-vendor-detail-chip.verified{
+
+background:#dcfce7;
+
+color:#15803d;
+
+}
+
+/* ---------- Approved ---------- */
+
+.admin-vendor-detail-chip.approved{
+
+background:#dcfce7;
+
+color:#15803d;
+
+}
+
+/* ---------- Rejected ---------- */
+
+.admin-vendor-detail-chip.rejected{
+
+background:#fee2e2;
+
+color:#dc2626;
+
+}
+
+/* ---------- Active ---------- */
+
+.admin-vendor-detail-chip.active{
+
+background:#dcfce7;
+
+color:#15803d;
+
+}
+
+/* ---------- Draft ---------- */
+
+.admin-vendor-detail-chip.draft{
+
+background:#dbeafe;
+
+color:#1d4ed8;
+
+}
+
+/* ---------- Suspended ---------- */
+
+.admin-vendor-detail-chip.suspended{
+
+background:#fee2e2;
+
+color:#dc2626;
+
+}
+
+/* ---------- Inactive ---------- */
+
+.admin-vendor-detail-chip.inactive{
+
+background:#f3f4f6;
+
+color:#6b7280;
+
+}
+/* ==========================================================
+DOCUMENTS
+========================================================== */
+
+.admin-vendor-detail-documents{
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
+}
+
+.admin-vendor-detail-document{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+gap:20px;
+
+padding:18px 20px;
+
+border:1px solid #e5e7eb;
+
+border-radius:18px;
+
+background:#f9fafb;
+
+transition:.25s;
+
+}
+
+.admin-vendor-detail-document:hover{
+
+background:#ffffff;
+
+border-color:#22c55e;
+
+box-shadow:0 12px 28px rgba(0,0,0,.08);
+
+}
+
+.admin-vendor-detail-document h4{
+
+font-size:16px;
+
+font-weight:700;
+
+color:#111827;
+
+margin-bottom:6px;
+
+}
+
+.admin-vendor-detail-document p{
+
+font-size:14px;
+
+color:#6b7280;
+
+}
+
+.admin-vendor-detail-document-actions{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+}
+
+.admin-vendor-detail-document-actions button,
+
+.admin-vendor-detail-document-actions a{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+padding:10px 18px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:14px;
+
+font-weight:600;
+
+cursor:pointer;
+
+text-decoration:none;
+
+transition:.25s;
+
+}
+
+/* Preview */
+
+.admin-vendor-detail-document-actions button{
+
+background:#dbeafe;
+
+color:#1d4ed8;
+
+}
+
+.admin-vendor-detail-document-actions button:hover{
+
+background:#bfdbfe;
+
+}
+
+/* Download */
+
+.admin-vendor-detail-document-actions a{
+
+background:#dcfce7;
+
+color:#15803d;
+
+}
+
+.admin-vendor-detail-document-actions a:hover{
+
+background:#bbf7d0;
+
+}
+
+/* ==========================================================
+SCROLLBAR
+========================================================== */
+
+.admin-vendor-detail-modal::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+.admin-vendor-detail-modal::-webkit-scrollbar-track{
+
+background:#f3f4f6;
+
+}
+
+.admin-vendor-detail-modal::-webkit-scrollbar-thumb{
+
+background:#cbd5e1;
+
+border-radius:20px;
+
+}
+
+.admin-vendor-detail-modal::-webkit-scrollbar-thumb:hover{
+
+background:#94a3b8;
+
+}
+
+/* ==========================================================
+ANIMATIONS
+========================================================== */
+
+@keyframes adminVendorFade{
+
+from{
+
+opacity:0;
+
+}
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+@keyframes adminVendorScale{
+
+from{
+
+opacity:0;
+
+transform:scale(.96);
+
+}
+
+to{
+
+opacity:1;
+
+transform:scale(1);
+
+}
+
+}
+
+/* ==========================================================
+RESPONSIVE
+========================================================== */
+
+@media(max-width:1100px){
+
+.admin-vendor-detail-body{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.admin-vendor-detail-overlay{
+
+padding:16px;
+
+}
+
+.admin-vendor-detail-modal{
+
+max-height:95vh;
+
+border-radius:20px;
+
+}
+
+.admin-vendor-detail-header{
+
+padding:22px;
+
+align-items:flex-start;
+
+gap:18px;
+
+flex-direction:column;
+
+}
+
+.admin-vendor-detail-profile{
+
+width:100%;
+
+}
+
+.admin-vendor-detail-body{
+
+padding:22px;
+
+}
+
+.admin-vendor-detail-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.admin-vendor-detail-full{
+
+grid-column:auto;
+
+}
+
+.admin-vendor-detail-document{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.admin-vendor-detail-document-actions{
+
+width:100%;
+
+flex-wrap:wrap;
+
+}
+
+.admin-vendor-detail-document-actions button,
+
+.admin-vendor-detail-document-actions a{
+
+flex:1;
+
+justify-content:center;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.admin-vendor-detail-profile{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.admin-vendor-detail-avatar,
+
+.admin-vendor-detail-image{
+
+width:70px;
+
+height:70px;
+
+}
+
+.admin-vendor-detail-profile h2{
+
+font-size:22px;
+
+}
+
+.admin-vendor-detail-card{
+
+padding:18px;
+
+}
+
+.admin-vendor-detail-stat-box{
+
+padding:18px;
+
+}
+
+.admin-vendor-detail-stat-box h2{
+
+font-size:22px;
+
+}
+
+.admin-vendor-detail-close{
+
+width:42px;
+
+height:42px;
+
+}
+
+}

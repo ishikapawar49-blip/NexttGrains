@@ -13,7 +13,7 @@ trim:true
 email: {
   type: String,
   required: true,
-  unique: true,
+  // unique: true,
   trim: true,
   lowercase: true,
   index: true,
@@ -345,7 +345,16 @@ enum:[
 "Suspended"
 ],
 default:"Draft"
-}
+},
+vendorApprovalStatus:{
+        type:String,
+        enum:[
+            "Pending",
+            "Approved",
+            "Rejected"
+        ],
+        default:"Pending"
+    }
 
 },
 

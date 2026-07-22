@@ -289,7 +289,7 @@ transform:translateY(0);
 
 /* ICON COLORS */
 
-.green{
+.pm-card-green{
 
     background:#e8f5e9;
 
@@ -297,7 +297,7 @@ transform:translateY(0);
 
 }
 
-.blue{
+.pm-card-blue{
 
     background:#e3f2fd;
 
@@ -305,7 +305,7 @@ transform:translateY(0);
 
 }
 
-.orange{
+.pm-card-orange{
 
     background:#fff3e0;
 
@@ -313,7 +313,7 @@ transform:translateY(0);
 
 }
 
-.purple{
+.pm-card-purple{
 
     background:#ede7f6;
 

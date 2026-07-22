@@ -64,24 +64,18 @@ export const registerUser = async (req, res) => {
         }
 
 
-        const existingEmail = await User.findOne({
+const existingEmail = await User.findOne({
+    email,
+    role: "customer"
+});
 
-            email
+if (existingEmail) {
+    return res.status(400).json({
+        success: false,
+        message: "Customer email already exists"
+    });
+}
 
-        });
-
-
-        if (existingEmail) {
-
-            return res.status(400).json({
-
-                success: false,
-
-                message: "Email already exists"
-
-            });
-
-        }
 
 
         const existingPhone = await User.findOne({
@@ -213,10 +207,9 @@ export const loginUser = async (req, res) => {
 
 
         const user = await User.findOne({
-
-            email
-
-        });
+    email,
+    role: "customer"
+});
 
 
         if (!user) {
@@ -300,8 +293,177 @@ export const loginUser = async (req, res) => {
 };
 
 
+// =======================
+// ADMIN LOGIN
+// =======================
 
+export const adminLogin = async (req, res) => {
 
+    try {
+
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+
+            return res.status(400).json({
+                success: false,
+                message: "Please enter email and password"
+            });
+
+        }
+
+        const admin = await User.findOne({
+
+            email,
+            role: "admin"
+
+        });
+
+        if (!admin) {
+
+            return res.status(404).json({
+
+                success: false,
+                message: "Admin not found"
+
+            });
+
+        }
+
+        const match = await bcrypt.compare(
+
+            password,
+            admin.password
+
+        );
+
+        if (!match) {
+
+            return res.status(401).json({
+
+                success: false,
+                message: "Invalid Credentials"
+
+            });
+
+        }
+
+        const token = generateToken(admin._id);
+
+        res.status(200).json({
+
+            success: true,
+
+            message: "Admin Login Successful",
+
+            token,
+
+            user: {
+
+                id: admin._id,
+                name: admin.name,
+                email: admin.email,
+                role: admin.role
+
+            }
+
+        });
+
+    }
+
+    catch (error) {
+
+        res.status(500).json({
+
+            success: false,
+            message: error.message
+
+        });
+
+    }
+
+};
+
+// =======================
+// ADMIN REGISTER (ONE TIME)
+// =======================
+
+export const adminRegister = async (req, res) => {
+
+    try {
+
+        const {
+            name,
+            email,
+            phone,
+            password
+        } = req.body;
+
+        const existingEmail = await User.findOne({
+    email,
+    role: "admin"
+});
+
+if (existingEmail) {
+    return res.status(400).json({
+        success: false,
+        message: "Admin email already exists"
+    });
+}
+        const existingPhone = await User.findOne({
+            phone
+        });
+
+        if (existingPhone) {
+            return res.status(400).json({
+                success: false,
+                message: "Phone already exists"
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const admin = await User.create({
+
+            name,
+
+            email,
+
+            phone,
+
+            password: hashedPassword,
+
+            role: "admin",
+
+            isVerified: true
+
+        });
+
+        res.status(201).json({
+
+            success: true,
+
+            message: "Admin Created Successfully",
+
+            admin
+
+        });
+
+    }
+
+    catch (error) {
+
+        res.status(500).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
+};
 // =======================
 // GET PROFILE
 // =======================
@@ -409,7 +571,8 @@ const existing=
 
 await User.findOne({
 
-email
+email,
+    role: "vendor"
 
 });
 

@@ -807,7 +807,7 @@ Authorization:`Bearer ${token}`
 
         <div className="pm-card">
 
-          <div className="pm-card-icon green">
+          <div className="pm-card-icon pm-card-green">
 
             <FaLeaf />
 
@@ -831,7 +831,7 @@ Authorization:`Bearer ${token}`
 
         <div className="pm-card">
 
-          <div className="pm-card-icon blue">
+          <div className="pm-card-icon pm-card-blue">
 
             <MdInventory2 />
 
@@ -855,7 +855,7 @@ Authorization:`Bearer ${token}`
 
         <div className="pm-card">
 
-          <div className="pm-card-icon orange">
+          <div className="pm-card-icon pm-card-orange">
 
             <FaBoxOpen />
 
@@ -879,7 +879,7 @@ Authorization:`Bearer ${token}`
 
         <div className="pm-card">
 
-          <div className="pm-card-icon purple">
+          <div className="pm-card-icon pm-card-purple">
 
             <FaRupeeSign />
 

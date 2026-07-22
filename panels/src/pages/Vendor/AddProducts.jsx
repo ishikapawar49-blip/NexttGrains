@@ -6,6 +6,7 @@ import {toast} from "react-toastify";
 
 export default function AddProducts(){
 const navigate=useNavigate();
+const token = localStorage.getItem("vendorToken");
 const [loading,setLoading]=useState(false);
 const [preview,setPreview]=useState([]);
 const {id}=useParams();
@@ -342,6 +343,7 @@ await axios.put(
 data,
 {
 headers:{
+Authorization:`Bearer ${token}`,
 "Content-Type":"multipart/form-data"
 }
 }
@@ -350,13 +352,14 @@ toast.success("Product Updated");
 }
 else{
 await axios.post(
-"http://localhost:5000/api/products/add",
-data,
-{
-headers:{
-"Content-Type":"multipart/form-data"
-}
-}
+    "http://localhost:5000/api/products/add",
+    data,
+    {
+        headers:{
+            Authorization:`Bearer ${token}`,
+            "Content-Type":"multipart/form-data"
+        }
+    }
 );
 toast.success("Product Added");
 }

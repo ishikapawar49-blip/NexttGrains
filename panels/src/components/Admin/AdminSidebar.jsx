@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./AdminSidebar.css";
-import { NavLink } from "react-router-dom";
-
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -25,7 +24,6 @@ import {
 } from "lucide-react";
 
 const menuItems=[
-
 // {
 // title:"Dashboard",
 // path:"/",
@@ -56,11 +54,11 @@ path:"/admin/orders",
 icon:<ShoppingCart size={22}/>
 },
 
-{
-title:"Inventory",
-path:"/admin/inventory",
-icon:<PackageSearch size={22}/>
-},
+// {
+// title:"Inventory",
+// path:"/admin/inventory",
+// icon:<PackageSearch size={22}/>
+// },
 
 {
 title:"Coupons",
@@ -106,17 +104,17 @@ path:"/admin/notifications",
 icon:<Bell size={22}/>
 },
 
-{
-title:"Support Tickets",
-path:"/admin/support",
-icon:<LifeBuoy size={22}/>
-},
+// {
+// title:"Support Tickets",
+// path:"/admin/support",
+// icon:<LifeBuoy size={22}/>
+// },
 
-{
-title:"Audit Logs",
-path:"/admin/auditlogs",
-icon:<ScrollText size={22}/>
-},
+// {
+// title:"Audit Logs",
+// path:"/admin/auditlogs",
+// icon:<ScrollText size={22}/>
+// },
 
 {
 title:"Settings",
@@ -129,6 +127,13 @@ icon:<Settings size={22}/>
 export default function AdminSidebar() {
 
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+  localStorage.removeItem("adminToken");
+  localStorage.removeItem("adminUser");
+  navigate("/admin/login", { replace: true });
+};
 
   return (
 
@@ -186,13 +191,16 @@ export default function AdminSidebar() {
         </button>
 
         {!collapsed && (
-          <div className="logoutBtn">
+          <button
+  className="logoutBtn"
+  onClick={handleLogout}
+>
 
-            <LogOut size={21} />
+  <LogOut size={21} />
 
-            <span>Sign out</span>
+  {!collapsed && <span>Sign out</span>}
 
-          </div>
+</button>
         )}
 
       </div>

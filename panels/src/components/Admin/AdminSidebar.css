@@ -148,14 +148,25 @@
 }
 
 .logoutBtn{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    color:#757575;
-    font-size:16px;
-    cursor:pointer;
-}
 
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+
+width:100%;
+
+border:none;
+outline:none;
+background:transparent;
+
+cursor:pointer;
+
+color:inherit;
+
+font:inherit;
+
+}
 .logoutBtn svg{
     width:18px;
     height:18px;

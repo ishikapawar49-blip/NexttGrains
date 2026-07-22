@@ -24,11 +24,11 @@ LogOut
 
 const menuItems=[
 
-{
-title:"Dashboard",
-path:"/vendor/dashboard",
-icon:<LayoutDashboard size={22}/>
-},
+// {
+// title:"Dashboard",
+// path:"/vendor/dashboard",
+// icon:<LayoutDashboard size={22}/>
+// },
 
 {
 title:"Products",
