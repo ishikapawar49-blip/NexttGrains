@@ -1,5 +1,10 @@
 import "./FreshArrivals.css";
 import "./BestSellers.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { useWishlist } from "../../context/WishlistContext";
+import { useCart } from "../../context/CartContext";
 import {
   Heart,
   Star,
@@ -7,60 +12,43 @@ import {
   Plus,
   ChevronRight,
 } from "lucide-react";
-
-import product1 from "../../assets/pi5.jpg";
-import product2 from "../../assets/pp6.jpg";
-import product3 from "../../assets/b5.jpg";
-import product4 from "../../assets/b4.jpg";
-
-const products = [
-  {
-    id: 1,
-    image: product1,
-    discount: "20% OFF",
-    rating: "4.7",
-    reviews: "980",
-    name: "Premium Masoor Dal",
-    desc: "Unpolished, slow-sun dried · 1 kg",
-    price: 159,
-    oldPrice: 199,
-  },
-  {
-    id: 2,
-    image: product2,
-    discount: "24% OFF",
-    rating: "4.8",
-    reviews: "1,340",
-    name: "Heritage Ragi Flour",
-    desc: "Finger millet, calcium-rich · 1 kg",
-    price: 129,
-    oldPrice: 169,
-  },
-  {
-    id: 3,
-    image: product3,
-    discount: "25% OFF",
-    rating: "4.9",
-    reviews: "3,120",
-    name: "Royal Dry Fruit Mix",
-    desc: "Almonds · Cashews · Walnuts · Dates · 500 g",
-    price: 749,
-    oldPrice: 999,
-  },
-  {
-    id: 4,
-    image: product4,
-    discount: "20% OFF",
-    rating: "4.8",
-    reviews: "4,280",
-    name: "Chakki Fresh Atta",
-    desc: "Traditional chakki, low GI · 5 kg",
-    price: 319,
-    oldPrice: 399,
-  },
-];
-
+ 
 function FreshArrivals() {
+  const [products,setProducts]=useState([]);
+const [loading,setLoading]=useState(true);
+const { toggleWishlist, isWishlisted } = useWishlist();
+const { addToCart } = useCart();
+
+const getProducts = async () => {
+  try {
+
+    const res = await axios.get(
+      "http://localhost:5000/api/products/new-arrivals"
+    );
+
+    console.log(res.data);
+
+    setProducts(res.data.products);
+
+  } catch (err) {
+    console.log(err);
+  } finally {
+    setLoading(false);
+  }
+};
+
+const getDiscount = (mrp, price) => {
+
+  if (!mrp || !price) return 0;
+
+  return getDiscount(item.mrp, item.price)
+
+};
+
+useEffect(()=>{
+getProducts();
+},[]);
+
   return (
     <section className="fresh-arrivals">
 
@@ -88,23 +76,52 @@ function FreshArrivals() {
       <div className="product-grid">
 
   {products.map((item) => (
-    <div className="product-card" key={item.id}>
-
+<Link
+    to={`/product/${item._id}`}
+    key={item._id}
+    className="product-card"
+    style={{
+        textDecoration: "none",
+        color: "inherit"
+    }}
+>
       <div className="product-image-wrapper">
 
-        <img src={item.image} alt={item.name} />
+        <img src={item.thumbnail} alt={item.name} />
 
         <span className="discount-badge">
-          {item.discount}
-        </span>
+{
+Math.round(((item.mrp-item.price)/item.mrp)*100)
+}% OFF
+</span>
 
         <span className="organic-badge">
           ORGANIC
         </span>
 
-        <button className="wishlist-btn">
-          <Heart size={20} />
-        </button>
+       <button
+    className="wishlist-btn"
+    onClick={async (e) => {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        await toggleWishlist(item._id);
+
+    }}
+>
+
+    <Heart
+        size={20}
+        fill={
+            isWishlisted(item._id)
+                ? "#ef4444"
+                : "transparent"
+        }
+        color="#ef4444"
+    />
+
+</button>
 
       </div>
 
@@ -131,9 +148,13 @@ function FreshArrivals() {
 
         <h3>{item.name}</h3>
 
-        <p className="product-desc">
-          {item.desc}
-        </p>
+       <p className="product-desc">
+    {item.shortDescription}
+
+    <span className="best-product-qty">
+        • {item.quantity}{item.unit}
+    </span>
+</p>
 
         <div className="price-row">
 
@@ -143,20 +164,38 @@ function FreshArrivals() {
             </span>
 
             <span className="old-price">
-              ₹{item.oldPrice}
+              ₹{item.mrp}
             </span>
           </div>
 
-          <button className="add-btn">
-            <Plus size={18} />
-            ADD
-          </button>
+          <button
+
+    className="add-btn"
+
+    onClick={async (e) => {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        await addToCart(
+            item._id,
+            1
+        );
+
+    }}
+
+>
+
+    <Plus size={18}/>
+    ADD
+
+</button>
 
         </div>
 
       </div>
 
-    </div>
+    </Link>
   ))}
 
 </div>

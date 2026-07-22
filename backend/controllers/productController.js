@@ -99,6 +99,7 @@ brand:req.body.brand,
 discount:req.body.discount || 0,
 tax:req.body.tax || 0,
 featured:req.body.featured || false,
+newArrival:req.body.newArrival || false,
 published:req.body.published ?? true,
 minStock:req.body.minStock || 20,
 vendorId,
@@ -545,6 +546,7 @@ const vendor = await User.findById(product.vendorId);
 product.vendorName = vendor?.name || "";product.discount = req.body.discount;
 product.tax = req.body.tax;
 product.featured = req.body.featured;
+product.newArrival=req.body.newArrival;
 product.published = req.body.published;
 product.minStock = req.body.minStock;
 product.category=req.body.category;
@@ -1326,4 +1328,211 @@ message:err.message
 
 }
 
+};
+
+// 
+// =====================
+// BEST SELLERS
+// =====================
+
+export const getBestSellerProducts = async (req, res) => {
+try{
+    const allProducts = await Product.find();
+
+console.log("============= ALL PRODUCTS =============");
+
+allProducts.forEach((p) => {
+    console.log({
+        name: p.name,
+        category: p.category,
+        status: p.status,
+        stock: p.stock,
+        published: p.published,
+        isDeleted: p.isDeleted
+    });
+});
+
+console.log("========================================");
+
+const products = await Product.aggregate([
+
+{
+$match:{
+    status:"Active",
+    stock:{ $gt:0 }
+}
+},
+
+{
+$sort:{
+// sold:-1,
+createdAt:-1
+}
+},
+
+{
+$group:{
+
+_id:"$category",
+
+product:{
+$first:"$$ROOT"
+}
+
+}
+
+},
+
+{
+$replaceRoot:{
+newRoot:"$product"
+}
+},
+
+{
+$sort:{
+// sold:-1
+category:1
+}
+},
+
+{
+$limit:4
+}
+
+]);
+
+console.log("BEST SELLER PRODUCTS");
+console.log(products);
+res.json({
+
+success:true,
+
+products
+
+});
+
+}
+
+catch(err){
+
+console.log(err);
+
+res.status(500).json({
+
+success:false,
+
+message:err.message
+
+});
+
+}
+
+};
+
+// NEW ARRIVAL
+export const getNewArrivalProducts = async (req,res)=>{
+
+try{
+
+const products=await Product.find({
+
+status:"Active",
+
+stock:{ $gt:0 },
+
+newArrival:true
+
+})
+
+.sort({
+
+createdAt:-1
+
+})
+.limit(4);
+
+res.json({
+
+success:true,
+
+products
+
+});
+
+}
+
+catch(err){
+
+res.status(500).json({
+
+success:false,
+
+message:err.message
+
+});
+console.log(products);
+}
+
+};
+
+// change new arrival
+export const changeNewArrival = async (req, res) => {
+  try {
+
+    console.log("Product ID:", req.params.id);
+    console.log("Body:", req.body);
+
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found"
+      });
+    }
+
+    const total = await Product.countDocuments({
+      newArrival: true,
+      _id: { $ne: product._id }
+    });
+
+    if (
+      req.body.newArrival === true &&
+      total >= 4
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Maximum 4 products allowed."
+      });
+    }
+
+    product.newArrival = req.body.newArrival;
+if (!product.productId) {
+    product.productId = await generateProductId();
+}
+
+if (!product.sku) {
+    product.sku = "SKU-" + Math.floor(
+        100000 + Math.random() * 900000
+    );
+}
+    await product.save();
+
+    res.json({
+      success: true,
+      product
+    });
+
+  } catch (err) {
+
+    console.log("CHANGE NEW ARRIVAL ERROR");
+    console.log(err);
+
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+
+  }
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import "./ProductManagement.css";
-
+import { toast } from "react-toastify";
 import {
   FiSearch,
   FiPlus,
@@ -480,6 +480,54 @@ Authorization:`Bearer ${token}`
 
   };
 
+
+// New Arrival
+const toggleNewArrival=async(product)=>{
+
+try{
+
+const selected=
+
+products.filter(
+
+x=>x.newArrival
+
+).length;
+if (
+    !product.newArrival &&
+    selected >= 4
+) {
+    toast.warning(
+        "Only 4 products can be marked as New Arrivals."
+    );
+    return;
+}
+
+const token = localStorage.getItem("adminToken");
+
+await axios.patch(
+`http://localhost:5000/api/products/new-arrival/${product._id}`,
+{
+    newArrival: !product.newArrival
+},
+{
+    headers:{
+        Authorization:`Bearer ${token}`
+    }
+}
+);
+
+fetchProducts();
+
+}
+
+catch(err){
+
+console.log(err);
+
+}
+
+};
 
   // ==============================
   // STOCK BADGE
@@ -1124,7 +1172,7 @@ Loading Products...
 <th>Inventory</th>
 <th>Sold</th>
 <th>Status</th>
-
+<th>New Arrival</th>
 <th>Rating</th>
 
 <th>Actions</th>
@@ -1372,7 +1420,33 @@ product.status
 
 </td>
 
+{/* Arrival */}
+<td>
 
+<label className="pm-switch">
+
+<input
+
+type="checkbox"
+
+checked={product.newArrival}
+
+onChange={()=>toggleNewArrival(product)}
+
+// disabled={
+// !product.newArrival &&
+// products.filter(
+// x=>x.newArrival
+// ).length>=4
+// }
+
+/>
+
+<span className="pm-slider"></span>
+
+</label>
+
+</td>
 
 {/* RATING */}
 <td>

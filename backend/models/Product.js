@@ -175,6 +175,11 @@ featured: {
     default: false
 },
 
+newArrival:{
+    type:Boolean,
+    default:false
+},
+
 published: {
     type: Boolean,
     default: true

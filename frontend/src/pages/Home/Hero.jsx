@@ -76,11 +76,11 @@ function Hero() {
         </div>
 
         {/* Slider Dots */}
-        <div className="hero-dots">
+        {/* <div className="hero-dots">
           <span className="active"></span>
           <span></span>
           <span></span>
-        </div>
+        </div> */}
 
       </div>
     </section>

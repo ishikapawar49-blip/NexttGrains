@@ -237,3 +237,24 @@
   width: 16px;
   height: 16px;
 }
+.best-loading{
+
+text-align:center;
+
+font-size:24px;
+
+padding:60px;
+
+}
+
+.best-product-qty{
+
+font-weight:600;
+
+margin-left:4px;
+
+white-space:nowrap;
+
+color:#6d675d;
+
+}

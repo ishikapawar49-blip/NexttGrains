@@ -3,6 +3,9 @@ import authMiddleware from "../middleware/authMiddleware.js";
 import upload from "../middleware/upload.js";
 import{
 addProduct,
+getBestSellerProducts,
+getNewArrivalProducts,
+changeNewArrival,
 getAllProducts,
 getVendorProducts,
 getSingleProduct,
@@ -31,6 +34,19 @@ router.post(
     addProduct
 );
 
+router.get(
+"/best-sellers",
+getBestSellerProducts
+);
+router.get(
+"/new-arrivals",
+getNewArrivalProducts
+);
+router.patch(
+"/new-arrival/:id",
+authMiddleware,
+changeNewArrival
+);
 router.get("/all",getAllProducts);
 router.get("/vendor/:vendorId",getVendorProducts);
 router.get("/recommended/:id",getRecommendedProducts);
